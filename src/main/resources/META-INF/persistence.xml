@@ -7,8 +7,10 @@
             <!-- 필수 속성 -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.user" value="giyong"/>
-            <property name="javax.persistence.jdbc.password" value="thsutleo852!"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/springbasic"/>
+<!--            <property name="javax.persistence.jdbc.password" value="thsutleo852!"/>-->
+<!--            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/springbasic"/>-->
+            <property name="javax.persistence.jdbc.password" value="12345678"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/basecamp"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <!-- 옵션 -->
             <property name="hibernate.show_sql" value="true"/>
