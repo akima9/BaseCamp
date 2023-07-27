@@ -16,7 +16,7 @@ public class Main {
         tx.begin();
 
         try {
-            Member member = new Member("akima9", 34);
+            Member member = new Member("akima9", "1234");
             entityManager.persist(member);
             tx.commit();
         } catch (Exception e) {

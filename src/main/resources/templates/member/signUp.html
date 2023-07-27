@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,11 +7,13 @@
 <body>
     <h1>Sign up page</h1>
     <!--  TODO: 이메일 인증  -->
-    <form>
-        <input type="email" name="memberId" placeholder="Email">
+    <form method="post" th:action="@{/members}">
+        <input type="email" name="memberId" placeholder="Email" th:value="${memberId}">
         <input type="password" name="memberPw" placeholder="Password">
         <input type="password" name="confirmPw" placeholder="Re-enter password">
         <button type="submit">Sign up</button>
     </form>
+
+<!--    GET, POST, PUT, DELETE, PATCH-->
 </body>
 </html>
