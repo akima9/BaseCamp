@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Basecamp</title>
@@ -8,8 +8,9 @@
     <div>
         <ul>
             <li><a href="/">Index</a></li>
-            <li><a href="/login">Sign in</a></li>
-            <li><a href="/signUp">Sign up</a></li>
+            <li th:if="${session.memberId != null}"><a href="/logout">Sign out</a></li>
+            <li th:if="${session.memberId == null}"><a href="/login">Sign in</a></li>
+            <li th:if="${session.memberId == null}"><a href="/signUp">Sign up</a></li>
         </ul>
     </div>
     <h1>Index page</h1>
