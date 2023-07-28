@@ -1,18 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Basecamp</title>
-</head>
-<body>
-    <div>
-        <ul>
-            <li><a href="/">Index</a></li>
-            <li th:if="${session.memberId != null}"><a href="/logout">Sign out</a></li>
-            <li th:if="${session.memberId == null}"><a href="/login">Sign in</a></li>
-            <li th:if="${session.memberId == null}"><a href="/signUp">Sign up</a></li>
-        </ul>
-    </div>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<div layout:fragment="content">
     <h1>Index page</h1>
     <ul>
         <li>모든 게시판의 게시물 목록을 모아 놓은 페이지를 보여준다</li>
@@ -20,5 +11,5 @@
         <li>로그인 상태라면 게시물 상세보기 페이지로 이동한다</li>
         <li>로그인 상태가 아니라면, 로그인 페이지로 이동한다</li>
     </ul>
-</body>
+</div>
 </html>

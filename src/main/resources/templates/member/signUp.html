@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<div layout:fragment="content">
     <h1>Sign up page</h1>
     <!--  TODO: 이메일 인증  -->
     <form method="post" th:action="@{/members}">
@@ -14,6 +13,6 @@
         <button type="submit">Sign up</button>
     </form>
 
-<!--    GET, POST, PUT, DELETE, PATCH-->
-</body>
+    <!--    GET, POST, PUT, DELETE, PATCH-->
+</div>
 </html>

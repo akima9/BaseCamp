@@ -1,0 +1,10 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="headerFragment">
+  <ul>
+    <li><a href="/">Index</a></li>
+    <li th:if="${session.memberId != null}"><a href="/logout">Sign out</a></li>
+    <li th:if="${session.memberId == null}"><a href="/login">Sign in</a></li>
+    <li th:if="${session.memberId == null}"><a href="/signUp">Sign up</a></li>
+  </ul>
+</div>
+</html>

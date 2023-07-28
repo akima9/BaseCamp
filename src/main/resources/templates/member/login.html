@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<div layout:fragment="content">
     <h1>Sign in page</h1>
     <!-- TODO: 비밀번호 찾기 -->
     <form method="post" th:action="@{/login}">
@@ -13,5 +12,5 @@
         <button type="submit">Sign in</button>
         <a href="/signUp">Create an account</a>
     </form>
-</body>
+</div>
 </html>
