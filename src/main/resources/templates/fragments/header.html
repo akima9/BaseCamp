@@ -2,6 +2,7 @@
 <div th:fragment="headerFragment">
   <ul>
     <li><a href="/">Index</a></li>
+    <li><a href="/boards/list">Board1</a></li>
     <li th:if="${session.memberId != null}"><a href="/logout">Sign out</a></li>
     <li th:if="${session.memberId == null}"><a href="/login">Sign in</a></li>
     <li th:if="${session.memberId == null}"><a href="/signUp">Sign up</a></li>
