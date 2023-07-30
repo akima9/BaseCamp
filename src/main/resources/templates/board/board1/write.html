@@ -5,6 +5,10 @@
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content">
     <h1>Board1 write page</h1>
-
+    <form method="post" th:action="@{/boards}">
+        <input type="text" name="title" placeholder="Title">
+        <textarea name="content" placeholder="Content"></textarea>
+        <button type="submit">등록</button>
+    </form>
 </div>
 </html>

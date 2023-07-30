@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<div layout:fragment="content">
+    <h1>Board1 modify page</h1>
+    <form method="post" th:action="@{/boards}">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="boardId" th:value="${board.boardId}">
+        <input type="text" name="title" placeholder="Title" th:value="${board.title}">
+        <textarea name="content" placeholder="Content" th:text="${board.content}"></textarea>
+        <button type="submit">수정</button>
+    </form>
+</div>
+</html>

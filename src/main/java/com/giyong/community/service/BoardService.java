@@ -7,5 +7,8 @@ import java.util.Optional;
 
 public interface BoardService {
     Board create(BoardDto dto);
-    Optional<Board> findById(int boardId);
+    Optional<Board> findById(Integer boardId);
+    Iterable<Board> findAll();
+
+    Board modify(BoardDto dto);
 }

@@ -6,5 +6,18 @@
 <div layout:fragment="content">
     <h1>Board1 list page</h1>
     <a href="/boards/write">글쓰기</a>
+    <table>
+        <tr>
+            <th>제목</th>
+            <th>내용</th>
+            <th>작성일</th>
+        </tr>
+        <tr th:each="board : ${list}">
+            <td>
+                <a th:href="@{/boards(boardId=${board.boardId})}" th:text="${board.title}"></a>
+            </td>
+            <th th:text="${board.createdAt}">createdAt</th>
+        </tr>
+    </table>
 </div>
 </html>
