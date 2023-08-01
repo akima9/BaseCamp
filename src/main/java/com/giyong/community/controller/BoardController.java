@@ -9,54 +9,57 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class BoardController {
     @Autowired
     private BoardService boardService;
 
-//    @PostMapping("/boards")
-//    public String boards(BoardDto dto) {
-//        boardService.create(dto);
-//        return "redirect:/boards/list";
-//    }
-//
-//    @PutMapping("/boards")
-//    public String modify(BoardDto dto) {
-//        System.out.println("BoardController.modify");
-//        System.out.println("dto = " + dto);
-//        Board board = boardService.modify(dto);
-//        return "redirect:/boards?boardId" + board.getBoardId();
-//    }
-//
-//    @GetMapping("/boards")
-//    public String boards(int boardId, Model model) {
-//        System.out.println("BoardController.boards");
-//        Optional<Board> board = boardService.findById(boardId);
-//        model.addAttribute("board", board.get());
-//        return "board/board1/view";
-//    }
-//
-//    @GetMapping("/boards/list")
-//    public String boards(Model model) {
-//        Iterable<Board> list = boardService.findAll();
-//        model.addAttribute("list", list);
-//        return "board/board1/list";
-//    }
-//
-//    @GetMapping("/boards/write")
-//    public String write() {
-//        return "board/board1/write";
-//    }
-//
-//    @GetMapping("/boards/modify")
-//    public String modify(int boardId, Model model) {
-//        Optional<Board> board = boardService.findById(boardId);
-//        model.addAttribute("board", board.get());
-//        return "board/board1/modify";
-//    }
+    @GetMapping("/boards/list")
+    public String goToBoardList(Model m) {
+        List<Board> boards = boardService.findAll();
+        m.addAttribute("boards", boards);
+        return "board/board1/list";
+    }
+
+    @GetMapping("/boards/write")
+    public String goToBoardWrite() {
+        return "board/board1/write";
+    }
+
+    @PostMapping("/boards")
+    public String writeBoard(BoardDto dto, Model m) {
+        Board board = boardService.write(dto);
+        m.addAttribute("board", board);
+        return "board/board1/view";
+    }
+
+    @GetMapping("/boards/modify")
+    public String goToBoardModify(Integer boardId, Model m) {
+        Board board = boardService.findById(boardId);
+        m.addAttribute("board", board);
+        return "board/board1/modify";
+    }
+
+    @PutMapping("/boards")
+    public String modify(BoardDto dto, Model m) {
+        Board board = boardService.write(dto);
+        m.addAttribute("board", board);
+        return "board/board1/view";
+    }
+
+    @GetMapping("/boards/delete")
+    public String delete(Integer boardId) {
+        boardService.remove(boardId);
+        return "redirect:/boards/list";
+    }
+
+    @GetMapping("/boards")
+    public String getBoard(Integer boardId, Model m) {
+        Board board = boardService.findById(boardId);
+        m.addAttribute("board", board);
+        return "board/board1/view";
+    }
 }

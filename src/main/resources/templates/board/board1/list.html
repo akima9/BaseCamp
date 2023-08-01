@@ -12,7 +12,7 @@
             <th>내용</th>
             <th>작성일</th>
         </tr>
-        <tr th:each="board : ${list}">
+        <tr th:each="board : ${boards}">
             <td>
                 <a th:href="@{/boards(boardId=${board.boardId})}" th:text="${board.title}"></a>
             </td>
