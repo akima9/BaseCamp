@@ -5,6 +5,11 @@ import com.giyong.community.entity.Member;
 import java.util.Optional;
 
 public interface MemberService {
-    Member create(Member member);
-    Optional<Member> findMember(Member member);
+    Member addMember(Member member);
+
+    Member findMember(Integer mno);
+
+    Member modifyMember(Member member);
+
+    void removeMember(Integer mno);
 }

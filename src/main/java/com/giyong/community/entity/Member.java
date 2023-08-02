@@ -5,18 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Data
 public class Member {
     @Id
-    private String id;
-    private String password;
+    @GeneratedValue
+    private int mno;
+    private String memberId;
+    private String memberPw;
     private String nickname;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
