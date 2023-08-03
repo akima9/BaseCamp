@@ -6,6 +6,7 @@ import com.giyong.community.service.MemberService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,9 @@ import java.util.Optional;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login() {
@@ -45,12 +49,13 @@ public class MemberController {
             return "redirect:/login";
         }
 
-        if (memberDto.getMemberPw().equals(findMember.getMemberPw())) {
+        if (passwordEncoder.matches(memberDto.getMemberPw(), findMember.getMemberPw())) {
             // 비밀번호가 같으면 로그인 처리
             HttpSession session = request.getSession(true);
             session.setAttribute("memberId", findMember.getMemberId());
             return "redirect:/";
         } else {
+            redirect.addFlashAttribute("resCode", 405);
             return "redirect:/login";
         }
     }
@@ -76,6 +81,7 @@ public class MemberController {
         if (memberDto.getMemberPw().equals(memberDto.getConfirmPw())) {
             // 같으면, 저장 후 login 페이지로 이동
             memberDto.setCreatedAt(new Date());
+            memberDto.setMemberPw(passwordEncoder.encode(memberDto.getMemberPw()));
             Member member = memberService.addMember(modelMapper.map(memberDto, Member.class));
 
             if (member != null) {

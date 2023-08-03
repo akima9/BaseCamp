@@ -36,6 +36,8 @@
                         alert("아이디 또는 비밀번호가 일치하지 않습니다.");
                     } else if (resCode.value == 200) {
                         alert("회원가입 되었습니다.");
+                    } else if (resCode.value == 405) {
+                        alert("비밀번호가 일치하지 않습니다.");
                     }
                 }
             },
