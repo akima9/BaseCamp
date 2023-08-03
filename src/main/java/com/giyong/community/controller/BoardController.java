@@ -9,7 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -25,7 +28,13 @@ public class BoardController {
     }
 
     @GetMapping("/boards/write")
-    public String goToBoardWrite() {
+    public String goToBoardWrite(HttpServletRequest request, RedirectAttributes redirect) {
+        HttpSession session = request.getSession(true);
+
+        if (session.getAttribute("memberId") == null) {
+            redirect.addFlashAttribute("resCode", 600);
+            return "redirect:/login";
+        }
         return "board/board1/write";
     }
 
