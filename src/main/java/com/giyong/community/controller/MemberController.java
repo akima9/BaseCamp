@@ -40,6 +40,11 @@ public class MemberController {
         ModelMapper modelMapper = new ModelMapper();
         Member findMember = memberService.findMember(modelMapper.map(memberDto, Member.class));
 
+        if (findMember == null) {
+            redirect.addFlashAttribute("resCode", 404);
+            return "redirect:/login";
+        }
+
         if (memberDto.getMemberPw().equals(findMember.getMemberPw())) {
             // 비밀번호가 같으면 로그인 처리
             HttpSession session = request.getSession(true);
@@ -58,20 +63,27 @@ public class MemberController {
 
     @PostMapping("/members")
     public String members(MemberDto memberDto, RedirectAttributes redirect) {
-        /**
-         * TODO
-         * 추후 구현 예정
-         * 1. 이메일 검증
-         * 2. 비밀번호 검증
-         * 3. 비밀번호 암호화
-         * 4. signUp 페이지로 redirect시 alert 메시지
-         */
+        ModelMapper modelMapper = new ModelMapper();
+        Member newMember = modelMapper.map(memberDto, Member.class);
+        Member findMember = memberService.findMember(newMember);
+
+        if (findMember != null) {
+            redirect.addFlashAttribute("resCode", 300);
+            return "redirect:/signUp";
+        }
+
         // memberPw와 confirmPw가 같은지 확인
         if (memberDto.getMemberPw().equals(memberDto.getConfirmPw())) {
             // 같으면, 저장 후 login 페이지로 이동
             memberDto.setCreatedAt(new Date());
-            ModelMapper modelMapper = new ModelMapper();
             Member member = memberService.addMember(modelMapper.map(memberDto, Member.class));
+
+            if (member != null) {
+                redirect.addFlashAttribute("resCode", 200);
+            } else {
+                redirect.addFlashAttribute("resCode", 500);
+                return "redirect:/signUp";
+            }
             return "redirect:/login";
         } else {
             // 다르면, 다시 signUp 페이지로 이동

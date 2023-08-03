@@ -3,16 +3,66 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
-<div layout:fragment="content">
-    <h1>Sign up page</h1>
-    <!--  TODO: 이메일 인증  -->
-    <form method="post" th:action="@{/members}">
-        <input type="email" name="memberId" placeholder="Email" th:value="${memberId}">
-        <input type="password" name="memberPw" placeholder="Password">
-        <input type="password" name="confirmPw" placeholder="Re-enter password">
-        <button type="submit">Sign up</button>
+<div layout:fragment="content" class="container">
+    <input type="hidden" id="resCode" th:value="${resCode}">
+    <h1>Sign-up.</h1>
+    <form method="post" th:action="@{/members}" onsubmit="return signUp.validateForm()">
+        <div class="mb-3">
+            <label for="inputMemberId" class="form-label">ID</label>
+            <input type="text" class="form-control" id="inputMemberId" name="memberId">
+        </div>
+        <div class="mb-3">
+            <label for="inputMemberPw" class="form-label">Password</label>
+            <input type="password" class="form-control" id="inputMemberPw" name="memberPw">
+        </div>
+        <div class="mb-3">
+            <label for="inputConfirmPw" class="form-label">Password Confirmation</label>
+            <input type="password" class="form-control" id="inputConfirmPw" name="confirmPw">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">회원가입</button>
     </form>
 
-    <!--    GET, POST, PUT, DELETE, PATCH-->
+    <script>
+        let signUp = {
+            init : function () {
+                let resCode = document.querySelector("#resCode");
+
+                if (resCode.value.length > 0) {
+                    if (resCode.value == 300) {
+                        alert("이미 사용중인 아이디입니다.");
+                    } else if (resCode.value == 500) {
+                        alert("회원가입에 실패하였습니다.");
+                    }
+                }
+            },
+            validateForm : function () {
+                let memberId = document.querySelector('input[name=memberId]');
+                let memberPw = document.querySelector('input[name=memberPw]');
+                let confirmPw = document.querySelector('input[name=confirmPw]');
+
+                if (memberId.value.length < 2) {
+                    alert("2글자 이상의 ID를 입력해주세요.");
+                    memberId.focus();
+                    return false;
+                }
+
+                if (memberPw.value.length < 6) {
+                    alert("6글자 이상의 비밀번호를 입력해주세요.");
+                    memberPw.focus();
+                    return false;
+                }
+
+                if (memberPw.value != confirmPw.value) {
+                    alert("입력하신 비밀번호가 일치하지 않습니다.");
+                    confirmPw.focus();
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        signUp.init();
+    </script>
 </div>
 </html>
