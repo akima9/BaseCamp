@@ -12,8 +12,6 @@ import java.util.Date;
 @Data
 public class Member {
     @Id
-    @GeneratedValue
-    private int mno;
     private String memberId;
     private String memberPw;
     private String nickname;

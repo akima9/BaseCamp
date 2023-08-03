@@ -5,7 +5,6 @@ import lombok.Data;
 import java.util.Date;
 @Data
 public class MemberDto {
-    private int mno;
     private String memberId;
     private String memberPw;
     private String confirmPw;

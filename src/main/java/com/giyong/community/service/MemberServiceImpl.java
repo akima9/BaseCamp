@@ -21,18 +21,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findMember(Integer mno) {
-        return memberRepository.findById(mno).orElse(null);
+    public Member findMember(Member member) {
+        return memberRepository.findById(member.getMemberId()).orElse(null);
     }
 
     @Override
     public Member modifyMember(Member member) {
-        Member oldMember = memberRepository.findById(member.getMno()).orElse(null);
+        Member oldMember = memberRepository.findById(member.getMemberId()).orElse(null);
 
         ModelMapper modelMapper = new ModelMapper();
 
         MemberDto dto = modelMapper.map(member, MemberDto.class);
-        dto.setMno(oldMember.getMno());
         dto.setMemberPw(member.getMemberPw());
         dto.setNickname(member.getNickname());
         dto.setUpdatedAt(new Date());
@@ -43,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void removeMember(Integer memberId) {
+    public void removeMember(String memberId) {
         memberRepository.deleteById(memberId);
     }
 }

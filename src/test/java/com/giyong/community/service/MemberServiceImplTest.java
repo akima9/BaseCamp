@@ -40,7 +40,7 @@ class MemberServiceImplTest {
         ModelMapper modelMapper = new ModelMapper();
         Member member = modelMapper.map(memberDto, Member.class);
         Member addMember = memberService.addMember(member);
-        Member findMember = memberService.findMember(addMember.getMno());
+        Member findMember = memberService.findMember(addMember);
         assertTrue(addMember.getMemberId().equals(findMember.getMemberId()));
     }
 
@@ -55,7 +55,7 @@ class MemberServiceImplTest {
         ModelMapper modelMapper = new ModelMapper();
         Member member = modelMapper.map(memberDto, Member.class);
         Member addMember = memberService.addMember(member);
-        Member findMember = memberService.findMember(addMember.getMno());
+        Member findMember = memberService.findMember(addMember);
         findMember.setNickname("tester");
         Member modifyMember = memberService.modifyMember(findMember);
         assertTrue(modifyMember.getNickname().equals("tester"));
@@ -72,8 +72,8 @@ class MemberServiceImplTest {
         ModelMapper modelMapper = new ModelMapper();
         Member member = modelMapper.map(memberDto, Member.class);
         Member addMember = memberService.addMember(member);
-        memberService.removeMember(addMember.getMno());
-        Member findMember = memberService.findMember(addMember.getMno());
+        memberService.removeMember(addMember.getMemberId());
+        Member findMember = memberService.findMember(addMember);
         assertTrue(findMember == null);
     }
 }
