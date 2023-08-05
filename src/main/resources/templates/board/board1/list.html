@@ -44,20 +44,7 @@
         </tbody>
     </table>
     <button type="button" class="btn btn-primary btn-sm write-btn">글쓰기</button>
-
     <script>
-        let list = {
-            init : function () {
-                let writeBtn = document.querySelector(".write-btn");
-
-                function goToWritePage() {
-                    self.location = "/boards/write";
-                }
-
-                writeBtn.addEventListener('click', goToWritePage);
-            }
-        }
-
         list.init();
     </script>
 </div>

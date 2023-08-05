@@ -17,7 +17,6 @@
     <div class="text-center">
         <button type="button" id="postBtn" class="btn btn-primary">등록</button>
     </div>
-    <div id="output"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
@@ -90,27 +89,6 @@
             },
             data: {}
         });
-
-        const write = {
-            init : function () {
-                let postBtn = document.querySelector("#postBtn");
-                postBtn.addEventListener("click", write.writeBoard);
-            },
-            writeBoard : function () {
-                editor.save()
-                    .then((savedData) => {
-                        write.postBoard(JSON.stringify(savedData));
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            },
-            postBoard : function (board) {
-                console.log("call postBoard");
-                console.log(board);
-            }
-        }
-
         write.init();
     </script>
 </div>

@@ -21,47 +21,7 @@
         </div>
         <button type="submit" class="btn btn-primary w-100">회원가입</button>
     </form>
-
     <script>
-        let signUp = {
-            init : function () {
-                let resCode = document.querySelector("#resCode");
-
-                if (resCode.value.length > 0) {
-                    if (resCode.value == 300) {
-                        alert("이미 사용중인 아이디입니다.");
-                    } else if (resCode.value == 500) {
-                        alert("회원가입에 실패하였습니다.");
-                    }
-                }
-            },
-            validateForm : function () {
-                let memberId = document.querySelector('input[name=memberId]');
-                let memberPw = document.querySelector('input[name=memberPw]');
-                let confirmPw = document.querySelector('input[name=confirmPw]');
-
-                if (memberId.value.length < 2) {
-                    alert("2글자 이상의 ID를 입력해주세요.");
-                    memberId.focus();
-                    return false;
-                }
-
-                if (memberPw.value.length < 6) {
-                    alert("6글자 이상의 비밀번호를 입력해주세요.");
-                    memberPw.focus();
-                    return false;
-                }
-
-                if (memberPw.value != confirmPw.value) {
-                    alert("입력하신 비밀번호가 일치하지 않습니다.");
-                    confirmPw.focus();
-                    return false;
-                }
-
-                return true;
-            }
-        }
-
         signUp.init();
     </script>
 </div>
