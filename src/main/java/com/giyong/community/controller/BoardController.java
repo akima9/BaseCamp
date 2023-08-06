@@ -40,6 +40,7 @@ public class BoardController {
 
     @PostMapping("/boards")
     public String writeBoard(BoardDto dto, Model m) {
+        System.out.println("dto = " + dto);
         Board board = boardService.write(dto);
         m.addAttribute("board", board);
         return "board/board1/view";
