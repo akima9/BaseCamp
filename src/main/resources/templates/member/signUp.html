@@ -9,15 +9,15 @@
     <form method="post" th:action="@{/members}" onsubmit="return signUp.validateForm()">
         <div class="mb-3">
             <label for="inputMemberId" class="form-label">ID</label>
-            <input type="text" class="form-control" id="inputMemberId" name="memberId">
+            <input type="text" class="form-control" id="inputMemberId" name="memberId" value="test">
         </div>
         <div class="mb-3">
             <label for="inputMemberPw" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputMemberPw" name="memberPw">
+            <input type="password" class="form-control" id="inputMemberPw" name="memberPw" value="111111">
         </div>
         <div class="mb-3">
             <label for="inputConfirmPw" class="form-label">Password Confirmation</label>
-            <input type="password" class="form-control" id="inputConfirmPw" name="confirmPw">
+            <input type="password" class="form-control" id="inputConfirmPw" name="confirmPw" value="111111">
         </div>
         <button type="submit" class="btn btn-primary w-100">회원가입</button>
     </form>

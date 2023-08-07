@@ -9,11 +9,11 @@
     <form method="post" th:action="@{/login}" onsubmit="return login.validateForm()">
         <div class="mb-3">
             <label for="inputMemberId" class="form-label">ID</label>
-            <input type="text" class="form-control" id="inputMemberId" name="memberId">
+            <input type="text" class="form-control" id="inputMemberId" name="memberId" value="test">
         </div>
         <div class="mb-3">
             <label for="inputMemberPw" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputMemberPw" name="memberPw">
+            <input type="password" class="form-control" id="inputMemberPw" name="memberPw" value="111111">
         </div>
         <button type="submit" class="btn btn-primary w-100">로그인</button>
         <button type="button" class="btn btn-primary w-100 mt-1 btn-light sign-up-btn">회원가입</button>

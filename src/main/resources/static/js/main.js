@@ -101,7 +101,13 @@ const list = {
 const write = {
     init : function () {
         let postBtn = document.querySelector("#postBtn");
+        let listBtn = document.querySelector("#listBtn");
+
         postBtn.addEventListener("click", write.writeBoard);
+        listBtn.addEventListener("click", write.goToList);
+    },
+    goToList : function () {
+        self.location = "/boards/list";
     },
     writeBoard : function () {
         editor.save()
@@ -112,21 +118,59 @@ const write = {
                 console.log(error);
             });
     },
+    modifyBoard : function () {
+        editor.save()
+            .then((savedData) => {
+                write.putBoard(savedData);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    putBoard : function (board) {
+        let boardId = document.querySelector("input[name=boardId]");
+        board.boardId = boardId.value;
+        write.putData("/rest/boards", board).then((data) => {
+            alert("수정 되었습니다.");
+            write.toggleReadOnly(); //editor readOnly로 변경
+            let modifyBtn = document.querySelector("#modifyBtn");
+            writeBtn.classList.remove("d-none"); // 수정하기 버튼 노출
+            modifyBtn.classList.add("d-none"); // 변경 버튼 숨김
+        });
+    },
     postBoard : function (board) {
-        console.log("call postBoard");
         write.postData("/rest/boards", board).then((data) => {
             alert("등록 되었습니다.");
-            console.log(data); // JSON 데이터가 `data.json()` 호출에 의해 파싱됨
-            // readOnly로 변경
-            write.toggleReadOnly();
-            // 등록 버튼을 수정하기 버튼으로 변경
+            let boardId = document.querySelector("input[name=boardId]");
+            boardId.value = data.boardId;
+            write.toggleReadOnly(); //editor readOnly로 변경
+            
             let postBtn = document.querySelector("#postBtn");
             let writeBtn = document.querySelector("#writeBtn");
+            let modifyBtn = document.querySelector("#modifyBtn");
 
-            postBtn.classList.add("d-none");
-            writeBtn.classList.remove("d-none");
+            postBtn.classList.add("d-none"); // 등록 버튼 숨김
+            writeBtn.classList.remove("d-none"); // 수정하기 버튼 노출
             writeBtn.addEventListener("click", write.toggleReadOnly);
+            modifyBtn.addEventListener("click", write.modifyBoard);
         });
+    },
+    putData : async function (url = "", data = {}) {
+        // 옵션 기본 값은 *로 강조
+        const response = await fetch(url, {
+            method: "PUT", // *GET, POST, PUT, DELETE 등
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+        });
+        return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
     },
     postData : async function (url = "", data = {}) {
         // 옵션 기본 값은 *로 강조
@@ -147,7 +191,6 @@ const write = {
     },
     toggleReadOnly : async function () {
         let readOnlyState = await editor.readOnly.toggle();
-        console.log(readOnlyState)
         if (readOnlyState == false) {
             let writeBtn = document.querySelector("#writeBtn");
             let modifyBtn = document.querySelector("#modifyBtn");
