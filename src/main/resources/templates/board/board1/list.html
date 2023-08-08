@@ -4,15 +4,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content" class="container">
-    <button type="button" class="btn btn-primary btn-sm write-btn">글쓰기</button>
+    <div class="text-end">
+        <button type="button" class="btn btn-primary btn-sm write-btn">글쓰기</button>
+    </div>
     <table class="table table-hover caption-top">
         <caption>Board1</caption>
         <thead class="table-light">
         <tr>
             <th scope="col">번호</th>
             <th scope="col">제목</th>
-            <th scope="col">날짜</th>
             <th scope="col">조회수</th>
+            <th scope="col">댓글수</th>
+            <th scope="col">날짜</th>
         </tr>
         </thead>
         <tbody>
@@ -21,29 +24,16 @@
             <td>
                 <a th:href="@{/boards(boardId=${board.boardId})}" th:text="${board.title}"></a>
             </td>
-            <td th:text="${board.createdAt}">createdAt</td>
             <td>조회수</td>
-        </tr>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
+            <td>댓글수</td>
+            <td th:text="${board.createdAt}">createdAt</td>
         </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary btn-sm write-btn">글쓰기</button>
+    <div class="text-end">
+        <button type="button" class="btn btn-primary btn-sm write-btn">글쓰기</button>
+    </div>
+
     <script>
         list.init();
     </script>

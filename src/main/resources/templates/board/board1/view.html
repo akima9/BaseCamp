@@ -3,11 +3,92 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
-<div layout:fragment="content">
-    <h1>Board1 view page</h1>
-    <p th:text="${board.title}">Title</p>
-    <p th:text="${board.content}">Content</p>
-    <a th:href="@{/boards/modify(boardId=${board.boardId})}">수정</a>
-    <a th:href="@{/boards/delete(boardId=${board.boardId})}">삭제</a>
+<div layout:fragment="content" class="container">
+    <div id="editorjs"></div>
+    <input type="hidden" name="boardId">
+    <div class="text-center">
+        <button type="button" id="postBtn" class="btn btn-primary">등록</button>
+        <button type="button" id="writeBtn" class="btn btn-primary d-none">수정하기</button>
+        <button type="button" id="modifyBtn" class="btn btn-primary d-none">변경</button>
+        <button type="button" id="listBtn" class="btn btn-light">목록</button>
+    </div>
+<!--    <h1>Board1 view page</h1>-->
+<!--    <p th:text="${board.title}">Title</p>-->
+<!--    <p th:text="${board.content}">Content</p>-->
+<!--    <a th:href="@{/boards/modify(boardId=${board.boardId})}">수정</a>-->
+<!--    <a th:href="@{/boards/delete(boardId=${board.boardId})}">삭제</a>-->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script><!-- Delimiter -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script><!-- List -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script><!-- Checklist -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script><!-- Quote -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/code@latest"></script><!-- Code -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script><!-- Embed -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/table@latest"></script><!-- Table -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script><!-- Link -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/warning@latest"></script><!-- Warning -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
+    <script th:inline="javascript">
+        const editor = new EditorJS({
+            readOnly: false,
+            holder: 'editorjs',
+            placeholder: 'Let`s write an awesome story!',
+            autofocus: true,
+            tools: {
+                header: {
+                    class: Header,
+                    inlineToolbar: ['marker', 'link'],
+                    config: {
+                        placeholder: 'Header'
+                    },
+                    shortcut: 'CMD+SHIFT+H'
+                },
+                image: SimpleImage,
+                list: {
+                    class: List,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+SHIFT+L'
+                },
+                checklist: {
+                    class: Checklist,
+                    inlineToolbar: true,
+                },
+                quote: {
+                    class: Quote,
+                    inlineToolbar: true,
+                    config: {
+                        quotePlaceholder: 'Enter a quote',
+                        captionPlaceholder: 'Quote\'s author',
+                    },
+                    shortcut: 'CMD+SHIFT+O'
+                },
+                warning: Warning,
+                marker: {
+                    class:  Marker,
+                    shortcut: 'CMD+SHIFT+M'
+                },
+                code: {
+                    class:  CodeTool,
+                    shortcut: 'CMD+SHIFT+C'
+                },
+                delimiter: Delimiter,
+                inlineCode: {
+                    class: InlineCode,
+                    shortcut: 'CMD+SHIFT+C'
+                },
+                linkTool: LinkTool,
+                embed: Embed,
+                table: {
+                    class: Table,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+ALT+T'
+                },
+            },
+            data: {}
+        });
+        write.init();
+    </script>
 </div>
 </html>
