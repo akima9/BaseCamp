@@ -62,7 +62,8 @@ public class RestBoardController {
                 }
             }
         });
-        boardDto.setContent(map.toString());
+        ObjectMapper mapper = new ObjectMapper();
+        boardDto.setContent(mapper.writeValueAsString(map));
         String title = boardDto.getTitle();
         if (title == null) {
             boardDto.setTitle("제목없음");

@@ -5,7 +5,8 @@
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content" class="container">
     <div id="editorjs"></div>
-    <input type="hidden" name="boardId">
+    <input type="text" name="boardId" th:value="${board.boardId}">
+    <textarea th:text="${board.content}"></textarea>
     <div class="text-center">
         <button type="button" id="postBtn" class="btn btn-primary">등록</button>
         <button type="button" id="writeBtn" class="btn btn-primary d-none">수정하기</button>
@@ -31,6 +32,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
     <script th:inline="javascript">
+        /*<![CDATA[*/
+        let test = JSON.parse(/*[[${board.content}]]*/);
+        console.log(test);
         const editor = new EditorJS({
             readOnly: false,
             holder: 'editorjs',
@@ -89,6 +93,7 @@
             data: {}
         });
         write.init();
+        /*]]>*/
     </script>
 </div>
 </html>
