@@ -200,3 +200,68 @@ const write = {
         }
     }
 }
+
+const VIEW = {
+    init : function () {
+        console.log("call VIEW init");
+        let writeBtn = document.querySelector("#writeBtn"); // 수정하기 버튼
+        let modifyBtn = document.querySelector("#modifyBtn"); // 변경 버튼
+        let listBtn = document.querySelector("#listBtn"); // 목록 버튼
+
+        writeBtn.addEventListener("click", VIEW.toggleReadOnly);
+        modifyBtn.addEventListener("click", VIEW.modifyBoard);
+        listBtn.addEventListener("click", VIEW.goToList);
+    },
+    modifyBoard : function () {
+        editor.save()
+            .then((savedData) => {
+                VIEW.putBoard(savedData);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    putBoard : function (board) {
+        let boardId = document.querySelector("input[name=boardId]");
+        board.boardId = boardId.value;
+        VIEW.putData("/rest/boards", board).then((data) => {
+            alert("수정 되었습니다.");
+            VIEW.toggleReadOnly(); //editor readOnly로 변경
+            VIEW.changeReadMode();
+        });
+    },
+    putData : async function (url = "", data = {}) {
+        // 옵션 기본 값은 *로 강조
+        const response = await fetch(url, {
+            method: "PUT", // *GET, POST, PUT, DELETE 등
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+        });
+        return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
+    },
+    goToList : function () {
+        self.location = "/boards/list";
+    },
+    toggleReadOnly : async function () {
+        let readOnlyState = await editor.readOnly.toggle();
+        if (readOnlyState == false) {
+            VIEW.changeModifyMode();
+        }
+    },
+    changeModifyMode : function () {
+        writeBtn.classList.add("d-none");
+        modifyBtn.classList.remove("d-none");
+    },
+    changeReadMode : function () {
+        writeBtn.classList.remove("d-none");
+        modifyBtn.classList.add("d-none");
+    }
+}

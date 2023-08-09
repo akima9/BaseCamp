@@ -5,11 +5,9 @@
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content" class="container">
     <div id="editorjs"></div>
-    <input type="text" name="boardId" th:value="${board.boardId}">
-    <textarea th:text="${board.content}"></textarea>
+    <input type="hidden" name="boardId" th:value="${board.boardId}">
     <div class="text-center">
-        <button type="button" id="postBtn" class="btn btn-primary">등록</button>
-        <button type="button" id="writeBtn" class="btn btn-primary d-none">수정하기</button>
+        <button type="button" th:if="${session.memberId == board.writer}" id="writeBtn" class="btn btn-primary">수정하기</button>
         <button type="button" id="modifyBtn" class="btn btn-primary d-none">변경</button>
         <button type="button" id="listBtn" class="btn btn-light">목록</button>
     </div>
@@ -33,10 +31,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
     <script th:inline="javascript">
         /*<![CDATA[*/
-        let test = JSON.parse(/*[[${board.content}]]*/);
-        console.log(test);
+        let content = JSON.parse(/*[[${board.content}]]*/);
+
         const editor = new EditorJS({
-            readOnly: false,
+            readOnly: true,
             holder: 'editorjs',
             placeholder: 'Let`s write an awesome story!',
             autofocus: true,
@@ -90,9 +88,12 @@
                     shortcut: 'CMD+ALT+T'
                 },
             },
-            data: {}
+            data: {
+                blocks: content.blocks
+            }
         });
-        write.init();
+
+        VIEW.init();
         /*]]>*/
     </script>
 </div>
