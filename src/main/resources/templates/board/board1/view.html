@@ -4,13 +4,20 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content" class="container">
-    <div id="editorjs"></div>
-    <input type="hidden" name="boardId" th:value="${board.boardId}">
-    <div class="text-center">
+    <form method="post" th:action="@{/boards}" id="formDeleteBoard">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="boardId" th:value="${board.boardId}">
+    </form>
+
+    <div class="text-end">
         <button type="button" th:if="${session.memberId == board.writer}" id="writeBtn" class="btn btn-primary">수정하기</button>
+        <button type="button" th:if="${session.memberId == board.writer}" id="deleteBtn" class="btn btn-outline-danger">삭제</button>
         <button type="button" id="modifyBtn" class="btn btn-primary d-none">변경</button>
         <button type="button" id="listBtn" class="btn btn-light">목록</button>
     </div>
+    <div id="editorjs"></div>
+
+
 <!--    <h1>Board1 view page</h1>-->
 <!--    <p th:text="${board.title}">Title</p>-->
 <!--    <p th:text="${board.content}">Content</p>-->

@@ -6,6 +6,7 @@ import com.giyong.community.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,6 +20,12 @@ import java.util.List;
 public class BoardController {
     @Autowired
     private BoardService boardService;
+
+    @DeleteMapping("/boards")
+    public String deleteBoard(BoardDto boardDto) {
+        boardService.remove(boardDto.getBoardId());
+        return "redirect:/boards/list";
+    }
 
     @GetMapping("/boards/list")
     public String goToBoardList(Model m) {

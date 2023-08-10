@@ -203,14 +203,25 @@ const write = {
 
 const VIEW = {
     init : function () {
-        console.log("call VIEW init");
-        let writeBtn = document.querySelector("#writeBtn"); // 수정하기 버튼
-        let modifyBtn = document.querySelector("#modifyBtn"); // 변경 버튼
-        let listBtn = document.querySelector("#listBtn"); // 목록 버튼
+        let writeBtn = document.querySelector("#writeBtn");     // 수정하기 버튼
+        let modifyBtn = document.querySelector("#modifyBtn");   // 변경 버튼
+        let listBtn = document.querySelector("#listBtn");       // 목록 버튼
+        let deleteBtn = document.querySelector("#deleteBtn");   // 삭제 버튼
+        
 
         writeBtn.addEventListener("click", VIEW.toggleReadOnly);
         modifyBtn.addEventListener("click", VIEW.modifyBoard);
         listBtn.addEventListener("click", VIEW.goToList);
+        deleteBtn.addEventListener("click", VIEW.deleteBoard);
+    },
+    deleteBoard : function () {
+        if (confirm("삭제하시겠습니까?")) {
+            let formDeleteBoard = document.querySelector("#formDeleteBoard");
+            formDeleteBoard.submit();
+        }
+    },
+    deleteData : function () {
+
     },
     modifyBoard : function () {
         editor.save()
