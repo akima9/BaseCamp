@@ -3,7 +3,13 @@ package com.giyong.community.controller;
 import com.giyong.community.dto.BoardDto;
 import com.giyong.community.entity.Board;
 import com.giyong.community.service.BoardService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,9 +35,16 @@ public class BoardController {
     }
 
     @GetMapping("/boards/list")
-    public String goToBoardList(Model m) {
-        List<Board> boards = boardService.findAll();
-        m.addAttribute("boards", boards);
+    public String goToBoardList(Model m, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
+        Page<Board> boards = boardService.findAll(pageable);
+        System.out.println("boards = " + boards);
+        ArrayList<BoardDto> boardList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        for (Board board : boards) {
+            BoardDto boardDto = modelMapper.map(board, BoardDto.class);
+            boardList.add(boardDto);
+        }
+        m.addAttribute("boards", new PageImpl<>(boardList, pageable, boards.getTotalElements()));
         return "board/board1/list";
     }
 

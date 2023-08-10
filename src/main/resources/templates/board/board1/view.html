@@ -10,10 +10,10 @@
     </form>
 
     <div class="text-end">
-        <button type="button" th:if="${session.memberId == board.writer}" id="writeBtn" class="btn btn-primary">수정하기</button>
-        <button type="button" id="modifyBtn" class="btn btn-primary d-none">변경</button>
-        <button type="button" th:if="${session.memberId == board.writer}" id="deleteBtn" class="btn btn-outline-danger">삭제</button>
-        <button type="button" id="listBtn" class="btn btn-light">목록</button>
+        <button type="button" th:if="${session.memberId == board.writer}" id="writeBtn" class="btn btn-primary btn-sm">수정하기</button>
+        <button type="button" id="modifyBtn" class="btn btn-primary btn-sm d-none">변경</button>
+        <button type="button" th:if="${session.memberId == board.writer}" id="deleteBtn" class="btn btn-outline-danger btn-sm">삭제</button>
+        <button type="button" id="listBtn" class="btn btn-light btn-sm">목록</button>
     </div>
     <div id="editorjs"></div>
 

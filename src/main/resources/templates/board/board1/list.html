@@ -11,28 +11,52 @@
         <caption>Board1</caption>
         <thead class="table-light">
         <tr>
-            <th scope="col">번호</th>
-            <th scope="col">제목</th>
-            <th scope="col">조회수</th>
-            <th scope="col">댓글수</th>
-            <th scope="col">날짜</th>
+            <th scope="col" class="text-center">번호</th>
+            <th scope="col" class="text-center w-50">제목</th>
+            <th scope="col" class="text-center">조회수</th>
+            <th scope="col" class="text-center">댓글수</th>
+            <th scope="col" class="text-center">날짜</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="board : ${boards}">
-            <th scope="row">번호</th>
-            <td>
+            <th scope="row" class="text-center">번호</th>
+            <td class="text-start">
                 <a th:href="@{/boards(boardId=${board.boardId})}" th:text="${board.title}"></a>
             </td>
-            <td>조회수</td>
-            <td>댓글수</td>
-            <td th:text="${board.createdAt}">createdAt</td>
+            <td class="text-center">조회수</td>
+            <td class="text-center">댓글수</td>
+            <td class="text-center" th:text="${#dates.format(board.createdAt, 'yy/MM/dd')}">createdAt</td>
         </tr>
         </tbody>
     </table>
-    <div class="text-end">
-        <button type="button" class="btn btn-primary btn-sm write-btn">글쓰기</button>
-    </div>
+
+    <nav aria-label="Page navigation" th:if="${!boards.isEmpty()}">
+        <th:block th:with="
+            pageNumber = ${boards.pageable.pageNumber},
+            pageSize = ${boards.pageable.pageSize},
+            totalPages = ${boards.totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})
+        ">
+            <ul class="pagination justify-content-center">
+                <li th:classappend="${boards.first} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${boards.first} ? '#' : @{/boards/list(page=${pageNumber - 1})}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+                    <a th:text="${page}" class="page-link" th:href="@{/boards/list(page=${page - 1})}"></a>
+                </li>
+                <li th:classappend="${boards.last} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${boards.last} ? '#' : @{/boards/list(page=${pageNumber + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </th:block>
+    </nav>
 
     <script>
         list.init();
