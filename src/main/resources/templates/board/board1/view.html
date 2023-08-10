@@ -11,18 +11,12 @@
 
     <div class="text-end">
         <button type="button" th:if="${session.memberId == board.writer}" id="writeBtn" class="btn btn-primary">수정하기</button>
-        <button type="button" th:if="${session.memberId == board.writer}" id="deleteBtn" class="btn btn-outline-danger">삭제</button>
         <button type="button" id="modifyBtn" class="btn btn-primary d-none">변경</button>
+        <button type="button" th:if="${session.memberId == board.writer}" id="deleteBtn" class="btn btn-outline-danger">삭제</button>
         <button type="button" id="listBtn" class="btn btn-light">목록</button>
     </div>
     <div id="editorjs"></div>
 
-
-<!--    <h1>Board1 view page</h1>-->
-<!--    <p th:text="${board.title}">Title</p>-->
-<!--    <p th:text="${board.content}">Content</p>-->
-<!--    <a th:href="@{/boards/modify(boardId=${board.boardId})}">수정</a>-->
-<!--    <a th:href="@{/boards/delete(boardId=${board.boardId})}">삭제</a>-->
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script><!-- Delimiter -->

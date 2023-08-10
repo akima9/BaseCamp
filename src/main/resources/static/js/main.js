@@ -101,10 +101,22 @@ const list = {
 const write = {
     init : function () {
         let postBtn = document.querySelector("#postBtn");
+        let writeBtn = document.querySelector("#writeBtn");
+        let modifyBtn = document.querySelector("#modifyBtn");
+        let deleteBtn = document.querySelector("#deleteBtn");
         let listBtn = document.querySelector("#listBtn");
 
         postBtn.addEventListener("click", write.writeBoard);
+        writeBtn.addEventListener("click", write.toggleReadOnly);
+        modifyBtn.addEventListener("click", write.modifyBoard);
         listBtn.addEventListener("click", write.goToList);
+        deleteBtn.addEventListener("click", write.deleteBoard);
+    },
+    deleteBoard : function () {
+        if (confirm("삭제하시겠습니까?")) {
+            let formDeleteBoard = document.querySelector("#formDeleteBoard");
+            formDeleteBoard.submit();
+        }
     },
     goToList : function () {
         self.location = "/boards/list";
@@ -133,26 +145,31 @@ const write = {
         write.putData("/rest/boards", board).then((data) => {
             alert("수정 되었습니다.");
             write.toggleReadOnly(); //editor readOnly로 변경
-            let modifyBtn = document.querySelector("#modifyBtn");
-            writeBtn.classList.remove("d-none"); // 수정하기 버튼 노출
-            modifyBtn.classList.add("d-none"); // 변경 버튼 숨김
+            write.changeReadMode();
+            // write.toggleReadOnly(); //editor readOnly로 변경
+            // let modifyBtn = document.querySelector("#modifyBtn");
+            // writeBtn.classList.remove("d-none"); // 수정하기 버튼 노출
+            // modifyBtn.classList.add("d-none"); // 변경 버튼 숨김
         });
     },
     postBoard : function (board) {
         write.postData("/rest/boards", board).then((data) => {
             alert("등록 되었습니다.");
+            
             let boardId = document.querySelector("input[name=boardId]");
             boardId.value = data.boardId;
             write.toggleReadOnly(); //editor readOnly로 변경
             
-            let postBtn = document.querySelector("#postBtn");
-            let writeBtn = document.querySelector("#writeBtn");
-            let modifyBtn = document.querySelector("#modifyBtn");
+            // let postBtn = document.querySelector("#postBtn");
+            // let writeBtn = document.querySelector("#writeBtn");
+            // let modifyBtn = document.querySelector("#modifyBtn");
+            // let deleteBtn = document.querySelector("#deleteBtn");
 
             postBtn.classList.add("d-none"); // 등록 버튼 숨김
             writeBtn.classList.remove("d-none"); // 수정하기 버튼 노출
-            writeBtn.addEventListener("click", write.toggleReadOnly);
-            modifyBtn.addEventListener("click", write.modifyBoard);
+            deleteBtn.classList.remove("d-none"); // 삭제 버튼 노출
+            // writeBtn.addEventListener("click", write.toggleReadOnly);
+            // modifyBtn.addEventListener("click", write.modifyBoard);
         });
     },
     putData : async function (url = "", data = {}) {
@@ -192,12 +209,21 @@ const write = {
     toggleReadOnly : async function () {
         let readOnlyState = await editor.readOnly.toggle();
         if (readOnlyState == false) {
-            let writeBtn = document.querySelector("#writeBtn");
-            let modifyBtn = document.querySelector("#modifyBtn");
+            write.changeModifyMode();
+            // let writeBtn = document.querySelector("#writeBtn");
+            // let modifyBtn = document.querySelector("#modifyBtn");
 
-            writeBtn.classList.add("d-none");
-            modifyBtn.classList.remove("d-none");
+            // writeBtn.classList.add("d-none");
+            // modifyBtn.classList.remove("d-none");
         }
+    },
+    changeModifyMode : function () {
+        writeBtn.classList.add("d-none");
+        modifyBtn.classList.remove("d-none");
+    },
+    changeReadMode : function () {
+        writeBtn.classList.remove("d-none");
+        modifyBtn.classList.add("d-none");
     }
 }
 
@@ -208,20 +234,25 @@ const VIEW = {
         let listBtn = document.querySelector("#listBtn");       // 목록 버튼
         let deleteBtn = document.querySelector("#deleteBtn");   // 삭제 버튼
         
+        if (writeBtn !== null) {
+            writeBtn.addEventListener("click", VIEW.toggleReadOnly);
+        }
 
-        writeBtn.addEventListener("click", VIEW.toggleReadOnly);
-        modifyBtn.addEventListener("click", VIEW.modifyBoard);
+        if (modifyBtn !== null) {
+            modifyBtn.addEventListener("click", VIEW.modifyBoard);
+        }
+
         listBtn.addEventListener("click", VIEW.goToList);
-        deleteBtn.addEventListener("click", VIEW.deleteBoard);
+
+        if (deleteBtn !== null) {
+            deleteBtn.addEventListener("click", VIEW.deleteBoard);
+        }
     },
     deleteBoard : function () {
         if (confirm("삭제하시겠습니까?")) {
             let formDeleteBoard = document.querySelector("#formDeleteBoard");
             formDeleteBoard.submit();
         }
-    },
-    deleteData : function () {
-
     },
     modifyBoard : function () {
         editor.save()

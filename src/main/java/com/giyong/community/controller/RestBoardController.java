@@ -39,8 +39,8 @@ public class RestBoardController {
                 }
             }
         });
-
-        oldBoard.setContent(map.toString());
+        ObjectMapper mapper = new ObjectMapper();
+        oldBoard.setContent(mapper.writeValueAsString(map));
         ModelMapper modelMapper = new ModelMapper();
         BoardDto dto = modelMapper.map(oldBoard, BoardDto.class);
         Board board = boardService.modify(dto);
