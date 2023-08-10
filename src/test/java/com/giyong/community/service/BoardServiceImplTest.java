@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.servlet.http.HttpSession;
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class BoardServiceImplTest {
@@ -51,5 +54,23 @@ class BoardServiceImplTest {
         Board findBoard = boardService.findById(board.getBoardId());
 
         assertTrue(board.getTitle().equals(findBoard.getTitle()));
+    }
+
+    @Test
+    void upViewCount() {
+//        BoardDto boardDto = new BoardDto();
+//        boardDto.setTitle("TEST");
+//        boardDto.setContent("test");
+//        boardDto.setWriter("tester");
+//        boardDto.setViewCount(0);
+//        boardDto.setCreatedAt(new Date());
+//
+//        Board board = boardService.write(boardDto);
+//        boardDto.setBoardId(board.getBoardId());
+//        HttpSession session = new HttpSession();
+//        boardService.upViewCount(boardDto.getBoardId(),);
+//        Board findBoard = boardService.findById(boardDto.getBoardId());
+//
+//        assertTrue(findBoard.getViewCount() == 1);
     }
 }

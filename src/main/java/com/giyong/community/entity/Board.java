@@ -14,6 +14,7 @@ public class Board {
     private String title;
     private String content;
     private String writer;
+    private int viewCount;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Temporal(TemporalType.TIMESTAMP)

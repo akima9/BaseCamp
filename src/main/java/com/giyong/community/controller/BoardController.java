@@ -44,6 +44,7 @@ public class BoardController {
             BoardDto boardDto = modelMapper.map(board, BoardDto.class);
             boardList.add(boardDto);
         }
+        System.out.println("boardList = " + boardList);
         m.addAttribute("boards", new PageImpl<>(boardList, pageable, boards.getTotalElements()));
         return "board/board1/list";
     }
@@ -61,7 +62,6 @@ public class BoardController {
 
     @PostMapping("/boards")
     public String writeBoard(BoardDto dto, Model m) {
-        System.out.println("dto = " + dto);
         Board board = boardService.write(dto);
         m.addAttribute("board", board);
         return "board/board1/view";
@@ -88,7 +88,8 @@ public class BoardController {
     }
 
     @GetMapping("/boards")
-    public String getBoard(Integer boardId, Model m) {
+    public String getBoard(Integer boardId, HttpSession session, Model m) {
+        boardService.upViewCount(boardId, session);
         Board board = boardService.findById(boardId);
         m.addAttribute("board", board);
         return "board/board1/view";

@@ -5,6 +5,7 @@ import com.giyong.community.entity.Board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,4 +19,6 @@ public interface BoardService {
     Board findById(Integer boardId);
 
     void remove(Integer boardId);
+
+    void upViewCount(Integer boardId, HttpSession session);
 }

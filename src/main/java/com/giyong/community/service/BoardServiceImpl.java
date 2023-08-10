@@ -11,9 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -22,6 +21,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Board write(BoardDto boardDto) {
+        boardDto.setViewCount(0);
         boardDto.setCreatedAt(new Date());
         boardDto.setUpdatedAt(new Date());
 
@@ -59,5 +59,30 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void remove(Integer boardId) {
         boardRepository.deleteById(boardId);
+    }
+
+    @Override
+    public void upViewCount(Integer boardId, HttpSession session) {
+        boolean userHasViewed = hasUserViewedPost(boardId, session);
+        if (!userHasViewed) {
+            Board findBoard = boardRepository.findById(boardId).orElse(null);
+            ModelMapper modelMapper = new ModelMapper();
+            BoardDto dto = modelMapper.map(findBoard, BoardDto.class);
+            dto.setViewCount(dto.getViewCount() + 1);
+            Board upViewCountBoard = modelMapper.map(dto, Board.class);
+            boardRepository.save(upViewCountBoard);
+            // 사용자가 해당 게시글을 조회한 것으로 표시
+            Set<Integer> viewedMemberIds = (Set<Integer>) session.getAttribute("viewedMemberIds");
+            viewedMemberIds.add(boardId);
+        }
+    }
+
+    public boolean hasUserViewedPost(Integer boardId, HttpSession session) {
+        Set<Integer> viewedMemberIds = (Set<Integer>) session.getAttribute("viewedMemberIds");
+        if (viewedMemberIds == null) {
+            viewedMemberIds = new HashSet<>();
+            session.setAttribute("viewedMemberIds", viewedMemberIds);
+        }
+        return viewedMemberIds.contains(boardId);
     }
 }
