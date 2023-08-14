@@ -323,8 +323,15 @@ const COMMENT = {
         return formattedDate;
     },
     createCommentDom : function (element) {
+        let loginId = document.querySelector("input[name=loginId]").value;
+        
         let commentWrap = document.querySelector(".comment_wrap");
+        
         let commentDiv = document.createElement("div");
+        commentDiv.setAttribute("class", "comment");
+        commentDiv.setAttribute("data-commentId", element.commentId);
+        commentDiv.setAttribute("data-writer", element.writer);
+        
         let rowDiv = document.createElement("div");
         rowDiv.setAttribute("class", "row");
         
@@ -335,28 +342,36 @@ const COMMENT = {
         let buttonDiv = document.createElement("div");
         buttonDiv.setAttribute("class", "col-auto");
 
+        let editBtn = document.createElement("button");
+        editBtn.setAttribute("type", "button");
+        editBtn.setAttribute("class", "btn btn-light btn-sm editCommentBtn");
+        editBtn.innerHTML = "댓글 편집";
+
         let modifyBtn = document.createElement("button");
         modifyBtn.setAttribute("type", "button");
-        modifyBtn.setAttribute("id", "modifyCommentBtn");
-        modifyBtn.setAttribute("class", "btn btn-light btn-sm");
-        modifyBtn.innerHTML = "수정";
+        modifyBtn.setAttribute("class", "btn btn-primary btn-sm d-none modifyCommentBtn");
+        modifyBtn.innerHTML = "댓글 수정";
 
         let deleteBtn = document.createElement("button");
         deleteBtn.setAttribute("type", "button");
-        deleteBtn.setAttribute("id", "deleteCommentBtn");
-        deleteBtn.setAttribute("class", "btn btn-outline-danger btn-sm ms-1");
-        deleteBtn.innerHTML = "삭제";
+        deleteBtn.setAttribute("class", "btn btn-outline-danger btn-sm ms-1 deleteCommentBtn");
+        deleteBtn.innerHTML = "댓글 삭제";
 
         let contents = document.createElement("p");
+        contents.setAttribute("class", "contents");
         contents.innerHTML = element.content;
 
+        buttonDiv.appendChild(editBtn);
         buttonDiv.appendChild(modifyBtn);
         buttonDiv.appendChild(deleteBtn);
         rowDiv.appendChild(createdAtDiv);
-        rowDiv.appendChild(buttonDiv);
+        if (loginId == element.writer) rowDiv.appendChild(buttonDiv);
         commentDiv.appendChild(rowDiv);
         commentDiv.appendChild(contents);
         commentWrap.appendChild(commentDiv);
+
+        editBtn.addEventListener("click", this.editComment);
+        modifyBtn.addEventListener("click", this.modifyComment);
         // <div>
         //     <div class="row">
         //         <div class="col-auto me-auto fw-light fst-italic text-secondary">createdAt</div>
@@ -367,6 +382,60 @@ const COMMENT = {
         //     </div>
         //     <p>내용</p>
         // </div>
+    },
+    editComment : function (event) {
+        let editBtn = event.target;
+        let parentDiv = editBtn.closest(".comment");
+        let contentsDiv = parentDiv.querySelector(".contents");
+
+        let contentInput = document.createElement("input");
+        contentInput.setAttribute("type", "text");
+        contentInput.setAttribute("class", "form-control mt-1");
+        contentInput.setAttribute("name", "content");
+
+        let modifyBtn = parentDiv.querySelector(".modifyCommentBtn");
+        modifyBtn.classList.remove("d-none");
+        editBtn.classList.add("d-none");
+
+        contentInput.value = contentsDiv.textContent;
+        parentDiv.appendChild(contentInput);
+        contentsDiv.classList.add("d-none");
+    },
+    modifyComment : function (event) {
+        console.log("call modifyComment");
+        let modifyBtn = event.target;
+        let parentDiv = modifyBtn.closest(".comment");
+        let commentId = parentDiv.getAttribute("data-commentid");
+        let writer = parentDiv.getAttribute("data-writer");
+        let content = parentDiv.querySelector("input[name=content]").value;
+
+        let form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/comments");
+
+        let input = document.createElement("input");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", "_method");
+        input.value = "PUT";
+        form.appendChild(input);
+        
+        input.setAttribute("type", "text");
+        input.setAttribute("name", "commentId");
+        input.value = commentId;
+        form.appendChild(input);
+
+        input.setAttribute("type", "text");
+        input.setAttribute("name", "writer");
+        input.value = writer;
+        form.appendChild(input);
+
+        input.setAttribute("type", "text");
+        input.setAttribute("name", "content");
+        input.value = content;
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+        form.submit();
     },
     getComments : function () {
         this.getData("/comments").then((data) => {

@@ -31,9 +31,10 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Comment modify(CommentDto commentDto) {
+        System.out.println("CommentServiceImpl.modify");
         // commentId로 기존 comment select
         Comment comment = commentRepository.findById(commentDto.getCommentId()).orElse(null);
-
+        System.out.println("comment = " + comment);
         // comment -> findCommentDto
         CommentDto findCommentDto = modelMapper.map(comment, CommentDto.class);
 

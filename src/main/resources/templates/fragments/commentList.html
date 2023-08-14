@@ -1,5 +1,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="commentListFragment">
+  <input type="hidden" name="loginId" th:value="${session.memberId}">
   <div class="comment_wrap">
   </div>
   <script>
