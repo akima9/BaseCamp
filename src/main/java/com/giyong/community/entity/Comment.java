@@ -17,5 +17,5 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAd;
+    private Date updatedAt;
 }
