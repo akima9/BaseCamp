@@ -307,3 +307,90 @@ const VIEW = {
         modifyBtn.classList.add("d-none");
     }
 }
+
+const COMMENT = {
+    init : function () {
+        this.getComments();
+    },
+    timestampToDate : function (data) {
+        let date = new Date(data);
+
+        let year = date.getFullYear().toString().slice(-2); // 년도에서 뒤의 두 자리만 추출
+        let month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 2자리로 패딩
+        let day = String(date.getDate()).padStart(2, '0'); // 날짜를 2자리로 패딩
+
+        let formattedDate = `${year}/${month}/${day}`;
+        return formattedDate;
+    },
+    createCommentDom : function (element) {
+        let commentWrap = document.querySelector(".comment_wrap");
+        let commentDiv = document.createElement("div");
+        let rowDiv = document.createElement("div");
+        rowDiv.setAttribute("class", "row");
+        
+        let createdAtDiv = document.createElement("div");
+        createdAtDiv.setAttribute("class", "col-auto me-auto fw-light fst-italic text-secondary");
+        createdAtDiv.innerHTML = this.timestampToDate(element.createdAt);
+
+        let buttonDiv = document.createElement("div");
+        buttonDiv.setAttribute("class", "col-auto");
+
+        let modifyBtn = document.createElement("button");
+        modifyBtn.setAttribute("type", "button");
+        modifyBtn.setAttribute("id", "modifyCommentBtn");
+        modifyBtn.setAttribute("class", "btn btn-light btn-sm");
+        modifyBtn.innerHTML = "수정";
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.setAttribute("type", "button");
+        deleteBtn.setAttribute("id", "deleteCommentBtn");
+        deleteBtn.setAttribute("class", "btn btn-outline-danger btn-sm ms-1");
+        deleteBtn.innerHTML = "삭제";
+
+        let contents = document.createElement("p");
+        contents.innerHTML = element.content;
+
+        buttonDiv.appendChild(modifyBtn);
+        buttonDiv.appendChild(deleteBtn);
+        rowDiv.appendChild(createdAtDiv);
+        rowDiv.appendChild(buttonDiv);
+        commentDiv.appendChild(rowDiv);
+        commentDiv.appendChild(contents);
+        commentWrap.appendChild(commentDiv);
+        // <div>
+        //     <div class="row">
+        //         <div class="col-auto me-auto fw-light fst-italic text-secondary">createdAt</div>
+        //         <div class="col-auto">
+        //         <button type="button" id="modifyCommentBtn" class="btn btn-light btn-sm">수정</button>
+        //         <button type="button" id="deleteCommentBtn" class="btn btn-outline-danger btn-sm">삭제</button>
+        //         </div>
+        //     </div>
+        //     <p>내용</p>
+        // </div>
+    },
+    getComments : function () {
+        this.getData("/comments").then((data) => {
+            console.log(data);
+            data.content.forEach((element) => {
+                this.createCommentDom(element);
+            });
+        });
+    },
+    getData : async function (url = "", data = {}) {
+        // 옵션 기본 값은 *로 강조
+        const response = await fetch(url, {
+            method: "GET", // *GET, POST, PUT, DELETE 등
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            // body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+        });
+        return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
+    },
+}

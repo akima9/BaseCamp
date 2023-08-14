@@ -1,0 +1,12 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="commentWriteFragment">
+  <form method="post" th:action="@{/comments}">
+    <input type="hidden" th:value="${board.boardId}" name="boardId">
+    <input type="hidden" th:value="${session.memberId}" name="writer">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" name="content">
+      <button class="btn btn-outline-secondary" type="submit">댓글등록</button>
+    </div>
+  </form>
+</div>
+</html>

@@ -37,14 +37,12 @@ public class BoardController {
     @GetMapping("/boards/list")
     public String goToBoardList(Model m, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
         Page<Board> boards = boardService.findAll(pageable);
-        System.out.println("boards = " + boards);
         ArrayList<BoardDto> boardList = new ArrayList<>();
         ModelMapper modelMapper = new ModelMapper();
         for (Board board : boards) {
             BoardDto boardDto = modelMapper.map(board, BoardDto.class);
             boardList.add(boardDto);
         }
-        System.out.println("boardList = " + boardList);
         m.addAttribute("boards", new PageImpl<>(boardList, pageable, boards.getTotalElements()));
         return "board/board1/list";
     }
