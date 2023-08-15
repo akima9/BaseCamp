@@ -402,7 +402,7 @@ const COMMENT = {
         contentsDiv.classList.add("d-none");
     },
     modifyComment : function (event) {
-        console.log("call modifyComment");
+        let boardId = document.querySelector("input[name=boardId]").value;
         let modifyBtn = event.target;
         let parentDiv = modifyBtn.closest(".comment");
         let commentId = parentDiv.getAttribute("data-commentid");
@@ -410,29 +410,38 @@ const COMMENT = {
         let content = parentDiv.querySelector("input[name=content]").value;
 
         let form = document.createElement("form");
-        form.setAttribute("method", "post");
+        form.setAttribute("method", "POST");
         form.setAttribute("action", "/comments");
 
-        let input = document.createElement("input");
-        input.setAttribute("type", "hidden");
-        input.setAttribute("name", "_method");
-        input.value = "PUT";
-        form.appendChild(input);
+        let methodInput = document.createElement("input");
+        methodInput.setAttribute("type", "hidden");
+        methodInput.setAttribute("name", "_method");
+        methodInput.setAttribute("value", "PUT");
+        form.appendChild(methodInput);
         
-        input.setAttribute("type", "text");
-        input.setAttribute("name", "commentId");
-        input.value = commentId;
-        form.appendChild(input);
+        let commentIdInput = document.createElement("input");
+        commentIdInput.setAttribute("type", "hidden");
+        commentIdInput.setAttribute("name", "commentId");
+        commentIdInput.setAttribute("value", commentId);
+        form.appendChild(commentIdInput);
 
-        input.setAttribute("type", "text");
-        input.setAttribute("name", "writer");
-        input.value = writer;
-        form.appendChild(input);
+        let writerInput = document.createElement("input");
+        writerInput.setAttribute("type", "hidden");
+        writerInput.setAttribute("name", "writer");
+        writerInput.setAttribute("value", writer);
+        form.appendChild(writerInput);
 
-        input.setAttribute("type", "text");
-        input.setAttribute("name", "content");
-        input.value = content;
-        form.appendChild(input);
+        let contentInput = document.createElement("input");
+        contentInput.setAttribute("type", "hidden");
+        contentInput.setAttribute("name", "content");
+        contentInput.setAttribute("value", content);
+        form.appendChild(contentInput);
+
+        let boardIdInput = document.createElement("input");
+        boardIdInput.setAttribute("type", "hidden");
+        boardIdInput.setAttribute("name", "boardId");
+        boardIdInput.setAttribute("value", boardId);
+        form.appendChild(boardIdInput);
 
         document.body.appendChild(form);
         form.submit();

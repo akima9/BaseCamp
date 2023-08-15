@@ -12,8 +12,6 @@ public class Board {
     @GeneratedValue
     private int boardId;
     private String title;
-    @Lob
-    @Column(name = "content", columnDefinition="BLOB")
     private String content;
     private String writer;
     private int viewCount;
