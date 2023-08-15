@@ -372,6 +372,7 @@ const COMMENT = {
 
         editBtn.addEventListener("click", this.editComment);
         modifyBtn.addEventListener("click", this.modifyComment);
+        deleteBtn.addEventListener("click", this.deleteComment);
         // <div>
         //     <div class="row">
         //         <div class="col-auto me-auto fw-light fst-italic text-secondary">createdAt</div>
@@ -382,6 +383,39 @@ const COMMENT = {
         //     </div>
         //     <p>내용</p>
         // </div>
+    },
+    deleteComment : function (event) {
+        if (confirm("댓글을 삭제하시겠습니까?")) {
+            let deleteBtn = event.target;
+            let parentDiv = deleteBtn.closest(".comment");
+            let commentId = parentDiv.getAttribute("data-commentid");
+            let boardId = document.querySelector("input[name=boardId]").value;
+            
+            let form = document.createElement("form");
+            form.setAttribute("method", "POST");
+            form.setAttribute("action", "/comments");
+
+            let methodInput = document.createElement("input");
+            methodInput.setAttribute("type", "hidden");
+            methodInput.setAttribute("name", "_method");
+            methodInput.setAttribute("value", "DELETE");
+            form.appendChild(methodInput);
+            
+            let commentIdInput = document.createElement("input");
+            commentIdInput.setAttribute("type", "hidden");
+            commentIdInput.setAttribute("name", "commentId");
+            commentIdInput.setAttribute("value", commentId);
+            form.appendChild(commentIdInput);
+
+            let boardIdInput = document.createElement("input");
+            boardIdInput.setAttribute("type", "hidden");
+            boardIdInput.setAttribute("name", "boardId");
+            boardIdInput.setAttribute("value", boardId);
+            form.appendChild(boardIdInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
     },
     editComment : function (event) {
         let editBtn = event.target;
