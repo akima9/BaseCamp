@@ -41,6 +41,7 @@ public class BoardController {
         ModelMapper modelMapper = new ModelMapper();
         for (Board board : boards) {
             BoardDto boardDto = modelMapper.map(board, BoardDto.class);
+            boardDto.setCommentCount(boardService.findCommentCount(boardDto.getBoardId()));
             boardList.add(boardDto);
         }
         m.addAttribute("boards", new PageImpl<>(boardList, pageable, boards.getTotalElements()));

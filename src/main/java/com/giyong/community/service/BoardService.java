@@ -21,4 +21,6 @@ public interface BoardService {
     void remove(Integer boardId);
 
     void upViewCount(Integer boardId, HttpSession session);
+
+    Integer findCommentCount(Integer boardId);
 }

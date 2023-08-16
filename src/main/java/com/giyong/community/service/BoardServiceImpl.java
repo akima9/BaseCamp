@@ -85,4 +85,8 @@ public class BoardServiceImpl implements BoardService {
         }
         return viewedMemberIds.contains(boardId);
     }
+
+    public Integer findCommentCount(Integer boardId) {
+        return boardRepository.findCommentCountByBoardId(boardId);
+    }
 }

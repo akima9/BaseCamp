@@ -11,6 +11,7 @@ public class BoardDto {
     private String content;
     private String writer;
     private int viewCount;
+    private int CommentCount;
     private Date createdAt;
     private Date updatedAt;
 }
