@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService{
@@ -51,6 +52,11 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Page<Comment> findAll(Pageable pageable) {
         return (Page<Comment>) commentRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Comment> findAllByBoardId(Integer boardId) {
+        return commentRepository.findAllByBoardId(boardId);
     }
 
     @Override

@@ -481,9 +481,13 @@ const COMMENT = {
         form.submit();
     },
     getComments : function () {
-        this.getData("/comments").then((data) => {
-            console.log(data);
-            data.content.forEach((element) => {
+        let boardId = document.querySelector("input[name=boardId]").value;
+        let params = {
+            "boardId": boardId
+        };
+        let queryString = new URLSearchParams(params).toString();
+        this.getData("/comments?" + queryString).then((data) => {
+            data.forEach((element) => {
                 this.createCommentDom(element);
             });
         });

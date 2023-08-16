@@ -20,7 +20,7 @@
         </thead>
         <tbody>
         <tr th:each="board : ${boards}">
-            <th scope="row" class="text-center">번호</th>
+            <th scope="row" class="text-center" th:text="${boardStat.count}">번호</th>
             <td class="text-start">
                 <a th:href="@{/boards(boardId=${board.boardId})}" th:text="${board.title}"></a>
             </td>

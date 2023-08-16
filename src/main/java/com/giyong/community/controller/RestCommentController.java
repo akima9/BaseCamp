@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class RestCommentController {
     @Autowired
     private CommentService commentService;
-    private ModelMapper modelMapper = new ModelMapper();
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping("/comments")
-    public String getComments(Pageable pageable) throws JsonProcessingException {
-        Page<Comment> comments = commentService.findAll(pageable);
+    public String getComments(Integer boardId) throws JsonProcessingException {
+        List<Comment> comments = commentService.findAllByBoardId(boardId);
         return objectMapper.writeValueAsString(comments);
     }
 }
