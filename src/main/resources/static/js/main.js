@@ -289,8 +289,10 @@ const VIEW = {
         });
         return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
     },
-    goToList : function () {
-        self.location = "/boards/list";
+    goToList : function (event) {
+        let listBtn = event.target;
+        let page = listBtn.getAttribute("data-page");
+        self.location = "/boards/list?page=" + page;
     },
     toggleReadOnly : async function () {
         let readOnlyState = await editor.readOnly.toggle();

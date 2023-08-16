@@ -22,7 +22,7 @@
         <tr th:each="board : ${boards}">
             <th scope="row" class="text-center" th:text="${boardStat.count}">번호</th>
             <td class="text-start">
-                <a th:href="@{/boards(boardId=${board.boardId})}" th:text="${board.title}"></a>
+                <a th:href="@{/boards(boardId=${board.boardId},page=${boards.pageable.pageNumber})}" th:text="${board.title}"></a>
             </td>
             <td class="text-center" th:text="${board.viewCount}">조회수</td>
             <td class="text-center" th:text="${board.commentCount}">댓글수</td>
