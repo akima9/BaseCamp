@@ -39,10 +39,13 @@ public class BoardController {
         Page<Board> boards = boardService.findAll(pageable);
         ArrayList<BoardDto> boardList = new ArrayList<>();
         ModelMapper modelMapper = new ModelMapper();
+        int boardNumber = 1;
         for (Board board : boards) {
             BoardDto boardDto = modelMapper.map(board, BoardDto.class);
+            boardDto.setBoardNumber(boardNumber);
             boardDto.setCommentCount(boardService.findCommentCount(boardDto.getBoardId()));
             boardList.add(boardDto);
+            boardNumber++;
         }
         m.addAttribute("boards", new PageImpl<>(boardList, pageable, boards.getTotalElements()));
         return "board/board1/list";
