@@ -41,16 +41,16 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public Page<Admin> findAll(Pageable pageable) {
-        return null;
+        return (Page<Admin>) adminRepository.findAll(pageable);
     }
 
     @Override
     public Admin findById(String adminId) {
-        return null;
+        return adminRepository.findById(adminId).orElse(null);
     }
 
     @Override
     public void remove(String adminId) {
-
+        adminRepository.deleteById(adminId);
     }
 }

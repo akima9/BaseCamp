@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}">
+<div layout:fragment="content" class="container">
+  <input type="hidden" id="resCode" th:value="${resCode}">
+  <h1>Login.</h1>
+<!--  <form method="post" th:action="@{/admin/login}" onsubmit="return login.validateForm()">-->
+  <form method="post" th:action="@{/admin/login}">
+    <div class="mb-3">
+      <label for="inputAdminId" class="form-label">ID</label>
+      <input type="text" class="form-control" id="inputAdminId" name="adminId" value="admin">
+    </div>
+    <div class="mb-3">
+      <label for="inputAdminPw" class="form-label">Password</label>
+      <input type="password" class="form-control" id="inputAdminPw" name="adminPw" value="1">
+    </div>
+    <button type="submit" class="btn btn-primary w-100">로그인</button>
+<!--    <button type="button" class="btn btn-primary w-100 mt-1 btn-light sign-up-btn">회원가입</button>-->
+  </form>
+  <script>
+<!--    adminLogin.init();-->
+  </script>
+</div>
+</html>
