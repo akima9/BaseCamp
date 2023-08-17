@@ -314,6 +314,26 @@ const COMMENT = {
     init : function () {
         this.getComments();
     },
+    validateForm : function () {
+        let form = document.querySelector("#commentForm");
+        let inputWriter = form.querySelector("input[name=writer]");
+        let inputContent = form.querySelector("input[name=content]");
+
+        if (inputWriter.value.length === 0) {
+            if (confirm("로그인이 필요합니다. 로그인 하시겠습니까?")) {
+                self.location = "/login";
+                return false;
+            }
+            return false;
+        }
+
+        if (inputContent.value.length === 0) {
+            alert("댓글을 입력해주세요.");
+            return false;
+        }
+        
+        return true;
+    },
     timestampToDate : function (data) {
         let date = new Date(data);
 

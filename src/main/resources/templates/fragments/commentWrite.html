@@ -1,6 +1,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="commentWriteFragment">
-  <form method="post" th:action="@{/comments}">
+  <form id="commentForm" method="post" th:action="@{/comments}" onsubmit="return COMMENT.validateForm()">
     <input type="hidden" th:value="${board.boardId}" name="boardId">
     <input type="hidden" th:value="${session.memberId}" name="writer">
     <div class="input-group mb-3">
