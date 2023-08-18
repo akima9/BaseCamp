@@ -26,7 +26,6 @@ public class AdminController {
 
     @PostMapping("/login")
     public String login(AdminDto adminDto, RedirectAttributes redirect, HttpServletRequest request) {
-        System.out.println("adminDto = " + adminDto);
         Admin admin = adminService.findById(adminDto.getAdminId());
         if (admin == null) {
             redirect.addFlashAttribute("resCode", 404);

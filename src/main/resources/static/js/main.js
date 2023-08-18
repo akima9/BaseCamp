@@ -331,7 +331,7 @@ const COMMENT = {
             alert("댓글을 입력해주세요.");
             return false;
         }
-        
+
         return true;
     },
     timestampToDate : function (data) {
@@ -531,4 +531,197 @@ const COMMENT = {
         });
         return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
     },
+}
+
+const CategoryList = {
+    init : function () {
+        console.log("call CategoryList.init");
+        let categoryCreateBtn = document.querySelector(".create-btn");
+        categoryCreateBtn.addEventListener("click", this.goToCreatePage);
+    },
+    goToCreatePage : function () {
+        self.location = "/sub/categorys/create";
+    }
+}
+
+const MainCategoryList = {
+    init : function () {
+        console.log("call CategoryList.init");
+        let categoryCreateBtn = document.querySelector(".create-btn");
+        categoryCreateBtn.addEventListener("click", this.goToCreatePage);
+    },
+    goToCreatePage : function () {
+        self.location = "/main/categorys/create";
+    }
+}
+
+const CategoryCreate = {
+    init : function () {
+        console.log("call CategoryCreate.init");
+        let createMainCategoryBtn = document.querySelector("#createMainCategoryBtn");
+        createMainCategoryBtn.addEventListener("click", this.goToMainCategoryPage);
+    },
+    goToMainCategoryPage : function () {
+        self.location = "/main/categorys/create";
+    },
+    validateForm : function () {
+        console.log("call CategoryCreate.validateForm");
+        let createCategoryForm = document.querySelector("#createCategoryForm");
+        let categoryName = createCategoryForm.querySelector("#inputCategoryName").value;
+        
+        if (categoryName.length === 0) {
+            alert("카테고리명을 입력해주세요.");
+            return false;
+        }
+
+        return true;
+    }
+}
+
+const MainCategoryCreate = {
+    init : function () {
+        let dupCheckBtn = document.querySelector("#dupCheckBtn");
+        let inputMainCategoryName = document.querySelector("#inputMainCategoryName");
+
+        dupCheckBtn.addEventListener("click", this.checkMainCategoryName);
+        inputMainCategoryName.addEventListener("change", this.changeMainCategoryName);
+    },
+    changeMainCategoryName : function (event) {
+        let inputMainCategoryName = event.target;
+        inputMainCategoryName.setAttribute("data-check", false);
+    },
+    checkMainCategoryName : function () {
+        let mainCategoryName = document.querySelector("#inputMainCategoryName").value;
+        if (mainCategoryName.length === 0) {
+            alert("상위 카테고리명을 입력해주세요.");
+            return;
+        }
+        let mainCategory = {
+            "mainCategoryName": mainCategoryName
+        };
+        
+        MainCategoryCreate.postData("/rest/main/categorys/dupCheck", mainCategory).then((data) => {
+            if (data === null) {
+                // 상위 카테고리명 사용 가능
+                MainCategoryCreate.successedMainCategoryName();
+            } else {
+                // 상위 카테고리명 중복
+                MainCategoryCreate.failedMainCategoryName();
+            }
+        });
+    },
+    successedMainCategoryName : function () {
+        alert("사용 가능한 상위 카테고리명입니다.");
+        let inputMainCategoryName = document.querySelector("#inputMainCategoryName");
+        inputMainCategoryName.setAttribute("data-check", true);
+    },
+    failedMainCategoryName : function () {
+        alert("이미 사용중인 카테고리명입니다.");
+    },
+    validateForm : function () {
+        let inputMainCategoryName = document.querySelector("#inputMainCategoryName");
+
+        if (inputMainCategoryName.value.length === 0) {
+            alert("상위 카테고리명을 입력해주세요.");
+            inputMainCategoryName.focus();
+            return false;
+        }
+        console.log(inputMainCategoryName.getAttribute("data-check"));
+        if (inputMainCategoryName.getAttribute("data-check") != "true") {
+            alert("상위 카테고리명 중복확인을 해주세요.")
+            return false;
+        }
+        return true;
+    },
+    postData : async function (url = "", data = {}) {
+        // 옵션 기본 값은 *로 강조
+        const response = await fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE 등
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+        });
+        return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
+    }
+}
+
+const MainCategoryModify = {
+    init : function () {
+        let dupCheckBtn = document.querySelector("#dupCheckBtn");
+        let inputMainCategoryName = document.querySelector("#inputMainCategoryName");
+
+        dupCheckBtn.addEventListener("click", this.checkMainCategoryName);
+        inputMainCategoryName.addEventListener("change", this.changeMainCategoryName);
+    },
+    changeMainCategoryName : function (event) {
+        let inputMainCategoryName = event.target;
+        inputMainCategoryName.setAttribute("data-check", false);
+    },
+    checkMainCategoryName : function () {
+        let mainCategoryName = document.querySelector("#inputMainCategoryName").value;
+        if (mainCategoryName.length === 0) {
+            alert("상위 카테고리명을 입력해주세요.");
+            return;
+        }
+        let mainCategory = {
+            "mainCategoryName": mainCategoryName
+        };
+        
+        MainCategoryCreate.postData("/rest/main/categorys/dupCheck", mainCategory).then((data) => {
+            if (data === null) {
+                // 상위 카테고리명 사용 가능
+                MainCategoryCreate.successedMainCategoryName();
+            } else {
+                // 상위 카테고리명 중복
+                MainCategoryCreate.failedMainCategoryName();
+            }
+        });
+    },
+    successedMainCategoryName : function () {
+        alert("사용 가능한 상위 카테고리명입니다.");
+        let inputMainCategoryName = document.querySelector("#inputMainCategoryName");
+        inputMainCategoryName.setAttribute("data-check", true);
+    },
+    failedMainCategoryName : function () {
+        alert("이미 사용중인 카테고리명입니다.");
+    },
+    validateForm : function () {
+        let inputMainCategoryName = document.querySelector("#inputMainCategoryName");
+
+        if (inputMainCategoryName.value.length === 0) {
+            alert("상위 카테고리명을 입력해주세요.");
+            inputMainCategoryName.focus();
+            return false;
+        }
+        console.log(inputMainCategoryName.getAttribute("data-check"));
+        if (inputMainCategoryName.getAttribute("data-check") != "true") {
+            alert("상위 카테고리명 중복확인을 해주세요.")
+            return false;
+        }
+        return true;
+    },
+    postData : async function (url = "", data = {}) {
+        // 옵션 기본 값은 *로 강조
+        const response = await fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE 등
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+        });
+        return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
+    }
 }

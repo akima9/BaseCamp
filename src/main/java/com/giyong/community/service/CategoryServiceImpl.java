@@ -24,6 +24,12 @@ public class CategoryServiceImpl implements CategoryService{
 
         Category category = modelMapper.map(categoryDto, Category.class);
 
+        if (categoryDto.getParentCategoryId() == 0) {
+            Category newCategory = categoryRepository.save(category);
+            newCategory.setParentCategoryId(newCategory.getCategoryId());
+            return categoryRepository.save(newCategory);
+        }
+
         return categoryRepository.save(category);
     }
 
