@@ -11,10 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -58,6 +55,13 @@ public class MainCategoryController {
     public String modify(MainCategoryDto mainCategoryDto) {
         System.out.println("MainCategoryController.modify");
         mainCategoryService.modify(mainCategoryDto);
+        return "redirect:/main/categorys/list";
+    }
+
+    @DeleteMapping("/categorys")
+    public String delete(MainCategoryDto mainCategoryDto) {
+        System.out.println("MainCategoryController.delete");
+        mainCategoryService.remove(mainCategoryDto.getMainCategoryId());
         return "redirect:/main/categorys/list";
     }
 }

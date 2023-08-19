@@ -656,9 +656,23 @@ const MainCategoryModify = {
     init : function () {
         let dupCheckBtn = document.querySelector("#dupCheckBtn");
         let inputMainCategoryName = document.querySelector("#inputMainCategoryName");
+        let deleteMainCategoryBtn = document.querySelector("#deleteMainCategoryBtn");
 
         dupCheckBtn.addEventListener("click", this.checkMainCategoryName);
+        deleteMainCategoryBtn.addEventListener("click", this.deleteMainCategory);
         inputMainCategoryName.addEventListener("change", this.changeMainCategoryName);
+    },
+    deleteMainCategory : function () {
+        if (confirm("삭제 하시겠습니까?")) {
+            let createCategoryForm = document.querySelector("#createCategoryForm");
+            // _method를 DELETE로 변경
+            let inputMethod = createCategoryForm.querySelector("input[name=_method]");
+            inputMethod.setAttribute("value", "DELETE");
+            // onsubmit 제거
+            createCategoryForm.removeAttribute("onsubmit");
+            // submit
+            createCategoryForm.submit();
+        }
     },
     changeMainCategoryName : function (event) {
         let inputMainCategoryName = event.target;

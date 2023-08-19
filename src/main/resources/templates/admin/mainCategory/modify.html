@@ -15,10 +15,17 @@
         <input type="text" class="form-control" id="inputMainCategoryName" name="mainCategoryName" th:value="${mainCategory.mainCategoryName}">
       </div>
       <div class="col-sm-3">
-        <button type="button" id="dupCheckBtn" class="btn btn-primary w-100">중복확인</button>
+        <button type="button" id="dupCheckBtn" class="btn btn-outline-primary w-100">중복확인</button>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary w-100">수정</button>
+    <div class="mb-3 row">
+      <div class="col-sm-6">
+        <button type="submit" class="btn btn-primary w-100">수정</button>
+      </div>
+      <div class="col-sm-6">
+        <button type="button" id="deleteMainCategoryBtn" class="btn btn-outline-danger w-100">삭제</button>
+      </div>
+    </div>
   </form>
   <script>
     MainCategoryModify.init();
