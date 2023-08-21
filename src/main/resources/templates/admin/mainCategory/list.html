@@ -21,7 +21,7 @@
     <tr th:each="mainCategory : ${mainCategories}">
       <th scope="row" class="text-center" th:text="${mainCategories.pageable.pageNumber * mainCategories.pageable.pageSize + mainCategoryStat.count}">번호</th>
       <td class="text-start">
-        <a th:href="@{/main/categorys(mainCategoryId=${mainCategory.mainCategoryId},page=${mainCategories.pageable.pageNumber})}" th:text="${mainCategory.mainCategoryName}"></a>
+        <a th:href="@{/admin/main/categorys(mainCategoryId=${mainCategory.mainCategoryId},page=${mainCategories.pageable.pageNumber})}" th:text="${mainCategory.mainCategoryName}"></a>
       </td>
       <td class="text-center" th:text="${mainCategory.creater}">생성자</td>
       <td class="text-center" th:text="${#dates.format(mainCategory.createdAt, 'yy/MM/dd')}">createdAt</td>
@@ -40,15 +40,15 @@
           ">
         <ul class="pagination justify-content-center">
           <li th:classappend="${mainCategories.first} ? 'disabled'" class="page-item">
-            <a class="page-link" th:href="${mainCategories.first} ? '#' : @{/main/categorys/list(page=${pageNumber - 1})}">
+            <a class="page-link" th:href="${mainCategories.first} ? '#' : @{/admin/main/categorys/list(page=${pageNumber - 1})}">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
           <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
-            <a th:text="${page}" class="page-link" th:href="@{/main/categorys/list(page=${page - 1})}"></a>
+            <a th:text="${page}" class="page-link" th:href="@{/admin/main/categorys/list(page=${page - 1})}"></a>
           </li>
           <li th:classappend="${mainCategories.last} ? 'disabled'" class="page-item">
-            <a class="page-link" th:href="${mainCategories.last} ? '#' : @{/main/categorys/list(page=${pageNumber + 1})}" aria-label="Next">
+            <a class="page-link" th:href="${mainCategories.last} ? '#' : @{/admin/main/categorys/list(page=${pageNumber + 1})}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>

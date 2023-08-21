@@ -11,7 +11,8 @@ public class SubCategory {
     @Id
     @GeneratedValue
     private int subCategoryId;
-    private int mainCategoryId;
+    @ManyToOne
+    private MainCategory mainCategory;
     private int subCategoryName;
     private String creater;
     @Temporal(TemporalType.TIMESTAMP)

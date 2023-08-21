@@ -551,7 +551,7 @@ const MainCategoryList = {
         categoryCreateBtn.addEventListener("click", this.goToCreatePage);
     },
     goToCreatePage : function () {
-        self.location = "/main/categorys/create";
+        self.location = "/admin/main/categorys/create";
     }
 }
 

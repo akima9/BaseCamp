@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}">
+<div layout:fragment="content" class="container">
+  <div class="text-end">
+    <button type="button" class="btn btn-primary btn-sm create-btn">하위 카테고리 생성</button>
+  </div>
+  <table class="table table-hover caption-top">
+    <caption>하위 카테고리 목록</caption>
+    <thead class="table-light">
+    <tr>
+      <th scope="col" class="text-center">번호</th>
+      <th scope="col" class="text-center">상위 카테고리명</th>
+      <th scope="col" class="text-center">하위 카테고리명</th>
+      <th scope="col" class="text-center">생성자</th>
+      <th scope="col" class="text-center">생성일자</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="subCategory : ${subCategories}">
+      <th scope="row" class="text-center" th:text="${subCategories.pageable.pageNumber * subCategories.pageable.pageSize + subCategoryStat.count}">번호</th>
+      <td class="text-start">
+        상위 카테고리명
+<!--        <a th:href="@{/main/categorys(mainCategoryId=${mainCategory.mainCategoryId},page=${mainCategories.pageable.pageNumber})}" th:text="${mainCategory.mainCategoryName}"></a>-->
+      </td>
+      <td class="text-start">
+        <a th:href="@{/sub/categorys(subCategoryId=${subCategory.parentCategoryId},page=${subCategories.pageable.pageNumber})}" th:text="${subCategory.categoryName}"></a>
+      </td>
+      <td class="text-center" th:text="${subCategory.creater}">생성자</td>
+      <td class="text-center" th:text="${#dates.format(subCategory.createdAt, 'yy/MM/dd')}">createdAt</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="Page navigation" th:if="${!subCategories.isEmpty()}">
+    <th:block th:with="
+            pageNumber = ${subCategories.pageable.pageNumber},
+            pageSize = ${subCategories.pageable.pageSize},
+            totalPages = ${subCategories.totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})
+        ">
+      <ul class="pagination justify-content-center">
+        <li th:classappend="${subCategories.first} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="${subCategories.first} ? '#' : @{/sub/categorys/list(page=${pageNumber - 1})}">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+          <a th:text="${page}" class="page-link" th:href="@{/sub/categorys/list(page=${page - 1})}"></a>
+        </li>
+        <li th:classappend="${subCategories.last} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="${subCategories.last} ? '#' : @{/sub/categorys/list(page=${pageNumber + 1})}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </th:block>
+  </nav>
+
+  <script>
+    CategoryList.init();
+  </script>
+</div>
+</html>

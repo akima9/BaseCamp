@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @Controller
-@RequestMapping("/main")
+@RequestMapping("/admin/main")
 public class MainCategoryController {
     @Autowired
     private MainCategoryService mainCategoryService;
@@ -33,7 +33,7 @@ public class MainCategoryController {
         System.out.println("mainCategoryDto = " + mainCategoryDto);
         MainCategory mainCategory = mainCategoryService.save(mainCategoryDto);
         System.out.println("mainCategory = " + mainCategory);
-        return "redirect:/main/categorys/list";
+        return "redirect:/admin/main/categorys/list";
     }
 
     @GetMapping("/categorys/list")
@@ -55,13 +55,13 @@ public class MainCategoryController {
     public String modify(MainCategoryDto mainCategoryDto) {
         System.out.println("MainCategoryController.modify");
         mainCategoryService.modify(mainCategoryDto);
-        return "redirect:/main/categorys/list";
+        return "redirect:/admin/main/categorys/list";
     }
 
     @DeleteMapping("/categorys")
     public String delete(MainCategoryDto mainCategoryDto) {
         System.out.println("MainCategoryController.delete");
         mainCategoryService.remove(mainCategoryDto.getMainCategoryId());
-        return "redirect:/main/categorys/list";
+        return "redirect:/admin/main/categorys/list";
     }
 }
