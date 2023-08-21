@@ -1,5 +1,6 @@
 package com.giyong.community.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ public class SubCategory {
     @Id
     @GeneratedValue
     private int subCategoryId;
+    @JsonBackReference
     @ManyToOne
     private MainCategory mainCategory;
     private String subCategoryName;

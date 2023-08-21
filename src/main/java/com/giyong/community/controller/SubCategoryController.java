@@ -48,4 +48,14 @@ public class SubCategoryController {
         System.out.println("subCategory = " + subCategory);
         return "redirect:/admin/sub/categorys/list";
     }
+
+    @GetMapping("/categorys")
+    public String categories(Integer subCategoryId, Integer page, Pageable pageable, Model m) {
+        SubCategory subCategory = subCategoryService.findById(subCategoryId);
+        Page<MainCategory> mainCategories = mainCategoryService.findAll(pageable);
+        m.addAttribute("subCategory", subCategory);
+        m.addAttribute("page", page);
+        m.addAttribute("mainCategories", mainCategories);
+        return "admin/subCategory/modify";
+    }
 }

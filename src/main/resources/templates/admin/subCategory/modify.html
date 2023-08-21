@@ -4,13 +4,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/admin_layout}">
 <div layout:fragment="content" class="container">
-  <h1 class="text-center mb-5">하위 카테고리 생성</h1>
-  <form id="createSubCategoryForm" method="post" th:action="@{/admin/sub/categorys}" onsubmit="return SubCategoryCreate.validateForm()">
+  <h1 class="text-center mb-5">하위 카테고리 수정</h1>
+  <form id="createSubCategoryForm" method="post" th:action="@{/admin/sub/categorys}" onsubmit="return SubCategoryModify.validateForm()">
+    <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="creater" th:value="${session.adminId}">
+    <input type="hidden" name="subCategoryId" th:value="${subCategory.subCategoryId}">
     <div class="mb-3 row">
       <label for="inputSubCategoryName" class="col-sm-2 col-form-label">하위 카테고리명</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputSubCategoryName" name="subCategoryName">
+        <input type="text" class="form-control" id="inputSubCategoryName" name="subCategoryName" th:value="${subCategory.subCategoryName}">
       </div>
       <div class="col-sm-3">
         <button type="button" id="dupCheckBtn" class="btn btn-primary w-100">중복확인</button>
@@ -21,7 +23,7 @@
       <div class="col-sm-7">
         <select id="selectMainCategoryId" class="form-select" name="mainCategoryId">
           <th:block th:each="mainCategory : ${mainCategories}">
-            <option th:value="${mainCategory.mainCategoryId}" th:text="${mainCategory.mainCategoryName}"></option>
+            <option th:value="${mainCategory.mainCategoryId}" th:text="${mainCategory.mainCategoryName}" th:selected="${subCategory.mainCategory.mainCategoryId == mainCategory.mainCategoryId}"></option>
           </th:block>
         </select>
       </div>
@@ -29,10 +31,18 @@
         <button type="button" id="createMainCategoryBtn" class="btn btn-primary w-100">상위 카테고리 추가</button>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary w-100">생성</button>
+    <div class="mb-3 row">
+      <div class="col-sm-6">
+        <button type="submit" class="btn btn-primary w-100">수정</button>
+      </div>
+      <div class="col-sm-6">
+        <button type="button" id="deleteSubCategoryBtn" class="btn btn-outline-danger w-100">삭제</button>
+      </div>
+    </div>
+
   </form>
   <script>
-    SubCategoryCreate.init();
+    SubCategoryModify.init();
   </script>
 </div>
 </html>

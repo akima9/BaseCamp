@@ -557,17 +557,71 @@ const MainCategoryList = {
 const SubCategoryCreate = {
     init : function () {
         let createMainCategoryBtn = document.querySelector("#createMainCategoryBtn");
+        let dupCheckBtn = document.querySelector("#dupCheckBtn");
+
         createMainCategoryBtn.addEventListener("click", this.goToMainCategoryPage);
+        dupCheckBtn.addEventListener("click", this.checkSubCategoryName);
+    },
+    checkSubCategoryName : function () {
+        let subCategoryName = document.querySelector("#inputSubCategoryName").value;
+        if (subCategoryName.length === 0) {
+            alert("하위 카테고리명을 입력해주세요.");
+            return;
+        }
+        let subCategory = {
+            "subCategoryName": subCategoryName
+        };
+        
+        SubCategoryCreate.postData("/rest/sub/categorys/dupCheck", subCategory).then((data) => {
+            if (data === null) {
+                // 하위 카테고리명 사용 가능
+                SubCategoryCreate.successedSubCategoryName();
+            } else {
+                // 하위 카테고리명 중복
+                SubCategoryCreate.failedSubCategoryName();
+            }
+        });
+    },
+    successedSubCategoryName : function () {
+        alert("사용 가능한 하위 카테고리명입니다.");
+        let inputSubCategoryName = document.querySelector("#inputSubCategoryName");
+        inputSubCategoryName.setAttribute("data-check", true);
+    },
+    failedSubCategoryName : function () {
+        alert("이미 사용중인 카테고리명입니다.");
+    },
+    postData : async function (url = "", data = {}) {
+        // 옵션 기본 값은 *로 강조
+        const response = await fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE 등
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+        });
+        return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
     },
     goToMainCategoryPage : function () {
         self.location = "/admin/main/categorys/create";
     },
     validateForm : function () {
         let createSubCategoryForm = document.querySelector("#createSubCategoryForm");
-        let subCategoryName = createSubCategoryForm.querySelector("#inputSubCategoryName").value;
+        let inputSubCategoryName = createSubCategoryForm.querySelector("#inputSubCategoryName");
         
-        if (subCategoryName.length === 0) {
-            alert("카테고리명을 입력해주세요.");
+        if (inputSubCategoryName.value.length === 0) {
+            alert("하위 카테고리명을 입력해주세요.");
+            inputSubCategoryName.focus();
+            return false;
+        }
+
+        if (inputSubCategoryName.getAttribute("data-check") != "true") {
+            alert("하위 카테고리명 중복확인을 해주세요.")
             return false;
         }
 

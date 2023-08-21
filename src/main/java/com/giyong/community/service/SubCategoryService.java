@@ -14,5 +14,7 @@ public interface SubCategoryService {
 
     SubCategory findById(Integer subCategoryId);
 
+    SubCategory findByName(String subCategoryName);
+
     void remove(Integer subCategoryId);
 }
