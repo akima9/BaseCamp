@@ -13,7 +13,7 @@ public class SubCategory {
     private int subCategoryId;
     @ManyToOne
     private MainCategory mainCategory;
-    private int subCategoryName;
+    private String subCategoryName;
     private String creater;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

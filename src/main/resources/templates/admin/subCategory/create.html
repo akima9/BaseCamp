@@ -4,23 +4,22 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/admin_layout}">
 <div layout:fragment="content" class="container">
-<!--  <input type="hidden" id="resCode" th:value="${resCode}">-->
-  <h1 class="text-center mb-5">카테고리 생성</h1>
-  <form id="createCategoryForm" method="post" th:action="@{/categorys}" onsubmit="return CategoryCreate.validateForm()">
+  <h1 class="text-center mb-5">하위 카테고리 생성</h1>
+  <form id="createSubCategoryForm" method="post" th:action="@{/admin/sub/categorys}" onsubmit="return SubCategoryCreate.validateForm()">
+    <input type="hidden" name="creater" th:value="${session.adminId}">
     <div class="mb-3 row">
-      <label for="inputCategoryName" class="col-sm-2 col-form-label">카테고리명</label>
+      <label for="inputSubCategoryName" class="col-sm-2 col-form-label">하위 카테고리명</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputCategoryName" name="categoryName">
+        <input type="text" class="form-control" id="inputSubCategoryName" name="subCategoryName">
       </div>
     </div>
     <div class="mb-3 row">
-      <label for="selectParentCategoryId" class="col-sm-2 col-form-label">상위 카테고리</label>
+      <label for="selectMainCategoryId" class="col-sm-2 col-form-label">상위 카테고리</label>
       <div class="col-sm-7">
-        <select id="selectParentCategoryId" class="form-select" aria-label="Default select example">
-          <option value="0" selected>선택 안함</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+        <select id="selectMainCategoryId" class="form-select" name="mainCategoryId">
+          <th:block th:each="mainCategory : ${mainCategories}">
+            <option th:value="${mainCategory.mainCategoryId}" th:text="${mainCategory.mainCategoryName}"></option>
+          </th:block>
         </select>
       </div>
       <div class="col-sm-3">
@@ -30,94 +29,7 @@
     <button type="submit" class="btn btn-primary w-100">생성</button>
   </form>
   <script>
-    CategoryCreate.init();
+    SubCategoryCreate.init();
   </script>
-
-<!--  <form method="post" th:action="@{/boards}" id="formDeleteBoard">-->
-<!--    <input type="hidden" name="_method" value="DELETE">-->
-<!--    <input type="hidden" name="boardId">-->
-<!--  </form>-->
-<!--  <div id="editorjs"></div>-->
-<!--  <div class="text-center">-->
-<!--    <button type="button" id="postBtn" class="btn btn-primary">등록</button>-->
-<!--    <button type="button" id="writeBtn" class="btn btn-primary d-none">수정하기</button>-->
-<!--    <button type="button" id="modifyBtn" class="btn btn-primary d-none">변경</button>-->
-<!--    <button type="button" id="deleteBtn" class="btn btn-outline-danger d-none">삭제</button>-->
-<!--    <button type="button" id="listBtn" class="btn btn-light">목록</button>-->
-<!--  </div>-->
-
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>&lt;!&ndash; Header &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script>&lt;!&ndash; Image &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script>&lt;!&ndash; Delimiter &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>&lt;!&ndash; List &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>&lt;!&ndash; Checklist &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script>&lt;!&ndash; Quote &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/code@latest"></script>&lt;!&ndash; Code &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>&lt;!&ndash; Embed &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/table@latest"></script>&lt;!&ndash; Table &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script>&lt;!&ndash; Link &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/warning@latest"></script>&lt;!&ndash; Warning &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script>&lt;!&ndash; Marker &ndash;&gt;-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script>&lt;!&ndash; Inline Code &ndash;&gt;-->
-<!--  <script>-->
-<!--    const editor = new EditorJS({-->
-<!--        readOnly: false,-->
-<!--        holder: 'editorjs',-->
-<!--        placeholder: 'Let`s write an awesome story!',-->
-<!--        autofocus: true,-->
-<!--        tools: {-->
-<!--            header: {-->
-<!--                class: Header,-->
-<!--                inlineToolbar: ['marker', 'link'],-->
-<!--                config: {-->
-<!--                    placeholder: 'Header'-->
-<!--                },-->
-<!--                shortcut: 'CMD+SHIFT+H'-->
-<!--            },-->
-<!--            image: SimpleImage,-->
-<!--            list: {-->
-<!--                class: List,-->
-<!--                inlineToolbar: true,-->
-<!--                shortcut: 'CMD+SHIFT+L'-->
-<!--            },-->
-<!--            checklist: {-->
-<!--                class: Checklist,-->
-<!--                inlineToolbar: true,-->
-<!--            },-->
-<!--            quote: {-->
-<!--                class: Quote,-->
-<!--                inlineToolbar: true,-->
-<!--                config: {-->
-<!--                    quotePlaceholder: 'Enter a quote',-->
-<!--                    captionPlaceholder: 'Quote\'s author',-->
-<!--                },-->
-<!--                shortcut: 'CMD+SHIFT+O'-->
-<!--            },-->
-<!--            warning: Warning,-->
-<!--            marker: {-->
-<!--                class:  Marker,-->
-<!--                shortcut: 'CMD+SHIFT+M'-->
-<!--            },-->
-<!--            code: {-->
-<!--                class:  CodeTool,-->
-<!--                shortcut: 'CMD+SHIFT+C'-->
-<!--            },-->
-<!--            delimiter: Delimiter,-->
-<!--            inlineCode: {-->
-<!--                class: InlineCode,-->
-<!--                shortcut: 'CMD+SHIFT+C'-->
-<!--            },-->
-<!--            linkTool: LinkTool,-->
-<!--            embed: Embed,-->
-<!--            table: {-->
-<!--                class: Table,-->
-<!--                inlineToolbar: true,-->
-<!--                shortcut: 'CMD+ALT+T'-->
-<!--            },-->
-<!--        },-->
-<!--        data: {}-->
-<!--    });-->
-<!--    write.init();-->
-<!--  </script>-->
 </div>
 </html>

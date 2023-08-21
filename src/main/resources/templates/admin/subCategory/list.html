@@ -22,11 +22,10 @@
     <tr th:each="subCategory : ${subCategories}">
       <th scope="row" class="text-center" th:text="${subCategories.pageable.pageNumber * subCategories.pageable.pageSize + subCategoryStat.count}">번호</th>
       <td class="text-start">
-        상위 카테고리명
-<!--        <a th:href="@{/main/categorys(mainCategoryId=${mainCategory.mainCategoryId},page=${mainCategories.pageable.pageNumber})}" th:text="${mainCategory.mainCategoryName}"></a>-->
+        <a th:href="@{/admin/main/categorys(mainCategoryId=${subCategory.mainCategory.mainCategoryId})}" th:text="${subCategory.mainCategory.mainCategoryName}"></a>
       </td>
       <td class="text-start">
-        <a th:href="@{/sub/categorys(subCategoryId=${subCategory.parentCategoryId},page=${subCategories.pageable.pageNumber})}" th:text="${subCategory.categoryName}"></a>
+        <a th:href="@{/admin/sub/categorys(subCategoryId=${subCategory.subCategoryId},page=${subCategories.pageable.pageNumber})}" th:text="${subCategory.subCategoryName}"></a>
       </td>
       <td class="text-center" th:text="${subCategory.creater}">생성자</td>
       <td class="text-center" th:text="${#dates.format(subCategory.createdAt, 'yy/MM/dd')}">createdAt</td>
@@ -62,7 +61,7 @@
   </nav>
 
   <script>
-    CategoryList.init();
+    SubCategoryList.init();
   </script>
 </div>
 </html>

@@ -8,7 +8,7 @@ import java.util.Date;
 public class SubCategoryDto {
     private int subCategoryId;
     private int mainCategoryId;
-    private int subCategoryName;
+    private String subCategoryName;
     private String creater;
     private Date createdAt;
     private Date updatedAt;

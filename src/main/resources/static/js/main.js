@@ -533,14 +533,13 @@ const COMMENT = {
     },
 }
 
-const CategoryList = {
+const SubCategoryList = {
     init : function () {
-        console.log("call CategoryList.init");
         let categoryCreateBtn = document.querySelector(".create-btn");
         categoryCreateBtn.addEventListener("click", this.goToCreatePage);
     },
     goToCreatePage : function () {
-        self.location = "/sub/categorys/create";
+        self.location = "/admin/sub/categorys/create";
     }
 }
 
@@ -555,21 +554,19 @@ const MainCategoryList = {
     }
 }
 
-const CategoryCreate = {
+const SubCategoryCreate = {
     init : function () {
-        console.log("call CategoryCreate.init");
         let createMainCategoryBtn = document.querySelector("#createMainCategoryBtn");
         createMainCategoryBtn.addEventListener("click", this.goToMainCategoryPage);
     },
     goToMainCategoryPage : function () {
-        self.location = "/main/categorys/create";
+        self.location = "/admin/main/categorys/create";
     },
     validateForm : function () {
-        console.log("call CategoryCreate.validateForm");
-        let createCategoryForm = document.querySelector("#createCategoryForm");
-        let categoryName = createCategoryForm.querySelector("#inputCategoryName").value;
+        let createSubCategoryForm = document.querySelector("#createSubCategoryForm");
+        let subCategoryName = createSubCategoryForm.querySelector("#inputSubCategoryName").value;
         
-        if (categoryName.length === 0) {
+        if (subCategoryName.length === 0) {
             alert("카테고리명을 입력해주세요.");
             return false;
         }
