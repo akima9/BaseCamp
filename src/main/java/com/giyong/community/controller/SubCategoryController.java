@@ -15,9 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin/sub")
@@ -57,5 +55,19 @@ public class SubCategoryController {
         m.addAttribute("page", page);
         m.addAttribute("mainCategories", mainCategories);
         return "admin/subCategory/modify";
+    }
+
+    @PutMapping("/categorys")
+    public String subCategoryModify(SubCategoryDto subCategoryDto) {
+        System.out.println("subCategoryDto = " + subCategoryDto);
+        subCategoryService.modify(subCategoryDto);
+        return "redirect:/admin/sub/categorys/list";
+    }
+
+    @DeleteMapping("/categorys")
+    public String subCategoryDelete(SubCategoryDto subCategoryDto) {
+        System.out.println("subCategoryDto = " + subCategoryDto);
+        subCategoryService.remove(subCategoryDto.getSubCategoryId());
+        return "redirect:/admin/sub/categorys/list";
     }
 }

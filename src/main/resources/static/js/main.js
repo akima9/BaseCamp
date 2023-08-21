@@ -790,3 +790,91 @@ const MainCategoryModify = {
         return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
     }
 }
+
+const SubCategoryModify = {
+    init : function () {
+        let dupCheckBtn = document.querySelector("#dupCheckBtn");
+        let inputSubCategoryName = document.querySelector("#inputSubCategoryName");
+        let deleteSubCategoryBtn = document.querySelector("#deleteSubCategoryBtn");
+
+        dupCheckBtn.addEventListener("click", this.checkSubCategoryName);
+        deleteSubCategoryBtn.addEventListener("click", this.deleteSubCategory);
+        inputSubCategoryName.addEventListener("change", this.changeSubCategoryName);
+    },
+    deleteSubCategory : function () {
+        if (confirm("삭제 하시겠습니까?")) {
+            let createSubCategoryForm = document.querySelector("#createSubCategoryForm");
+            // _method를 DELETE로 변경
+            let inputMethod = createSubCategoryForm.querySelector("input[name=_method]");
+            inputMethod.setAttribute("value", "DELETE");
+            // onsubmit 제거
+            createSubCategoryForm.removeAttribute("onsubmit");
+            // submit
+            createSubCategoryForm.submit();
+        }
+    },
+    changeSubCategoryName : function (event) {
+        let inputSubCategoryName = event.target;
+        inputSubCategoryName.setAttribute("data-check", false);
+    },
+    checkSubCategoryName : function () {
+        let subCategoryName = document.querySelector("#inputSubCategoryName").value;
+        if (subCategoryName.length === 0) {
+            alert("하위 카테고리명을 입력해주세요.");
+            return;
+        }
+        let subCategory = {
+            "subCategoryName": subCategoryName
+        };
+        
+        SubCategoryModify.postData("/rest/sub/categorys/dupCheck", subCategory).then((data) => {
+            if (data === null) {
+                // 하위 카테고리명 사용 가능
+                SubCategoryModify.successedSubCategoryName();
+            } else {
+                // 하위 카테고리명 중복
+                SubCategoryModify.failedSubCategoryName();
+            }
+        });
+    },
+    successedSubCategoryName : function () {
+        alert("사용 가능한 하위 카테고리명입니다.");
+        let inputSubCategoryName = document.querySelector("#inputSubCategoryName");
+        inputSubCategoryName.setAttribute("data-check", true);
+    },
+    failedSubCategoryName : function () {
+        alert("이미 사용중인 카테고리명입니다.");
+    },
+    validateForm : function () {
+        let inputSubCategoryName = document.querySelector("#inputSubCategoryName");
+
+        if (inputSubCategoryName.value.length === 0) {
+            alert("하위 카테고리명을 입력해주세요.");
+            inputSubCategoryName.focus();
+            return false;
+        }
+
+        if (inputSubCategoryName.getAttribute("data-check") != "true") {
+            alert("하위 카테고리명 중복확인을 해주세요.")
+            return false;
+        }
+        return true;
+    },
+    postData : async function (url = "", data = {}) {
+        // 옵션 기본 값은 *로 강조
+        const response = await fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE 등
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+        });
+        return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
+    }
+}
