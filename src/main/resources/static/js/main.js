@@ -878,3 +878,83 @@ const SubCategoryModify = {
         return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
     }
 }
+
+const Header = {
+    init : function () {
+        console.log("call Header.init");
+        this.getBoardList();
+    },
+    createMenu : function (data) {
+        console.log("call Header.createMenu");
+        for (let i = 0; i < data.totalElements; i++) {
+            let mainCategory = data.content[i];
+            let subCategory = mainCategory.subCategories;
+            let mainCategoryName = mainCategory.mainCategoryName;
+            
+            let mainLi = document.createElement("li");
+            mainLi.setAttribute("class", "nav-item dropdown");
+
+            let mainA = document.createElement("a");
+            mainA.setAttribute("class", "nav-link dropdown-toggle");
+            mainA.setAttribute("role", "button");
+            mainA.setAttribute("data-bs-toggle", "dropdown");
+            mainA.setAttribute("aria-expanded", "false");
+            mainA.setAttribute("href", "/boards/list");
+            mainA.textContent = mainCategoryName;
+
+            let subUl = document.createElement("ul");
+            subUl.setAttribute("class", "dropdown-menu");
+
+            for (let j = 0; j < subCategory.length; j++) {
+                let subCategoryName = subCategory[j].subCategoryName;
+
+                let subLi = document.createElement("li");
+                let subA = document.createElement("a");
+                subA.setAttribute("class", "dropdown-item");
+                subA.setAttribute("href", "#");
+                subA.textContent = subCategoryName;
+
+                subLi.appendChild(subA);
+                
+                // 구분선
+                if (j < subCategory.length - 1) {
+                    let hr = document.createElement("hr");
+                    hr.setAttribute("class", "dropdown-divider");
+                    subLi.appendChild(hr);
+                }
+                subUl.appendChild(subLi);
+            }
+            mainLi.appendChild(mainA);
+            mainLi.appendChild(subUl);
+
+            // subCategory가 있는 mainCategory
+            if (subCategory.length > 0) {
+                sideBar.appendChild(mainLi);
+            }
+        }
+    },
+    getBoardList : function () {
+        let sideBar = document.querySelector("#sideBar");
+        console.log("call Header.getBoardList");
+        this.postData("/rest/main/categorys").then((data) => {
+            this.createMenu(data);
+        });
+    },
+    postData : async function (url = "", data = {}) {
+        // 옵션 기본 값은 *로 강조
+        const response = await fetch(url, {
+            method: "GET", // *GET, POST, PUT, DELETE 등
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            // body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+        });
+        return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
+    }
+}
