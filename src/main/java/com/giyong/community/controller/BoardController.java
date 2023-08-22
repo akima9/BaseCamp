@@ -30,24 +30,24 @@ public class BoardController {
 
     @DeleteMapping("/boards")
     public String deleteBoard(BoardDto boardDto) {
-        boardService.remove(boardDto.getBoardId());
+//        boardService.remove(boardDto.getBoardId());
         return "redirect:/boards/list";
     }
 
     @GetMapping("/boards/list")
     public String goToBoardList(Model m, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
-        Page<Board> boards = boardService.findAll(pageable);
-        ArrayList<BoardDto> boardList = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-        int boardNumber = 1;
-        for (Board board : boards) {
-            BoardDto boardDto = modelMapper.map(board, BoardDto.class);
-            boardDto.setBoardNumber(boardNumber);
-            boardDto.setCommentCount(boardService.findCommentCount(boardDto.getBoardId()));
-            boardList.add(boardDto);
-            boardNumber++;
-        }
-        m.addAttribute("boards", new PageImpl<>(boardList, pageable, boards.getTotalElements()));
+//        Page<Board> boards = boardService.findAll(pageable);
+//        ArrayList<BoardDto> boardList = new ArrayList<>();
+//        ModelMapper modelMapper = new ModelMapper();
+//        int boardNumber = 1;
+//        for (Board board : boards) {
+//            BoardDto boardDto = modelMapper.map(board, BoardDto.class);
+//            boardDto.setBoardNumber(boardNumber);
+//            boardDto.setCommentCount(boardService.findCommentCount(boardDto.getBoardId()));
+//            boardList.add(boardDto);
+//            boardNumber++;
+//        }
+//        m.addAttribute("boards", new PageImpl<>(boardList, pageable, boards.getTotalElements()));
         return "board/board1/list";
     }
 

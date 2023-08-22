@@ -14,27 +14,26 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
-    public Member addMember(Member member) {
+    public Member addMember(MemberDto memberDto) {
+        Member member = modelMapper.map(memberDto, Member.class);
         return memberRepository.save(member);
     }
 
     @Override
-    public Member findMember(Member member) {
-        return memberRepository.findById(member.getMemberId()).orElse(null);
+    public Member findMember(MemberDto memberDto) {
+        return memberRepository.findById(memberDto.getId()).orElse(null);
     }
 
     @Override
-    public Member modifyMember(Member member) {
-        Member oldMember = memberRepository.findById(member.getMemberId()).orElse(null);
+    public Member modifyMember(MemberDto memberDto) {
+        Member oldMember = memberRepository.findById(memberDto.getId()).orElse(null);
 
-        ModelMapper modelMapper = new ModelMapper();
-
-        MemberDto dto = modelMapper.map(member, MemberDto.class);
-        dto.setMemberPw(member.getMemberPw());
-        dto.setNickname(member.getNickname());
-        dto.setUpdatedAt(new Date());
+        MemberDto dto = modelMapper.map(oldMember, MemberDto.class);
+        dto.setMemberPw(memberDto.getMemberPw());
 
         Member modifyMember = modelMapper.map(dto, Member.class);
 
@@ -42,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void removeMember(String memberId) {
-        memberRepository.deleteById(memberId);
+    public void removeMember(Long id) {
+        memberRepository.deleteById(id);
     }
 }

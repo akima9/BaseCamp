@@ -21,10 +21,11 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Board write(BoardDto boardDto) {
-        boardDto.setViewCount(0);
-        boardDto.setCreatedAt(new Date());
-        boardDto.setUpdatedAt(new Date());
-
+//        boardDto.setViewCount(0);
+//        boardDto.setCreatedAt(new Date());
+//        boardDto.setUpdatedAt(new Date());
+        System.out.println("BoardServiceImpl.write");
+        System.out.println("boardDto = " + boardDto);
         ModelMapper modelMapper = new ModelMapper();
         Board board = modelMapper.map(boardDto, Board.class);
 
@@ -33,17 +34,18 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Board modify(BoardDto boardDto) {
-        Board oldBoard = boardRepository.findById(boardDto.getBoardId()).orElse(null);
-
-        ModelMapper modelMapper = new ModelMapper();
-        BoardDto dto = modelMapper.map(oldBoard, BoardDto.class);
-        dto.setTitle(boardDto.getTitle());
-        dto.setContent(boardDto.getContent());
-        dto.setUpdatedAt(new Date());
-
-        Board modifyBoard = modelMapper.map(dto, Board.class);
-
-        return boardRepository.save(modifyBoard);
+//        Board oldBoard = boardRepository.findById(boardDto.getBoardId()).orElse(null);
+//
+//        ModelMapper modelMapper = new ModelMapper();
+//        BoardDto dto = modelMapper.map(oldBoard, BoardDto.class);
+//        dto.setTitle(boardDto.getTitle());
+//        dto.setContent(boardDto.getContent());
+//        dto.setUpdatedAt(new Date());
+//
+//        Board modifyBoard = modelMapper.map(dto, Board.class);
+//
+//        return boardRepository.save(modifyBoard);
+        return null;
     }
 
     @Override

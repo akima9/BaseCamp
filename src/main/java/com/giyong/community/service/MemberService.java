@@ -1,15 +1,16 @@
 package com.giyong.community.service;
 
+import com.giyong.community.dto.MemberDto;
 import com.giyong.community.entity.Member;
 
 import java.util.Optional;
 
 public interface MemberService {
-    Member addMember(Member member);
+    Member addMember(MemberDto memberDto);
 
-    Member findMember(Member member);
+    Member findMember(MemberDto memberDto);
 
-    Member modifyMember(Member member);
+    Member modifyMember(MemberDto memberDto);
 
-    void removeMember(String memberId);
+    void removeMember(Long id);
 }

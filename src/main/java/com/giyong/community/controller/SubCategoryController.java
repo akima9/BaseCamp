@@ -1,11 +1,8 @@
 package com.giyong.community.controller;
 
-import com.giyong.community.dto.CategoryDto;
 import com.giyong.community.dto.SubCategoryDto;
-import com.giyong.community.entity.Category;
 import com.giyong.community.entity.MainCategory;
 import com.giyong.community.entity.SubCategory;
-import com.giyong.community.service.CategoryService;
 import com.giyong.community.service.MainCategoryService;
 import com.giyong.community.service.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
