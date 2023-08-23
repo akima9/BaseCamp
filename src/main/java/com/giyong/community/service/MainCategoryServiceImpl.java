@@ -46,7 +46,7 @@ public class MainCategoryServiceImpl implements MainCategoryService{
     }
 
     @Override
-    public MainCategory findById(Integer mainCategoryId) {
+    public MainCategory findById(Long mainCategoryId) {
         return mainCategoryRepository.findById(mainCategoryId).orElse(null);
     }
 
@@ -56,7 +56,7 @@ public class MainCategoryServiceImpl implements MainCategoryService{
     }
 
     @Override
-    public void remove(Integer mainCategoryId) {
+    public void remove(Long mainCategoryId) {
         mainCategoryRepository.deleteById(mainCategoryId);
     }
 }

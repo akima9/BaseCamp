@@ -1,21 +1,20 @@
 package com.giyong.community.service;
 
-import com.giyong.community.dto.BoardDto;
-import com.giyong.community.entity.Board;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-class BoardServiceImplTest {
+@TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
+class MainCategoryServiceImplTest {
     @Autowired
-    private BoardService boardService;
+    private MainCategoryService mainCategoryService;
 
     @Test
-    void write() {
-
+    void save() {
     }
 
     @Test
@@ -31,18 +30,10 @@ class BoardServiceImplTest {
     }
 
     @Test
+    void findByName() {
+    }
+
+    @Test
     void remove() {
-    }
-
-    @Test
-    void upViewCount() {
-    }
-
-    @Test
-    void hasUserViewedPost() {
-    }
-
-    @Test
-    void findCommentCount() {
     }
 }

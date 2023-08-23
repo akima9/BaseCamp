@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 public class MainCategoryDto {
-    private int mainCategoryId;
+    private Long mainCategoryId;
     private String mainCategoryName;
     private String creater;
     private Date createdAt;

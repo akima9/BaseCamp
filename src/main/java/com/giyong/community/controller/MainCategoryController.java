@@ -44,7 +44,7 @@ public class MainCategoryController {
     }
 
     @GetMapping("/categorys")
-    public String categories(Integer mainCategoryId, Integer page, Model m) {
+    public String categories(Long mainCategoryId, Integer page, Model m) {
         MainCategory mainCategory = mainCategoryService.findById(mainCategoryId);
         m.addAttribute("mainCategory", mainCategory);
         m.addAttribute("page", page);

@@ -12,7 +12,7 @@ public interface AdminService {
 
     Page<Admin> findAll(Pageable pageable);
 
-    Admin findById(String adminId);
+    Admin findById(Long id);
 
-    void remove(String adminId);
+    void remove(Long id);
 }

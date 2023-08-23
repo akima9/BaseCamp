@@ -12,9 +12,9 @@ public interface MainCategoryService {
 
     Page<MainCategory> findAll(Pageable pageable);
 
-    MainCategory findById(Integer mainCategoryId);
+    MainCategory findById(Long mainCategoryId);
 
     MainCategory findByName(String mainCategoryName);
 
-    void remove(Integer mainCategoryId);
+    void remove(Long mainCategoryId);
 }

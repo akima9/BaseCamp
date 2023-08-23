@@ -19,8 +19,6 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public Admin addAdmin(AdminDto adminDto) {
-        adminDto.setCreatedAt(new Date());
-        adminDto.setUpdatedAt(new Date());
         Admin admin = modelMapper.map(adminDto, Admin.class);
 
         return adminRepository.save(admin);
@@ -28,11 +26,10 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public Admin modify(AdminDto adminDto) {
-        Admin oldAdmin = adminRepository.findById(adminDto.getAdminId()).orElse(null);
+        Admin oldAdmin = adminRepository.findById(adminDto.getId()).orElse(null);
 
         AdminDto dto = modelMapper.map(oldAdmin, AdminDto.class);
         dto.setAdminName(adminDto.getAdminName());
-        dto.setUpdatedAt(new Date());
 
         Admin modifyAdmin = modelMapper.map(dto, Admin.class);
 
@@ -45,12 +42,12 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public Admin findById(String adminId) {
-        return adminRepository.findById(adminId).orElse(null);
+    public Admin findById(Long id) {
+        return adminRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void remove(String adminId) {
-        adminRepository.deleteById(adminId);
+    public void remove(Long id) {
+        adminRepository.deleteById(id);
     }
 }
