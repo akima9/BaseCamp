@@ -3,6 +3,8 @@ package com.giyong.community.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,7 +21,11 @@ public class MainCategory {
     @JsonManagedReference
     @OneToMany(mappedBy = "mainCategory", cascade = CascadeType.REMOVE)
     private List<SubCategory> subCategories;
-    private String creater;
+    @JsonBackReference
+    @ManyToOne
+    private Admin admin;
+    @CreationTimestamp
     private LocalDateTime createdAt;
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 }

@@ -19,9 +19,6 @@ public class MainCategoryServiceImpl implements MainCategoryService{
 
     @Override
     public MainCategory save(MainCategoryDto mainCategoryDto) {
-        mainCategoryDto.setCreatedAt(new Date());
-        mainCategoryDto.setUpdatedAt(new Date());
-
         MainCategory mainCategory = modelMapper.map(mainCategoryDto, MainCategory.class);
 
         return mainCategoryRepository.save(mainCategory);
@@ -33,7 +30,6 @@ public class MainCategoryServiceImpl implements MainCategoryService{
 
         MainCategoryDto dto = modelMapper.map(oldMainCategory, MainCategoryDto.class);
         dto.setMainCategoryName(mainCategoryDto.getMainCategoryName());
-        dto.setUpdatedAt(new Date());
 
         MainCategory modifyMainCategory = modelMapper.map(dto, MainCategory.class);
 
