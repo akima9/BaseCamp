@@ -6,7 +6,7 @@
 <div layout:fragment="content" class="container">
   <h1 class="text-center mb-5">하위 카테고리 생성</h1>
   <form id="createSubCategoryForm" method="post" th:action="@{/admin/sub/categorys}" onsubmit="return SubCategoryCreate.validateForm()">
-    <input type="hidden" name="creater" th:value="${session.adminId}">
+    <input type="hidden" name="adminId" th:value="${session.adminId}">
     <div class="mb-3 row">
       <label for="inputSubCategoryName" class="col-sm-2 col-form-label">하위 카테고리명</label>
       <div class="col-sm-7">

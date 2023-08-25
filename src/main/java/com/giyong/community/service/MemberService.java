@@ -10,6 +10,8 @@ public interface MemberService {
 
     Member findMember(MemberDto memberDto);
 
+    Member findByMemberId(MemberDto memberDto);
+
     Member modifyMember(MemberDto memberDto);
 
     void removeMember(Long id);

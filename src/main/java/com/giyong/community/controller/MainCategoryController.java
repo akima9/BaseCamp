@@ -38,7 +38,9 @@ public class MainCategoryController {
 
     @GetMapping("/categorys/list")
     public String list(Model m, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        System.out.println("MainCategoryController.list");
         Page<MainCategory> mainCategories = mainCategoryService.findAll(pageable);
+        System.out.println("mainCategories = " + mainCategories);
         m.addAttribute("mainCategories", mainCategories);
         return "admin/mainCategory/list";
     }

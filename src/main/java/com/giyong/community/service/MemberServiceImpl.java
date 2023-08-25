@@ -31,6 +31,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Member findByMemberId(MemberDto memberDto) {
+        return memberRepository.findByMemberId(memberDto.getMemberId());
+    }
+
+    @Override
     public Member modifyMember(MemberDto memberDto) {
         Member oldMember = memberRepository.findById(memberDto.getId()).orElse(null);
 

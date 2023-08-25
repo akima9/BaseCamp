@@ -23,8 +23,8 @@
       <td class="text-start">
         <a th:href="@{/admin/main/categorys(mainCategoryId=${mainCategory.mainCategoryId},page=${mainCategories.pageable.pageNumber})}" th:text="${mainCategory.mainCategoryName}"></a>
       </td>
-      <td class="text-center" th:text="${mainCategory.creater}">생성자</td>
-      <td class="text-center" th:text="${#dates.format(mainCategory.createdAt, 'yy/MM/dd')}">createdAt</td>
+      <td class="text-center" th:text="${mainCategory.admin.adminId}">생성자</td>
+      <td class="text-center" th:text="${#temporals.format(mainCategory.createdAt, 'yy/MM/dd')}">createdAt</td>
     </tr>
     </tbody>
   </table>

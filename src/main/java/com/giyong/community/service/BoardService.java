@@ -16,6 +16,8 @@ public interface BoardService {
 
     Page<Board> findAll(Pageable pageable);
 
+    Page<Board> findAllBySubCategoryId(Long subCategoryId, Pageable pageable);
+
     Board findById(Long boardId);
 
     void remove(Long boardId);

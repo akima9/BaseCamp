@@ -879,7 +879,7 @@ const SubCategoryModify = {
     }
 }
 
-const Header = {
+const HeaderPage = {
     init : function () {
         console.log("call Header.init");
         this.getBoardList();
@@ -911,7 +911,7 @@ const Header = {
                 let subLi = document.createElement("li");
                 let subA = document.createElement("a");
                 subA.setAttribute("class", "dropdown-item");
-                subA.setAttribute("href", "#");
+                subA.setAttribute("href", "/boards/list?subCategoryId=" + subCategory[j].subCategoryId);
                 subA.textContent = subCategoryName;
 
                 subLi.appendChild(subA);

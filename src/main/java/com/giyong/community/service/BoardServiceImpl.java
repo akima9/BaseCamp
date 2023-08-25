@@ -66,6 +66,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public Page<Board> findAllBySubCategoryId(Long subCategoryId, Pageable pageable) {
+        return (Page<Board>) boardRepository.findAllBySubCategorySubCategoryId(pageable, subCategoryId);
+    }
+
+    @Override
     public Board findById(Long boardId) {
         return boardRepository.findById(boardId).orElse(null);
     }

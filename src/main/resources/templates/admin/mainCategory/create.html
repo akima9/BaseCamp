@@ -6,7 +6,7 @@
 <div layout:fragment="content" class="container">
   <h1 class="text-center mb-5">상위 카테고리 생성</h1>
   <form id="createCategoryForm" method="post" th:action="@{/admin/main/categorys}" onsubmit="return MainCategoryCreate.validateForm()">
-    <input type="hidden" name="creater" th:value="${session.adminId}">
+    <input type="hidden" name="adminId" th:value="${session.adminId}">
     <div class="mb-3 row">
       <label for="inputMainCategoryName" class="col-sm-2 col-form-label">상위 카테고리명</label>
       <div class="col-sm-7">

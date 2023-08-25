@@ -35,19 +35,9 @@ public class BoardController {
     }
 
     @GetMapping("/boards/list")
-    public String goToBoardList(Model m, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
-//        Page<Board> boards = boardService.findAll(pageable);
-//        ArrayList<BoardDto> boardList = new ArrayList<>();
-//        ModelMapper modelMapper = new ModelMapper();
-//        int boardNumber = 1;
-//        for (Board board : boards) {
-//            BoardDto boardDto = modelMapper.map(board, BoardDto.class);
-//            boardDto.setBoardNumber(boardNumber);
-//            boardDto.setCommentCount(boardService.findCommentCount(boardDto.getBoardId()));
-//            boardList.add(boardDto);
-//            boardNumber++;
-//        }
-//        m.addAttribute("boards", new PageImpl<>(boardList, pageable, boards.getTotalElements()));
+    public String goToBoardList(BoardDto boardDto, Model m, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
+        Page<Board> boards = boardService.findAllBySubCategoryId(boardDto.getSubCategoryId(), pageable);
+        m.addAttribute("boards", boards);
         return "board/board1/list";
     }
 
@@ -64,6 +54,8 @@ public class BoardController {
 
     @PostMapping("/boards")
     public String writeBoard(BoardDto dto, Model m) {
+        System.out.println("BoardController.writeBoard");
+        System.out.println("dto = " + dto);
         Board board = boardService.write(dto);
         m.addAttribute("board", board);
         return "board/board1/view";

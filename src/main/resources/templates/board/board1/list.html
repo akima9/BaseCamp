@@ -4,8 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content" class="container">
+    <input th:value="${param.subCategoryId}">
     <div class="text-end">
-        <button type="button" class="btn btn-primary btn-sm write-btn">글쓰기</button>
+        <button type="button" class="btn btn-primary btn-sm write-btn" th:attr="data-id=${param.subCategoryId}">글쓰기</button>
     </div>
     <table class="table table-hover caption-top">
         <caption>Board1</caption>
@@ -25,8 +26,8 @@
                 <a th:href="@{/boards(boardId=${board.boardId},page=${boards.pageable.pageNumber})}" th:text="${board.title}"></a>
             </td>
             <td class="text-center" th:text="${board.viewCount}">조회수</td>
-            <td class="text-center" th:text="${board.commentCount}">댓글수</td>
-            <td class="text-center" th:text="${#dates.format(board.createdAt, 'yy/MM/dd')}">createdAt</td>
+            <td class="text-center" th:text="${board.comments.size}">댓글수</td>
+            <td class="text-center" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd')}">createdAt</td>
         </tr>
         </tbody>
     </table>

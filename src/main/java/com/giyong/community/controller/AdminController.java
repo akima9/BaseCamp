@@ -26,14 +26,15 @@ public class AdminController {
 
     @PostMapping("/login")
     public String login(AdminDto adminDto, RedirectAttributes redirect, HttpServletRequest request) {
-        Admin admin = adminService.findById(adminDto.getId());
+        Admin admin = adminService.findByAdminId(adminDto.getAdminId());
+
         if (admin == null) {
             redirect.addFlashAttribute("resCode", 404);
             return "redirect:/admin/login";
         }
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("adminId", admin.getAdminId());
+        session.setAttribute("adminId", admin.getId());
 
         return "redirect:/admin";
     }

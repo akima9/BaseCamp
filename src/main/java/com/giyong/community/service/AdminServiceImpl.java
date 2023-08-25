@@ -49,6 +49,11 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public Admin findByAdminId(String adminId) {
+        return adminRepository.findByAdminId(adminId);
+    }
+
+    @Override
     public void remove(Long id) {
         adminRepository.deleteById(id);
     }

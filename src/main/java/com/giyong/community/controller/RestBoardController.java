@@ -49,29 +49,28 @@ public class RestBoardController {
     }
 
     @PostMapping("/boards")
-    public String boards(@RequestBody Map<String, Object> map, BoardDto boardDto, @SessionAttribute(name = "memberId", required = false) String memberId) throws JsonProcessingException {
-//        map.forEach((key, value) -> {
-//            if (key.equals("blocks")) {
-//                ArrayList<Map<String, String>> blocksList = (ArrayList<Map<String, String>>) value;
-//                for (Map block : blocksList) {
-//                    if (block.get("type").equals("header")) {
-//                        Map<String, String> data = (Map<String, String>) block.get("data");
-//                        boardDto.setTitle(data.get("text"));
-//                        break;
-//                    }
-//
-//                }
-//            }
-//        });
-//        ObjectMapper mapper = new ObjectMapper();
-//        boardDto.setContent(mapper.writeValueAsString(map));
-//        String title = boardDto.getTitle();
-//        if (title == null) {
-//            boardDto.setTitle("제목없음");
-//        }
-//        boardDto.setWriter(memberId);
-//        Board board = boardService.write(boardDto);
-//        return objectMapper.writeValueAsString(board);
-        return null;
+    public String boards(@RequestBody Map<String, Object> map, BoardDto boardDto, @SessionAttribute(name = "memberId", required = false) Long memberId) throws JsonProcessingException {
+        map.forEach((key, value) -> {
+            if (key.equals("blocks")) {
+                ArrayList<Map<String, String>> blocksList = (ArrayList<Map<String, String>>) value;
+                for (Map block : blocksList) {
+                    if (block.get("type").equals("header")) {
+                        Map<String, String> data = (Map<String, String>) block.get("data");
+                        boardDto.setTitle(data.get("text"));
+                        break;
+                    }
+
+                }
+            }
+        });
+        ObjectMapper mapper = new ObjectMapper();
+        boardDto.setContent(mapper.writeValueAsString(map));
+        String title = boardDto.getTitle();
+        if (title == null) {
+            boardDto.setTitle("제목없음");
+        }
+        boardDto.setMemberId(memberId);
+        Board board = boardService.write(boardDto);
+        return objectMapper.writeValueAsString(board);
     }
 }
