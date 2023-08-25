@@ -27,7 +27,7 @@ public class SubCategory {
     @JoinColumn(name = "admin_id")
     private Admin admin;
     @JsonManagedReference
-    @OneToMany(mappedBy = "subCategory", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "subCategory")
     private List<Board> boards;
     @CreationTimestamp
     private LocalDateTime createdAt;

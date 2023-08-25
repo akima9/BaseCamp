@@ -19,7 +19,7 @@ public class MainCategory {
     private Long mainCategoryId;
     private String mainCategoryName;
     @JsonManagedReference
-    @OneToMany(mappedBy = "mainCategory", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "mainCategory")
     private List<SubCategory> subCategories;
     @JsonBackReference
     @ManyToOne

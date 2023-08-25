@@ -12,6 +12,8 @@ public class BoardDto {
     private String content;
     private Long viewCount;
     private Long CommentCount;
+    private Long subCategoryId;
+    private Long memberId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

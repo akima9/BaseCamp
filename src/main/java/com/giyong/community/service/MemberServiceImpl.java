@@ -6,6 +6,7 @@ import com.giyong.community.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Optional;
@@ -18,6 +19,7 @@ public class MemberServiceImpl implements MemberService {
     private ModelMapper modelMapper;
 
     @Override
+    @Transactional
     public Member addMember(MemberDto memberDto) {
         Member member = modelMapper.map(memberDto, Member.class);
         return memberRepository.save(member);

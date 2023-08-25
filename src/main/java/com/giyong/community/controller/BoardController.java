@@ -70,7 +70,7 @@ public class BoardController {
     }
 
     @GetMapping("/boards/modify")
-    public String goToBoardModify(Integer boardId, Model m) {
+    public String goToBoardModify(Long boardId, Model m) {
         Board board = boardService.findById(boardId);
         m.addAttribute("board", board);
         return "board/board1/modify";
@@ -84,13 +84,13 @@ public class BoardController {
     }
 
     @GetMapping("/boards/delete")
-    public String delete(Integer boardId) {
+    public String delete(Long boardId) {
         boardService.remove(boardId);
         return "redirect:/boards/list";
     }
 
     @GetMapping("/boards")
-    public String getBoard(Integer boardId, Integer page, HttpSession session, Model m) {
+    public String getBoard(Long boardId, Integer page, HttpSession session, Model m) {
         boardService.upViewCount(boardId, session);
         Board board = boardService.findById(boardId);
         m.addAttribute("board", board);

@@ -21,13 +21,15 @@ public class Board {
     private String content;
     @JsonBackReference
     @ManyToOne
+    @JoinColumn(name = "member_id")
     private Member member;
     private Long viewCount;
     @JsonBackReference
     @ManyToOne
+    @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
     @JsonManagedReference
-    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "board")
     private List<Comment> comments;
     @CreationTimestamp
     private LocalDateTime createdAt;

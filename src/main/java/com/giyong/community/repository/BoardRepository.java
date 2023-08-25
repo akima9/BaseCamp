@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface BoardRepository extends JpaRepository<Board, Integer> {
+public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query(value = "select count(*) from comment where board_id = :boardId", nativeQuery = true)
-    Integer findCommentCountByBoardId(@Param("boardId") Integer boardId);
+    Long findCommentCountByBoardId(@Param("boardId") Long boardId);
 }

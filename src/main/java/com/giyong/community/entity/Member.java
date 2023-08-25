@@ -25,6 +25,9 @@ public class Member {
     @JsonManagedReference
     @OneToMany(mappedBy = "member")
     private List<Board> boards;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "member")
+    private List<Comment> comments;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

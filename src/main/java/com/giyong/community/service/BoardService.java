@@ -16,11 +16,11 @@ public interface BoardService {
 
     Page<Board> findAll(Pageable pageable);
 
-    Board findById(Integer boardId);
+    Board findById(Long boardId);
 
-    void remove(Integer boardId);
+    void remove(Long boardId);
 
-    void upViewCount(Integer boardId, HttpSession session);
+    void upViewCount(Long boardId, HttpSession session);
 
-    Integer findCommentCount(Integer boardId);
+    Long findCommentCount(Long boardId);
 }

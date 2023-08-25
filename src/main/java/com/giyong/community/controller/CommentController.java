@@ -21,15 +21,12 @@ public class CommentController {
     }
     @PutMapping("/comments")
     public String modifyComment(CommentDto commentDto) {
-        System.out.println("CommentController.modifyComment");
         Comment comment = commentService.modify(commentDto);
-        System.out.println("comment = " + comment);
-        return "redirect:/boards?boardId=" + comment.getBoardId();
+        return "redirect:/boards?boardId=" + comment.getBoard().getBoardId();
     }
     @PostMapping("/comments")
     public String createComment(CommentDto commentDto) {
-        System.out.println("CommentController.createComment");
         Comment comment = commentService.write(commentDto);
-        return "redirect:/boards?boardId=" + comment.getBoardId();
+        return "redirect:/boards?boardId=" + comment.getBoard().getBoardId();
     }
 }

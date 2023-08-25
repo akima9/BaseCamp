@@ -2,14 +2,15 @@ package com.giyong.community.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 public class CommentDto {
-    private int commentId;
-    private int boardId;
+    private Long commentId;
     private String content;
-    private String writer;
-    private Date createdAt;
-    private Date updatedAt;
+    private Long memberId;
+    private Long boardId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

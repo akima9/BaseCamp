@@ -15,7 +15,7 @@ public interface CommentService {
 
     Page<Comment> findAll(Pageable pageable);
 
-    List<Comment> findAllByBoardId(Integer boardId);
+    List<Comment> findAllByBoardId(Long boardId);
 
-    void remove(Integer commentId);
+    void remove(Long commentId);
 }

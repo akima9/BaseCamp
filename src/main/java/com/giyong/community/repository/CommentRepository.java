@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CommentRepository extends PagingAndSortingRepository<Comment, Integer> {
+public interface CommentRepository extends PagingAndSortingRepository<Comment, Long> {
     @Query(value = "select * from comment where board_id = :boardId", nativeQuery = true)
-    List<Comment> findAllByBoardId(@Param("boardId") Integer boardId);
+    List<Comment> findAllByBoardId(@Param("boardId") Long boardId);
 }

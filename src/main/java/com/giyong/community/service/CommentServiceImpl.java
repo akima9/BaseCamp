@@ -20,11 +20,6 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Comment write(CommentDto commentDto) {
-        // commentDto에 생성 날짜 및 수정 날짜 세팅
-        commentDto.setCreatedAt(new Date());
-        commentDto.setUpdatedAt(new Date());
-
-        // commentDto -> comment entity
         Comment comment = modelMapper.map(commentDto, Comment.class);
 
         return commentRepository.save(comment);
@@ -41,7 +36,6 @@ public class CommentServiceImpl implements CommentService{
 
         // findCommentDto에 commentDto 세팅
         findCommentDto.setContent(commentDto.getContent());
-        findCommentDto.setUpdatedAt(new Date());
 
         // findCommentDto -> modifyComment
         Comment modifyComment = modelMapper.map(findCommentDto, Comment.class);
@@ -55,12 +49,12 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<Comment> findAllByBoardId(Integer boardId) {
+    public List<Comment> findAllByBoardId(Long boardId) {
         return commentRepository.findAllByBoardId(boardId);
     }
 
     @Override
-    public void remove(Integer commentId) {
+    public void remove(Long commentId) {
         commentRepository.deleteById(commentId);
     }
 }

@@ -19,6 +19,7 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
+    @Transactional
     public SubCategory save(SubCategoryDto subCategoryDto) {
         SubCategory subCategory = modelMapper.map(subCategoryDto, SubCategory.class);
 

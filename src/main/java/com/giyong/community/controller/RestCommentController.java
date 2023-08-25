@@ -22,7 +22,7 @@ public class RestCommentController {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping("/comments")
-    public String getComments(Integer boardId) throws JsonProcessingException {
+    public String getComments(Long boardId) throws JsonProcessingException {
         List<Comment> comments = commentService.findAllByBoardId(boardId);
         return objectMapper.writeValueAsString(comments);
     }
