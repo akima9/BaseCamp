@@ -12,9 +12,9 @@ public interface SubCategoryService {
 
     Page<SubCategory> findAll(Pageable pageable);
 
-    SubCategory findById(Integer subCategoryId);
+    SubCategory findById(Long subCategoryId);
 
     SubCategory findByName(String subCategoryName);
 
-    void remove(Integer subCategoryId);
+    void remove(Long subCategoryId);
 }

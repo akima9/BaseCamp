@@ -45,7 +45,7 @@ public class SubCategoryController {
     }
 
     @GetMapping("/categorys")
-    public String categories(Integer subCategoryId, Integer page, Pageable pageable, Model m) {
+    public String categories(Long subCategoryId, Integer page, Pageable pageable, Model m) {
         SubCategory subCategory = subCategoryService.findById(subCategoryId);
         Page<MainCategory> mainCategories = mainCategoryService.findAll(pageable);
         m.addAttribute("subCategory", subCategory);

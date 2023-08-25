@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
@@ -63,10 +65,13 @@ class MainCategoryServiceImplTest {
     }
 
     @Test
+    @DisplayName("아이디로 조회")
     @Order(3)
     void findById() {
         MainCategory mainCategory = mainCategoryService.findById(1L);
         assertTrue(mainCategory.getMainCategoryName().equals("animation"));
+        assertTrue(mainCategory.getAdmin().getAdminId().equals("admin"));
+        assertTrue(mainCategory.getAdmin().getAdminPw().equals("1234"));
     }
 
     @Test

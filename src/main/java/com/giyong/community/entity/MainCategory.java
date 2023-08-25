@@ -23,6 +23,7 @@ public class MainCategory {
     private List<SubCategory> subCategories;
     @JsonBackReference
     @ManyToOne
+    @JoinColumn(name = "admin_id")
     private Admin admin;
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,8 +21,11 @@ public class Admin {
     private String adminPw;
     private String adminName;
     @JsonManagedReference
-    @OneToMany(mappedBy = "admin", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "admin")
     private List<MainCategory> mainCategories;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "admin")
+    private List<SubCategory> subCategories;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

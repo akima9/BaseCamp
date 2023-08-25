@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -19,24 +20,27 @@ public class SubCategoryServiceImpl implements SubCategoryService{
 
     @Override
     public SubCategory save(SubCategoryDto subCategoryDto) {
-        subCategoryDto.setCreatedAt(new Date());
-        subCategoryDto.setUpdatedAt(new Date());
-
         SubCategory subCategory = modelMapper.map(subCategoryDto, SubCategory.class);
 
         return subCategoryRepository.save(subCategory);
     }
 
     @Override
+    @Transactional
     public SubCategory modify(SubCategoryDto subCategoryDto) {
         SubCategory oldSubCategory = subCategoryRepository.findById(subCategoryDto.getSubCategoryId()).orElse(null);
 
         SubCategoryDto dto = modelMapper.map(oldSubCategory, SubCategoryDto.class);
-        dto.setMainCategoryId(subCategoryDto.getMainCategoryId());
-        dto.setSubCategoryName(subCategoryDto.getSubCategoryName());
-        dto.setUpdatedAt(new Date());
+
+        if (subCategoryDto.getMainCategoryId() != null) {
+            dto.setMainCategoryId(subCategoryDto.getMainCategoryId());
+        }
+        if (subCategoryDto.getSubCategoryName() != null) {
+            dto.setSubCategoryName(subCategoryDto.getSubCategoryName());
+        }
 
         SubCategory modifySubCategory = modelMapper.map(dto, SubCategory.class);
+        System.out.println("modifySubCategory = " + modifySubCategory);
 
         return subCategoryRepository.save(modifySubCategory);
     }
@@ -47,7 +51,8 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     }
 
     @Override
-    public SubCategory findById(Integer subCategoryId) {
+    @Transactional(readOnly = true)
+    public SubCategory findById(Long subCategoryId) {
         return subCategoryRepository.findById(subCategoryId).orElse(null);
     }
 
@@ -57,7 +62,7 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     }
 
     @Override
-    public void remove(Integer subCategoryId) {
+    public void remove(Long subCategoryId) {
         subCategoryRepository.deleteById(subCategoryId);
     }
 }
