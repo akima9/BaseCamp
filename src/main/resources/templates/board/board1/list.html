@@ -6,7 +6,7 @@
 <div layout:fragment="content" class="container">
     <input th:value="${param.subCategoryId}">
     <div class="text-end">
-        <button type="button" class="btn btn-primary btn-sm write-btn" th:attr="data-id=${param.subCategoryId}">글쓰기</button>
+        <button type="button" class="btn btn-primary btn-sm write-btn" th:attr="data-subCategoryId=${subCategoryId}">글쓰기</button>
     </div>
     <table class="table table-hover caption-top">
         <caption>Board1</caption>
