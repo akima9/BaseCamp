@@ -14,16 +14,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BoardController {
@@ -33,8 +31,12 @@ public class BoardController {
     private SubCategoryService subCategoryService;
 
     @DeleteMapping("/boards")
-    public String deleteBoard(BoardDto boardDto) {
+    public String deleteBoard(BoardDto boardDto, @RequestParam int page, RedirectAttributes redirectAttributes) {
+        System.out.println("boardDto = " + boardDto);
+        System.out.println("page = " + page);
 //        boardService.remove(boardDto.getBoardId());
+        redirectAttributes.addFlashAttribute("subCategoryId", boardDto.getSubCategoryId());
+        redirectAttributes.addFlashAttribute("page", page);
         return "redirect:/boards/list";
     }
 
@@ -88,13 +90,14 @@ public class BoardController {
     }
 
     @GetMapping("/boards")
-    public String getBoard(Long boardId, Integer page, HttpSession session, Model m) {
-        System.out.println("BoardController.getBoard");
+    public String getBoard(Long subCategoryId, Long boardId, Integer page, HttpSession session, Model m) {
         boardService.upViewCount(boardId, session);
         Board board = boardService.findById(boardId);
-        System.out.println("board = " + board);
+
         m.addAttribute("board", board);
         m.addAttribute("page", page);
+        m.addAttribute("subCategoryId", subCategoryId);
+
         return "board/board1/view";
     }
 }

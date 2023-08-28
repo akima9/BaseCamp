@@ -300,7 +300,8 @@ const VIEW = {
     goToList : function (event) {
         let listBtn = event.target;
         let page = listBtn.getAttribute("data-page");
-        self.location = "/boards/list?page=" + page;
+        let subCategoryId = document.querySelector("input[name=subCategoryId]");
+        self.location = "/boards/list?subCategoryId=" + subCategoryId.value + "&page=" + page;
     },
     toggleReadOnly : async function () {
         let readOnlyState = await editor.readOnly.toggle();
