@@ -70,6 +70,8 @@ public class RestBoardController {
             boardDto.setTitle("제목없음");
         }
         boardDto.setMemberId(memberId);
+        Long subCategoryId = Long.parseLong((String) map.get("subCategoryId"));
+        boardDto.setSubCategoryId(subCategoryId);
         Board board = boardService.write(boardDto);
         return objectMapper.writeValueAsString(board);
     }

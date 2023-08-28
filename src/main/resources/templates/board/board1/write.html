@@ -7,6 +7,7 @@
     <form method="post" th:action="@{/boards}" id="formDeleteBoard">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="boardId">
+        <input type="hidden" name="subCategoryId" th:value="${param.subCategoryId}">
     </form>
     <div id="editorjs"></div>
     <div class="text-center">

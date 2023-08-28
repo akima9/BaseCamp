@@ -2,7 +2,9 @@ package com.giyong.community.controller;
 
 import com.giyong.community.dto.BoardDto;
 import com.giyong.community.entity.Board;
+import com.giyong.community.entity.SubCategory;
 import com.giyong.community.service.BoardService;
+import com.giyong.community.service.SubCategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,8 @@ import java.util.List;
 public class BoardController {
     @Autowired
     private BoardService boardService;
+    @Autowired
+    private SubCategoryService subCategoryService;
 
     @DeleteMapping("/boards")
     public String deleteBoard(BoardDto boardDto) {
@@ -37,8 +41,9 @@ public class BoardController {
     @GetMapping("/boards/list")
     public String goToBoardList(Long subCategoryId, BoardDto boardDto, Model m, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
         Page<Board> boards = boardService.findAllBySubCategoryId(boardDto.getSubCategoryId(), pageable);
+        SubCategory subCategory = subCategoryService.findById(subCategoryId);
         m.addAttribute("boards", boards);
-        m.addAttribute("subCategoryId", subCategoryId);
+        m.addAttribute("subCategory", subCategory);
         return "board/board1/list";
     }
 

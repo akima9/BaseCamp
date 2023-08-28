@@ -89,12 +89,15 @@ const login = {
 const list = {
     init : function () {
         let writeBtn = document.querySelector(".write-btn");
+        let subCategoryId = writeBtn.getAttribute("data-sub-category-id");
 
-        function goToWritePage() {
-            self.location = "/boards/write";
-        }
+        writeBtn.addEventListener('click', this.goToWritePage);
+    },
+    goToWritePage : function () {
+        let writeBtn = document.querySelector(".write-btn");
+        let subCategoryId = writeBtn.getAttribute("data-sub-category-id");
 
-        writeBtn.addEventListener('click', goToWritePage);
+        self.location = "/boards/write?subCategoryId=" + subCategoryId;
     }
 }
 
@@ -119,7 +122,9 @@ const write = {
         }
     },
     goToList : function () {
-        self.location = "/boards/list";
+        let subCategoryId = document.querySelector("input[name=subCategoryId]");
+
+        self.location = "/boards/list?subCategoryId=" + subCategoryId.value;
     },
     writeBoard : function () {
         editor.save()
@@ -153,6 +158,9 @@ const write = {
         });
     },
     postBoard : function (board) {
+        let subCategoryId = document.querySelector("input[name=subCategoryId]");
+        board.subCategoryId = subCategoryId.value;
+
         write.postData("/rest/boards", board).then((data) => {
             alert("등록 되었습니다.");
             
