@@ -889,11 +889,9 @@ const SubCategoryModify = {
 
 const HeaderPage = {
     init : function () {
-        console.log("call Header.init");
         this.getBoardList();
     },
     createMenu : function (data) {
-        console.log("call Header.createMenu");
         for (let i = 0; i < data.totalElements; i++) {
             let mainCategory = data.content[i];
             let subCategory = mainCategory.subCategories;
@@ -943,7 +941,6 @@ const HeaderPage = {
     },
     getBoardList : function () {
         let sideBar = document.querySelector("#sideBar");
-        console.log("call Header.getBoardList");
         this.postData("/rest/main/categorys").then((data) => {
             this.createMenu(data);
         });

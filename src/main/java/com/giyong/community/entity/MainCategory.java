@@ -3,6 +3,7 @@ package com.giyong.community.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Data
+@ToString(exclude = {"subCategories", "admin"})
 public class MainCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -71,6 +71,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional
     public Board findById(Long boardId) {
         return boardRepository.findById(boardId).orElse(null);
     }
@@ -81,6 +82,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional
     public void upViewCount(Long boardId, HttpSession session) {
         boolean userHasViewed = hasUserViewedPost(boardId, session);
         if (!userHasViewed) {

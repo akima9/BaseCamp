@@ -5,6 +5,7 @@ import com.giyong.community.dto.MemberDto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Entity
 @Data
+@ToString(exclude = {"boards", "comments"})
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

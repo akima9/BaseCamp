@@ -89,8 +89,10 @@ public class BoardController {
 
     @GetMapping("/boards")
     public String getBoard(Long boardId, Integer page, HttpSession session, Model m) {
+        System.out.println("BoardController.getBoard");
         boardService.upViewCount(boardId, session);
         Board board = boardService.findById(boardId);
+        System.out.println("board = " + board);
         m.addAttribute("board", board);
         m.addAttribute("page", page);
         return "board/board1/view";
