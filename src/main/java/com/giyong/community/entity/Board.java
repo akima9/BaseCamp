@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comments = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

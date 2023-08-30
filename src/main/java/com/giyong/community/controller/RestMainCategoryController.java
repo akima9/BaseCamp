@@ -26,7 +26,9 @@ public class RestMainCategoryController {
 
     @GetMapping("/categorys")
     public String categories(Pageable pageable) throws JsonProcessingException {
+        System.out.println("RestMainCategoryController.categories");
         Page<MainCategory> mainCategories = mainCategoryService.findAll(pageable);
+        System.out.println("mainCategories = " + mainCategories);
         return objectMapper.writeValueAsString(mainCategories);
     }
 }

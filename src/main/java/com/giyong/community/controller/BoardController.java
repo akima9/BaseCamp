@@ -31,12 +31,9 @@ public class BoardController {
     private SubCategoryService subCategoryService;
 
     @DeleteMapping("/boards")
-    public String deleteBoard(BoardDto boardDto, RedirectAttributes redirectAttributes) {
-        System.out.println("BoardController.deleteBoard");
-        System.out.println("boardDto = " + boardDto);
+    public String deleteBoard(BoardDto boardDto) {
         boardService.remove(boardDto.getBoardId());
-        redirectAttributes.addFlashAttribute("subCategoryId", boardDto.getSubCategoryId());
-        return "redirect:/boards/list";
+        return "redirect:/boards/list?subCategoryId=" + boardDto.getSubCategoryId();
     }
 
     @GetMapping("/boards/list")

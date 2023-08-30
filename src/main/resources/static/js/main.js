@@ -941,8 +941,10 @@ const HeaderPage = {
         }
     },
     getBoardList : function () {
+        console.log("call HeaderPage.getBoardList")
         let sideBar = document.querySelector("#sideBar");
         this.postData("/rest/main/categorys").then((data) => {
+            console.log(data);
             this.createMenu(data);
         });
     },
