@@ -14,15 +14,12 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude = {"subCategories", "admin"})
+@ToString(exclude = {"admin"})
 public class MainCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mainCategoryId;
     private String mainCategoryName;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "mainCategory")
-    private List<SubCategory> subCategories;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "admin_id")

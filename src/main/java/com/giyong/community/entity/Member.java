@@ -16,7 +16,6 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude = {"boards", "comments"})
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +23,6 @@ public class Member {
     @Column(unique = true)
     private String memberId;
     private String memberPw;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "member")
-    private List<Board> boards;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "member")
-    private List<Comment> comments;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

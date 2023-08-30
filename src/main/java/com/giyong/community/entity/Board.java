@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude = {"member", "subCategory", "comments"})
+@ToString(exclude = {"member", "subCategory"})
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +30,6 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "board")
-    private List<Comment> comments;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

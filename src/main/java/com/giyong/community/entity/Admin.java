@@ -14,7 +14,6 @@ import java.util.Set;
 
 @Entity
 @Data
-@ToString(exclude = {"mainCategories", "subCategories"})
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +21,6 @@ public class Admin {
     private String adminId;
     private String adminPw;
     private String adminName;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "admin")
-    private List<MainCategory> mainCategories;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "admin")
-    private List<SubCategory> subCategories;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude = {"boards", "mainCategory", "admin"})
+@ToString(exclude = {"mainCategory", "admin"})
 public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +29,6 @@ public class SubCategory {
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admin admin;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "subCategory")
-    private List<Board> boards;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

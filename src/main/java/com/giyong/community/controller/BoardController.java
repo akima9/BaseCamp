@@ -31,12 +31,11 @@ public class BoardController {
     private SubCategoryService subCategoryService;
 
     @DeleteMapping("/boards")
-    public String deleteBoard(BoardDto boardDto, @RequestParam int page, RedirectAttributes redirectAttributes) {
+    public String deleteBoard(BoardDto boardDto, RedirectAttributes redirectAttributes) {
+        System.out.println("BoardController.deleteBoard");
         System.out.println("boardDto = " + boardDto);
-        System.out.println("page = " + page);
-//        boardService.remove(boardDto.getBoardId());
+        boardService.remove(boardDto.getBoardId());
         redirectAttributes.addFlashAttribute("subCategoryId", boardDto.getSubCategoryId());
-        redirectAttributes.addFlashAttribute("page", page);
         return "redirect:/boards/list";
     }
 
