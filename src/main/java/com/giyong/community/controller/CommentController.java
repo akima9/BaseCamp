@@ -27,6 +27,9 @@ public class CommentController {
     @PostMapping("/comments")
     public String createComment(CommentDto commentDto) {
         Comment comment = commentService.write(commentDto);
-        return "redirect:/boards?boardId=" + comment.getBoard().getBoardId();
+        return "redirect:/boards" +
+                "?subCategoryId=" + commentDto.getSubCategoryId() +
+                "&boardId=" + comment.getBoard().getBoardId() +
+                "&page=" + commentDto.getPage();
     }
 }

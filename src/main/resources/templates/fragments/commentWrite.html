@@ -2,7 +2,9 @@
 <div th:fragment="commentWriteFragment">
   <form id="commentForm" method="post" th:action="@{/comments}" onsubmit="return COMMENT.validateForm()">
     <input type="hidden" th:value="${board.boardId}" name="boardId">
-    <input type="hidden" th:value="${session.memberId}" name="writer">
+    <input type="hidden" th:value="${session.memberId}" name="memberId">
+    <input type="hidden" th:value="${param.subCategoryId}" name="subCategoryId">
+    <input type="hidden" th:value="${param.page}" name="page">
     <div class="input-group mb-3">
       <input type="text" class="form-control" name="content">
       <button class="btn btn-outline-secondary" type="submit">댓글등록</button>

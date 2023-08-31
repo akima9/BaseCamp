@@ -11,6 +11,8 @@ public class CommentDto {
     private String content;
     private Long memberId;
     private Long boardId;
+    private Long subCategoryId;
+    private int page;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

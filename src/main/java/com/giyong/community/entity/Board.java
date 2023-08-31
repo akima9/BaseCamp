@@ -32,7 +32,7 @@ public class Board {
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
     @JsonManagedReference
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdAt;

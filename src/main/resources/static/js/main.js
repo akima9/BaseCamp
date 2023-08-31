@@ -344,7 +344,7 @@ const COMMENT = {
         return true;
     },
     timestampToDate : function (data) {
-        let date = new Date(data);
+        let date = new Date(data[0] + "-" + data[1] + "-" + data[2]);
 
         let year = date.getFullYear().toString().slice(-2); // 년도에서 뒤의 두 자리만 추출
         let month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 2자리로 패딩
@@ -396,7 +396,8 @@ const COMMENT = {
         buttonDiv.appendChild(modifyBtn);
         buttonDiv.appendChild(deleteBtn);
         rowDiv.appendChild(createdAtDiv);
-        if (loginId == element.writer) rowDiv.appendChild(buttonDiv);
+
+        if (loginId == element.member.id) rowDiv.appendChild(buttonDiv);
         commentDiv.appendChild(rowDiv);
         commentDiv.appendChild(contents);
         commentWrap.appendChild(commentDiv);
@@ -517,7 +518,7 @@ const COMMENT = {
             "boardId": boardId
         };
         let queryString = new URLSearchParams(params).toString();
-        this.getData("/comments?" + queryString).then((data) => {
+        this.getData("/rest/comments?" + queryString).then((data) => {
             data.forEach((element) => {
                 this.createCommentDom(element);
             });
@@ -554,7 +555,6 @@ const SubCategoryList = {
 
 const MainCategoryList = {
     init : function () {
-        console.log("call CategoryList.init");
         let categoryCreateBtn = document.querySelector(".create-btn");
         categoryCreateBtn.addEventListener("click", this.goToCreatePage);
     },
@@ -686,7 +686,7 @@ const MainCategoryCreate = {
             inputMainCategoryName.focus();
             return false;
         }
-        console.log(inputMainCategoryName.getAttribute("data-check"));
+
         if (inputMainCategoryName.getAttribute("data-check") != "true") {
             alert("상위 카테고리명 중복확인을 해주세요.")
             return false;
@@ -774,7 +774,7 @@ const MainCategoryModify = {
             inputMainCategoryName.focus();
             return false;
         }
-        console.log(inputMainCategoryName.getAttribute("data-check"));
+
         if (inputMainCategoryName.getAttribute("data-check") != "true") {
             alert("상위 카테고리명 중복확인을 해주세요.")
             return false;
@@ -941,10 +941,8 @@ const HeaderPage = {
         }
     },
     getBoardList : function () {
-        console.log("call HeaderPage.getBoardList")
         let sideBar = document.querySelector("#sideBar");
         this.postData("/rest/main/categorys").then((data) => {
-            console.log(data);
             this.createMenu(data);
         });
     },

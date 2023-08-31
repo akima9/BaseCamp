@@ -12,13 +12,12 @@ import java.util.Date;
 
 @Entity
 @Data
-@ToString(exclude = {"member", "board"})
+@ToString(exclude = {"board"})
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
     private String content;
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
