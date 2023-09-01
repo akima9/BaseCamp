@@ -361,7 +361,7 @@ const COMMENT = {
         let commentDiv = document.createElement("div");
         commentDiv.setAttribute("class", "comment");
         commentDiv.setAttribute("data-commentId", element.commentId);
-        commentDiv.setAttribute("data-writer", element.writer);
+        commentDiv.setAttribute("data-memberId", element.member.id);
         
         let rowDiv = document.createElement("div");
         rowDiv.setAttribute("class", "row");
@@ -405,16 +405,6 @@ const COMMENT = {
         editBtn.addEventListener("click", this.editComment);
         modifyBtn.addEventListener("click", this.modifyComment);
         deleteBtn.addEventListener("click", this.deleteComment);
-        // <div>
-        //     <div class="row">
-        //         <div class="col-auto me-auto fw-light fst-italic text-secondary">createdAt</div>
-        //         <div class="col-auto">
-        //         <button type="button" id="modifyCommentBtn" class="btn btn-light btn-sm">수정</button>
-        //         <button type="button" id="deleteCommentBtn" class="btn btn-outline-danger btn-sm">삭제</button>
-        //         </div>
-        //     </div>
-        //     <p>내용</p>
-        // </div>
     },
     deleteComment : function (event) {
         if (confirm("댓글을 삭제하시겠습니까?")) {
@@ -445,6 +435,20 @@ const COMMENT = {
             boardIdInput.setAttribute("value", boardId);
             form.appendChild(boardIdInput);
 
+            let subCategoryId = document.querySelector("input[name=subCategoryId]");
+            let subCategoryIdInput = document.createElement("input");
+            subCategoryIdInput.setAttribute("type", "hidden");
+            subCategoryIdInput.setAttribute("name", "subCategoryId");
+            subCategoryIdInput.setAttribute("value", subCategoryId.value);
+            form.appendChild(subCategoryIdInput);
+
+            let page = document.querySelector("input[name=page]");
+            let pageInput = document.createElement("input");
+            pageInput.setAttribute("type", "hidden");
+            pageInput.setAttribute("name", "page");
+            pageInput.setAttribute("value", page.value);
+            form.appendChild(pageInput);
+
             document.body.appendChild(form);
             form.submit();
         }
@@ -472,7 +476,7 @@ const COMMENT = {
         let modifyBtn = event.target;
         let parentDiv = modifyBtn.closest(".comment");
         let commentId = parentDiv.getAttribute("data-commentid");
-        let writer = parentDiv.getAttribute("data-writer");
+        let memberId = parentDiv.getAttribute("data-memberId");
         let content = parentDiv.querySelector("input[name=content]").value;
 
         let form = document.createElement("form");
@@ -491,11 +495,11 @@ const COMMENT = {
         commentIdInput.setAttribute("value", commentId);
         form.appendChild(commentIdInput);
 
-        let writerInput = document.createElement("input");
-        writerInput.setAttribute("type", "hidden");
-        writerInput.setAttribute("name", "writer");
-        writerInput.setAttribute("value", writer);
-        form.appendChild(writerInput);
+        let memberIdInput = document.createElement("input");
+        memberIdInput.setAttribute("type", "hidden");
+        memberIdInput.setAttribute("name", "memberId");
+        memberIdInput.setAttribute("value", memberId);
+        form.appendChild(memberIdInput);
 
         let contentInput = document.createElement("input");
         contentInput.setAttribute("type", "hidden");
@@ -508,6 +512,20 @@ const COMMENT = {
         boardIdInput.setAttribute("name", "boardId");
         boardIdInput.setAttribute("value", boardId);
         form.appendChild(boardIdInput);
+
+        let subCategoryId = document.querySelector("input[name=subCategoryId]");
+        let subCategoryIdInput = document.createElement("input");
+        subCategoryIdInput.setAttribute("type", "hidden");
+        subCategoryIdInput.setAttribute("name", "subCategoryId");
+        subCategoryIdInput.setAttribute("value", subCategoryId.value);
+        form.appendChild(subCategoryIdInput);
+
+        let page = document.querySelector("input[name=page]");
+        let pageInput = document.createElement("input");
+        pageInput.setAttribute("type", "hidden");
+        pageInput.setAttribute("name", "page");
+        pageInput.setAttribute("value", page.value);
+        form.appendChild(pageInput);
 
         document.body.appendChild(form);
         form.submit();

@@ -17,12 +17,18 @@ public class CommentController {
     @DeleteMapping("/comments")
     public String deleteComment(CommentDto commentDto) {
         commentService.remove(commentDto.getCommentId());
-        return "redirect:/boards?boardId=" + commentDto.getBoardId();
+        return "redirect:/boards" +
+                "?subCategoryId=" + commentDto.getSubCategoryId() +
+                "&boardId=" + commentDto.getBoardId() +
+                "&page=" + commentDto.getPage();
     }
     @PutMapping("/comments")
     public String modifyComment(CommentDto commentDto) {
         Comment comment = commentService.modify(commentDto);
-        return "redirect:/boards?boardId=" + comment.getBoard().getBoardId();
+        return "redirect:/boards" +
+                "?subCategoryId=" + commentDto.getSubCategoryId() +
+                "&boardId=" + comment.getBoard().getBoardId() +
+                "&page=" + commentDto.getPage();
     }
     @PostMapping("/comments")
     public String createComment(CommentDto commentDto) {
