@@ -3,13 +3,22 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
-<div layout:fragment="content">
-    <h1>Index page</h1>
-    <ul>
-        <li>모든 게시판의 게시물 목록을 모아 놓은 페이지를 보여준다</li>
-        <li>게시물을 클릭하면, 로그인 여부를 확인한다</li>
-        <li>로그인 상태라면 게시물 상세보기 페이지로 이동한다</li>
-        <li>로그인 상태가 아니라면, 로그인 페이지로 이동한다</li>
-    </ul>
+<div layout:fragment="content" class="container">
+    <div class="container text-center">
+        <div class="row g-4">
+            <div class="col" th:each="mainCategory : ${mainCategories}">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header" th:text="${mainCategory.mainCategoryName}">
+                        Featured
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="subCategory : ${mainCategory.subCategories}">
+                            <a th:href="@{/boards/list(subCategoryId=${subCategory.subCategoryId})}" th:text="${subCategory.subCategoryName}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </html>
