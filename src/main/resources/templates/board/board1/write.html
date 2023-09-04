@@ -46,7 +46,13 @@
                     },
                     shortcut: 'CMD+SHIFT+H'
                 },
-                image: SimpleImage,
+                image: {
+                    class: SimpleImage,
+                    inlineToolbar: true,
+                    config: {
+                        placeholder: 'Paste image URL!'
+                    }
+                },
                 list: {
                     class: List,
                     inlineToolbar: true,
