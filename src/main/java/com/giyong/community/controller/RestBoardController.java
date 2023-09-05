@@ -4,10 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giyong.community.dto.BoardDto;
 import com.giyong.community.entity.Board;
+import com.giyong.community.service.BoardImagesService;
 import com.giyong.community.service.BoardService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -18,7 +20,16 @@ public class RestBoardController {
     @Autowired
     private BoardService boardService;
     @Autowired
+    private BoardImagesService boardImagesService;
+    @Autowired
     private ObjectMapper objectMapper;
+
+    @PostMapping("/boards/uploadFile")
+    public String imageUpload(MultipartFile image) {
+        System.out.println("image = " + image);
+        boardImagesService.store(image);
+        return "test";
+    }
 
     @PutMapping("/boards")
     public String boards(@RequestBody Map<String, Object> map) throws JsonProcessingException {

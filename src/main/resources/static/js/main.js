@@ -232,6 +232,10 @@ const write = {
     changeReadMode : function () {
         writeBtn.classList.remove("d-none");
         modifyBtn.classList.add("d-none");
+    },
+    imageUpload : function (file) {
+        console.log("call imageUpload");
+        console.log(file);
     }
 }
 
