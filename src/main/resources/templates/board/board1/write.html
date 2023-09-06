@@ -50,13 +50,24 @@
                 image: {
                     class: ImageTool,
                     config: {
-                        endpoints: {
-                            byFile: '/rest/boards/uploadFile',
-                        },
-                        onFileUploadResponse: (response) => {
-                            console.log("call onFileUploadResponse");
-                            console.log(response);
+                        uploader: {
+                            uploadByFile(file) {
+                                console.log(file);
+                                let formData = new FormData();
+                                formData.append("file", file);
+                                console.log(formData.values().next().value);
+                                return write.imageUpload("/rest/boards/uploadFile", formData).then((resData) => {
+                                    return resData
+                                })
+                            }
                         }
+                        // endpoints: {
+                        //     byFile: '/rest/boards/uploadFile',
+                        // },
+                        // onFileUploadResponse: (response) => {
+                        //     console.log("call onFileUploadResponse");
+                        //     console.log(response);
+                        // }
                     }
                 },
                 list: {

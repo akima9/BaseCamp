@@ -3,6 +3,7 @@ package com.giyong.community.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giyong.community.dto.BoardDto;
+import com.giyong.community.dto.BoardImagesDto;
 import com.giyong.community.entity.Board;
 import com.giyong.community.service.BoardImagesService;
 import com.giyong.community.service.BoardService;
@@ -11,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -25,10 +30,11 @@ public class RestBoardController {
     private ObjectMapper objectMapper;
 
     @PostMapping("/boards/uploadFile")
-    public String imageUpload(MultipartFile image) {
-        System.out.println("image = " + image);
-        boardImagesService.store(image);
-        return "test";
+    public String imageUpload(@RequestParam("file") MultipartFile file) {
+        String destinationPath = boardImagesService.store(file);
+
+        String s = "{\"success\" : 1, \"file\": {\"url\" : \"https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg\"}}";
+        return s;
     }
 
     @PutMapping("/boards")

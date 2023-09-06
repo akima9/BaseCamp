@@ -7,5 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 public interface BoardImagesService {
     BoardImages upload(BoardImagesDto boardImagesDto);
 
-    void store(MultipartFile file);
+    String store(MultipartFile file);
 }

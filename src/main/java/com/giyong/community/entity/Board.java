@@ -21,6 +21,7 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardId;
     private String title;
+    @Lob
     private String content;
     @JsonBackReference
     @ManyToOne
