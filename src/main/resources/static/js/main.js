@@ -257,6 +257,33 @@ const write = {
     }
 }
 
+const Images = {
+    upload : async function (url = "", data = {}) {
+        console.log("call Image.upload");
+        console.log("url", url);
+        console.log("data", data);
+
+        let response = await fetch(url, {
+            method: "post",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {},
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: data
+        });
+        // console.log("start sleep");
+        // this.sleep(30000);
+        // console.log("end sleep");
+        return response.json();
+    },
+    // sleep: function (ms) {
+    //     let wakeUpTime = Date.now() + ms;
+    //     while (Date.now() < wakeUpTime) {}
+    // }
+}
+
 const VIEW = {
     init : function () {
         let writeBtn = document.querySelector("#writeBtn");     // 수정하기 버튼

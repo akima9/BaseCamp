@@ -56,7 +56,7 @@
                                 let formData = new FormData();
                                 formData.append("file", file);
                                 console.log(formData.values().next().value);
-                                return write.imageUpload("/rest/boards/uploadFile", formData).then((resData) => {
+                                return Images.upload("/rest/boards/uploadFile", formData).then((resData) => {
                                     console.log(resData);
                                     return {
                                         success: 1,
