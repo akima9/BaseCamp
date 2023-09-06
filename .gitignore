@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Custom ###
-/upload-dir/
+/src/main/resources/static/img/

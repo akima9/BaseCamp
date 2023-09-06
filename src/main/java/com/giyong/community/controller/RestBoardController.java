@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giyong.community.dto.BoardDto;
 import com.giyong.community.dto.BoardImagesDto;
+import com.giyong.community.dto.ImageFileDto;
+import com.giyong.community.dto.ImageUploadResponseDto;
 import com.giyong.community.entity.Board;
 import com.giyong.community.service.BoardImagesService;
 import com.giyong.community.service.BoardService;
+import org.apache.tomcat.util.json.JSONParser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +33,19 @@ public class RestBoardController {
     private ObjectMapper objectMapper;
 
     @PostMapping("/boards/uploadFile")
-    public String imageUpload(@RequestParam("file") MultipartFile file) {
+    public String imageUpload(@RequestParam("file") MultipartFile file) throws JsonProcessingException {
         String destinationPath = boardImagesService.store(file);
 
-        String s = "{\"success\" : 1, \"file\": {\"url\" : \"https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg\"}}";
-        return s;
+//        String s = "{\"success\" : 1, \"file\": {\"url\" : \"" + destinationPath + "\"}}";
+        ImageFileDto imageFileDto = new ImageFileDto();
+        imageFileDto.setUrl(destinationPath);
+
+        ImageUploadResponseDto imageUploadResponseDto = new ImageUploadResponseDto();
+        imageUploadResponseDto.setSuccess(1);
+        imageUploadResponseDto.setFile(imageFileDto);
+
+        return objectMapper.writeValueAsString(imageUploadResponseDto);
+//        return destinationPath;
     }
 
     @PutMapping("/boards")

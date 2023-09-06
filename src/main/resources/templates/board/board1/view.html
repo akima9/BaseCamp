@@ -32,6 +32,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/warning@latest"></script><!-- Warning -->
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.8.1/dist/bundle.min.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         let content = JSON.parse(/*[[${board.content}]]*/);
@@ -50,7 +51,35 @@
                     },
                     shortcut: 'CMD+SHIFT+H'
                 },
-                image: SimpleImage,
+                image: {
+                    class: ImageTool,
+                    config: {
+                        uploader: {
+                            uploadByFile(file) {
+                                console.log(file);
+                                let formData = new FormData();
+                                formData.append("file", file);
+                                console.log(formData.values().next().value);
+                                return write.imageUpload("/rest/boards/uploadFile", formData).then((resData) => {
+                                    console.log(resData);
+                                    return {
+                                        success: 1,
+                                        file: {
+                                            url: resData.file.url
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                        // endpoints: {
+                        //     byFile: '/rest/boards/uploadFile',
+                        // },
+                        // onFileUploadResponse: (response) => {
+                        //     console.log("call onFileUploadResponse");
+                        //     console.log(response);
+                        // }
+                    }
+                },
                 list: {
                     class: List,
                     inlineToolbar: true,

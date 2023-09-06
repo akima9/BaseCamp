@@ -57,7 +57,13 @@
                                 formData.append("file", file);
                                 console.log(formData.values().next().value);
                                 return write.imageUpload("/rest/boards/uploadFile", formData).then((resData) => {
-                                    return resData
+                                    console.log(resData);
+                                    return {
+                                        success: 1,
+                                        file: {
+                                            url: resData.file.url
+                                        }
+                                    }
                                 })
                             }
                         }

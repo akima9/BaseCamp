@@ -46,13 +46,11 @@ public class BoardImagesServiceImpl implements BoardImagesService {
         String day = now.format(DateTimeFormatter.ofPattern("dd"));
         String storedPath = year + "/" + month + "/" + day + "/";
 
-        File filePath = new File(storedPath);
-
-        if (!filePath.exists()) filePath.mkdirs();
-
         Path destinationFile = this.rootLocation.resolve(storedPath + storedFileName)
                 .normalize().toAbsolutePath();
-        System.out.println("destinationFile = " + destinationFile);
+
+        File filePath = new File(String.valueOf(destinationFile));
+        if (!filePath.exists()) filePath.mkdirs();
 
         try (InputStream inputStream = file.getInputStream()) {
             Files.copy(inputStream, destinationFile,
@@ -61,6 +59,17 @@ public class BoardImagesServiceImpl implements BoardImagesService {
             throw new RuntimeException(e);
         }
 
-        return String.valueOf(destinationFile);
+        String destinationPathString = String.valueOf(destinationFile);
+        String[] split = destinationPathString.split("/");
+        String destination = "http://localhost:8080";
+        for (int i = split.length - 5; i < split.length; i++) {
+            System.out.println("split[i] = " + split[i]);
+            destination += "/";
+            destination += split[i];
+        }
+
+        System.out.println("destination = " + destination);
+
+        return destination;
     }
 }
