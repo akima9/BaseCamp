@@ -19,6 +19,13 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        session.invalidate();
+        return "redirect:/admin";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "admin/login";
