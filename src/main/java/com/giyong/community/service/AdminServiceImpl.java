@@ -32,6 +32,7 @@ public class AdminServiceImpl implements AdminService{
 
         AdminDto dto = modelMapper.map(oldAdmin, AdminDto.class);
         dto.setAdminName(adminDto.getAdminName());
+        dto.setAdminPw(adminDto.getAdminPw());
 
         Admin modifyAdmin = modelMapper.map(dto, Admin.class);
 

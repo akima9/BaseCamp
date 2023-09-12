@@ -1031,3 +1031,43 @@ const HeaderPage = {
         return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
     }
 }
+
+const AdminEdit = {
+    validateForm : function () {
+        let adminName = document.querySelector('input[name=adminName]');
+        let adminPw = document.querySelector('input[name=adminPw]');
+        let confirmPw = document.querySelector('input[name=confirmPw]');
+
+        if (adminName.value.length < 2) {
+            alert("2글자 이상의 이름을 입력해주세요.");
+            adminName.focus();
+            return false;
+        }
+
+        if (adminPw.value.length < 6) {
+            alert("6글자 이상의 비밀번호를 입력해주세요.");
+            adminPw.focus();
+            return false;
+        }
+
+        if (adminPw.value != confirmPw.value) {
+            alert("입력하신 비밀번호가 일치하지 않습니다.");
+            confirmPw.focus();
+            return false;
+        }
+
+        return confirm("수정하시겠습니까?");
+    },
+    modifyChecker : function () {
+        let resCode = document.querySelector("#resCode");
+        
+        if (resCode.value == "200") {
+            alert("수정 되었습니다.");
+        }
+    },
+    goToList : function () {
+        console.log("call AdminEdit.goToList");
+        let page = document.querySelector("input[name=page]");
+        self.location = "/admin/list?page="+page.value;
+    }
+}

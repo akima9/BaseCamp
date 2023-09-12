@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}">
+<div layout:fragment="content" class="container">
+    <div class="text-end">
+        <button type="button" class="btn btn-primary btn-sm add-admin-btn">관리자 추가</button>
+    </div>
+    <table class="table table-hover caption-top">
+        <caption>관리자 목록</caption>
+        <thead class="table-light">
+        <tr>
+            <th scope="col" class="text-center">번호</th>
+            <th scope="col" class="text-center">아이디</th>
+            <th scope="col" class="text-center">이름</th>
+            <th scope="col" class="text-center">등록일자</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="admin : ${admins}">
+            <th scope="row" class="text-center" th:text="${admins.pageable.pageNumber * admins.pageable.pageSize + adminStat.count}">번호</th>
+            <td class="text-center">
+                <a th:href="@{/admin/edit(id=${admin.id},page=${admins.pageable.pageNumber})}" th:text="${admin.adminId}">아이디</a>
+            </td>
+            <td class="text-center" th:text="${admin.adminName}">이름</td>
+            <td class="text-center" th:text="${#temporals.format(admin.createdAt, 'yy/MM/dd')}">등록일자</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation" th:if="${!admins.isEmpty()}">
+        <th:block th:with="
+            pageNumber = ${admins.pageable.pageNumber},
+            pageSize = ${admins.pageable.pageSize},
+            totalPages = ${admins.totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})
+        ">
+            <ul class="pagination justify-content-center">
+                <li th:classappend="${admins.first} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${admins.first} ? '#' : @{/admin/list(page=${pageNumber - 1})}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+                    <a th:text="${page}" class="page-link" th:href="@{/admin/list(page=${page - 1})}"></a>
+                </li>
+                <li th:classappend="${admins.last} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${admins.last} ? '#' : @{/admin/list(page=${pageNumber + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </th:block>
+    </nav>
+
+<!--    <script>-->
+<!--        list.init();-->
+<!--    </script>-->
+</div>
+</html>

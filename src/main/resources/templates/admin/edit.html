@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}">
+<div layout:fragment="content" class="container">
+  <input type="hidden" id="resCode" th:value="${resCode}">
+  <h1 th:text="${admin.adminId}">ID</h1>
+  <form method="post" th:action="@{/admin/edit}" onsubmit="return AdminEdit.validateForm()">
+    <input type="hidden" name="_method" value="put">
+    <input type="hidden" name="id" th:value="${admin.id}">
+    <input type="hidden" name="page" th:value="${page}">
+    <div class="mb-3">
+      <label for="inputAdminName" class="form-label">Name</label>
+      <input type="text" class="form-control" id="inputAdminName" name="adminName" th:value="${admin.adminName}">
+    </div>
+    <div class="mb-3">
+      <label for="inputAdminPw" class="form-label">Password</label>
+      <input type="password" class="form-control" id="inputAdminPw" name="adminPw" th:value="${admin.adminPw}">
+    </div>
+    <div class="mb-3">
+      <label for="inputConfirmPw" class="form-label">Password Confirmation</label>
+      <input type="password" class="form-control" id="inputConfirmPw" name="confirmPw" th:value="${admin.adminPw}">
+    </div>
+    <div class="mb3 text-center">
+      <button type="submit" class="btn btn-primary">수정</button>
+      <button type="button" id="listBtn" class="btn btn-light" onclick="AdminEdit.goToList()">목록</button>
+    </div>
+  </form>
+  <script>
+    AdminEdit.modifyChecker();
+  </script>
+</div>
+</html>
