@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/admin_layout}">
 <div layout:fragment="content" class="container">
     <div class="text-end">
-        <button type="button" class="btn btn-primary btn-sm add-admin-btn">관리자 추가</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="AdminList.addAdmin()">관리자 추가</button>
     </div>
     <table class="table table-hover caption-top">
         <caption>관리자 목록</caption>
@@ -55,9 +55,5 @@
             </ul>
         </th:block>
     </nav>
-
-<!--    <script>-->
-<!--        list.init();-->
-<!--    </script>-->
 </div>
 </html>

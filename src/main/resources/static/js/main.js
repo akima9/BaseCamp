@@ -1071,3 +1071,9 @@ const AdminEdit = {
         self.location = "/admin/list?page="+page.value;
     }
 }
+
+const AdminList = {
+    addAdmin : function () {
+        self.location = "/admin/add";
+    }
+}

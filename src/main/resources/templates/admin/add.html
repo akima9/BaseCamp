@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}">
+<div layout:fragment="content" class="container">
+  <input type="hidden" id="resCode" th:value="${resCode}">
+  <h1>Admin Sign-up.</h1>
+  <form method="post" th:action="@{/admin/add}" onsubmit="return AdminAdd.validateForm()">
+    <div class="mb-3 row">
+      <label for="inputAdminId" class="form-label">ID</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="inputAdminId" name="adminId">
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-primary w-100" onclick="AdminAdd.dupeCheck">중복확인</button>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="inputAdminName" class="form-label">Name</label>
+      <input type="text" class="form-control" id="inputAdminName" name="adminName">
+    </div>
+    <div class="mb-3">
+      <label for="inputAdminPw" class="form-label">Password</label>
+      <input type="password" class="form-control" id="inputAdminPw" name="adminPw">
+    </div>
+    <div class="mb-3">
+      <label for="inputConfirmPw" class="form-label">Password Confirmation</label>
+      <input type="password" class="form-control" id="inputConfirmPw" name="confirmPw">
+    </div>
+    <div class="mb3 text-center">
+      <button type="submit" class="btn btn-primary">등록</button>
+      <button type="button" id="listBtn" class="btn btn-light" onclick="AdminAdd.goToList()">목록</button>
+    </div>
+  </form>
+</div>
+</html>

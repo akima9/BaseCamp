@@ -25,7 +25,12 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @PutMapping("edit")
+    @GetMapping("/add")
+    public String addAdmin() {
+        return "/admin/add";
+    }
+
+    @PutMapping("/edit")
     public String editAdmin(AdminDto adminDto, Integer page, RedirectAttributes redirect) {
         System.out.println("AdminController.editAdmin");
         System.out.println("adminDto = " + adminDto);
@@ -34,7 +39,7 @@ public class AdminController {
         return "redirect:/admin/edit?id="+admin.getId()+"&page="+page;
     }
 
-    @GetMapping("edit")
+    @GetMapping("/edit")
     public String goToAdminEdit(AdminDto adminDto, Integer page, Model m) {
         Admin admin = adminService.findById(adminDto.getId());
 
