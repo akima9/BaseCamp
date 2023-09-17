@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,10 @@ import java.util.Date;
 public class AdminServiceImpl implements AdminService{
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
@@ -28,11 +33,16 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public Admin modify(AdminDto adminDto) {
+        // 아이디로 기존 admin 불러오기.
         Admin oldAdmin = adminRepository.findById(adminDto.getId()).orElse(null);
-
+        // admin -> adminDto로 변환.
         AdminDto dto = modelMapper.map(oldAdmin, AdminDto.class);
+        // 변경된 데이터 세팅.
         dto.setAdminName(adminDto.getAdminName());
-        dto.setAdminPw(adminDto.getAdminPw());
+        // 비밀번호는 입력한 경우에만 변경.
+        if (adminDto.getAdminPw() != null) {
+            dto.setAdminPw(passwordEncoder.encode(adminDto.getAdminPw()));
+        }
 
         Admin modifyAdmin = modelMapper.map(dto, Admin.class);
 

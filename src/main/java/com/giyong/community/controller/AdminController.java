@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,8 @@ import javax.servlet.http.HttpSession;
 public class AdminController {
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/add")
     public String addAdmin() {
@@ -32,8 +35,6 @@ public class AdminController {
 
     @PutMapping("/edit")
     public String editAdmin(AdminDto adminDto, Integer page, RedirectAttributes redirect) {
-        System.out.println("AdminController.editAdmin");
-        System.out.println("adminDto = " + adminDto);
         Admin admin = adminService.modify(adminDto);
         redirect.addFlashAttribute("resCode", 200);
         return "redirect:/admin/edit?id="+admin.getId()+"&page="+page;
@@ -85,9 +86,14 @@ public class AdminController {
             return "redirect:/admin/login";
         }
 
-        HttpSession session = request.getSession(true);
-        session.setAttribute("adminId", admin.getId());
-
-        return "redirect:/admin";
+        if (passwordEncoder.matches(adminDto.getAdminPw(), admin.getAdminPw())) {
+            // 비밀번호가 같으면 로그인 처리
+            HttpSession session = request.getSession(true);
+            session.setAttribute("adminId", admin.getId());
+            return "redirect:/admin";
+        } else {
+            redirect.addFlashAttribute("resCode", 405);
+            return "redirect:/admin/login";
+        }
     }
 }

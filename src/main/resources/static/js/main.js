@@ -1044,16 +1044,18 @@ const AdminEdit = {
             return false;
         }
 
-        if (adminPw.value.length < 6) {
-            alert("6글자 이상의 비밀번호를 입력해주세요.");
-            adminPw.focus();
-            return false;
-        }
-
-        if (adminPw.value != confirmPw.value) {
-            alert("입력하신 비밀번호가 일치하지 않습니다.");
-            confirmPw.focus();
-            return false;
+        if (adminPw.value.length > 0 || confirmPw.value.length > 0) {
+            if (adminPw.value.length < 6) {
+                alert("6글자 이상의 비밀번호를 입력해주세요.");
+                adminPw.focus();
+                return false;
+            }
+    
+            if (adminPw.value != confirmPw.value) {
+                alert("입력하신 비밀번호가 일치하지 않습니다.");
+                confirmPw.focus();
+                return false;
+            }
         }
 
         return confirm("수정하시겠습니까?");
@@ -1076,4 +1078,25 @@ const AdminList = {
     addAdmin : function () {
         self.location = "/admin/add";
     }
+}
+
+const AdminLogin = {
+    validateForm : function () {
+        let adminId = document.querySelector('input[name=adminId]');
+        let adminPw = document.querySelector('input[name=adminPw]');
+
+        if (adminId.value.length < 2) {
+            alert("2글자 이상의 ID를 입력해주세요.");
+            adminId.focus();
+            return false;
+        }
+
+        if (adminPw.value.length < 6) {
+            alert("6글자 이상의 비밀번호를 입력해주세요.");
+            adminPw.focus();
+            return false;
+        }
+
+        return true;
+    }   
 }
