@@ -1,5 +1,5 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="commentWriteFragment">
+<div th:if="${session.memberId != null}" th:fragment="commentWriteFragment">
   <form id="commentForm" method="post" th:action="@{/comments}" onsubmit="return COMMENT.validateForm()">
     <input type="hidden" th:value="${board.boardId}" name="boardId">
     <input type="hidden" th:value="${session.memberId}" name="memberId">
