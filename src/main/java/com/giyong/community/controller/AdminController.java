@@ -86,18 +86,18 @@ public class AdminController {
             return "redirect:/admin/login";
         }
 
-//        if (passwordEncoder.matches(adminDto.getAdminPw(), admin.getAdminPw())) {
-//            // 비밀번호가 같으면 로그인 처리
-//            HttpSession session = request.getSession(true);
-//            session.setAttribute("adminId", admin.getId());
-//            return "redirect:/admin";
-//        } else {
-//            redirect.addFlashAttribute("resCode", 405);
-//            return "redirect:/admin/login";
-//        }
+        if (passwordEncoder.matches(adminDto.getAdminPw(), admin.getAdminPw())) {
+            // 비밀번호가 같으면 로그인 처리
+            HttpSession session = request.getSession(true);
+            session.setAttribute("adminId", admin.getId());
+            return "redirect:/admin";
+        } else {
+            redirect.addFlashAttribute("resCode", 405);
+            return "redirect:/admin/login";
+        }
 
-        HttpSession session = request.getSession(true);
-        session.setAttribute("adminId", admin.getId());
-        return "redirect:/admin";
+//        HttpSession session = request.getSession(true);
+//        session.setAttribute("adminId", admin.getId());
+//        return "redirect:/admin";
     }
 }

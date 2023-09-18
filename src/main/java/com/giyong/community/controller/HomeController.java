@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
     @Autowired
@@ -22,7 +25,13 @@ public class HomeController {
     }
 
     @GetMapping("/admin")
-    public String admin() {
+    public String admin(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/admin/login";
+        }
+
         return "admin";
     }
 }
