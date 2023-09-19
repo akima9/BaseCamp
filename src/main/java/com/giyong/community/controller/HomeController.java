@@ -26,12 +26,6 @@ public class HomeController {
 
     @GetMapping("/admin")
     public String admin(HttpServletRequest request) {
-        HttpSession session = request.getSession(true);
-
-        if (session.getAttribute("adminId") == null) {
-            return "redirect:/admin/login";
-        }
-
         return "admin";
     }
 }
