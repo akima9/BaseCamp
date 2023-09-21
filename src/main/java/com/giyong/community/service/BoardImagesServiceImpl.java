@@ -35,6 +35,7 @@ public class BoardImagesServiceImpl implements BoardImagesService {
 
     @Override
     public String store(MultipartFile file) {
+        System.out.println("BoardImagesServiceImpl.store");
         long nowTime = System.currentTimeMillis();
         String originFileName = String.valueOf(Paths.get(file.getOriginalFilename()));
         String ext = originFileName.substring(originFileName.lastIndexOf(".") + 1);
@@ -49,6 +50,7 @@ public class BoardImagesServiceImpl implements BoardImagesService {
         Path destinationFile = this.rootLocation.resolve(storedPath + storedFileName)
                 .normalize().toAbsolutePath();
 
+        System.out.println("destinationFile = " + destinationFile);
         File filePath = new File(String.valueOf(destinationFile));
         if (!filePath.exists()) filePath.mkdirs();
 
@@ -61,7 +63,8 @@ public class BoardImagesServiceImpl implements BoardImagesService {
 
         String destinationPathString = String.valueOf(destinationFile);
         String[] split = destinationPathString.split("/");
-        String destination = "http://localhost:8080";
+//        String destination = "http://localhost:8080";
+        String destination = "https://www.basecamp.o-r.kr";
         for (int i = split.length - 5; i < split.length; i++) {
             System.out.println("split[i] = " + split[i]);
             destination += "/";

@@ -35,3 +35,4 @@ build/
 ### Custom ###
 /src/main/resources/static/img/
 /src/main/resources/application.properties
+/src/main/resources/ssl/
