@@ -37,7 +37,7 @@ public class BoardController {
     }
 
     @GetMapping("/boards/list")
-    public String goToBoardList(Long subCategoryId, BoardDto boardDto, Model m, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
+    public String goToBoardList(Long subCategoryId, BoardDto boardDto, Model m, @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
         Page<Board> boards = boardService.findAllBySubCategoryId(boardDto.getSubCategoryId(), pageable);
         SubCategory subCategory = subCategoryService.findById(subCategoryId);
         m.addAttribute("boards", boards);

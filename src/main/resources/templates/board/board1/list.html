@@ -15,6 +15,7 @@
             <th scope="col" class="text-center w-50">제목</th>
             <th scope="col" class="text-center">조회수</th>
             <th scope="col" class="text-center">댓글수</th>
+            <th scope="col" class="text-center">작성자</th>
             <th scope="col" class="text-center">날짜</th>
         </tr>
         </thead>
@@ -26,6 +27,7 @@
             </td>
             <td class="text-center" th:text="${board.viewCount}">조회수</td>
             <td class="text-center" th:text="${board.comments.size}">댓글수</td>
+            <td class="text-center" th:text="${board.member.memberId}">작성자</td>
             <td class="text-center" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd')}">createdAt</td>
         </tr>
         </tbody>
@@ -42,15 +44,15 @@
         ">
             <ul class="pagination justify-content-center">
                 <li th:classappend="${boards.first} ? 'disabled'" class="page-item">
-                    <a class="page-link" th:href="${boards.first} ? '#' : @{/boards/list(page=${pageNumber - 1})}">
+                    <a class="page-link" th:href="${boards.first} ? '#' : @{/boards/list(subCategoryId=${subCategory.subCategoryId},page=${pageNumber - 1})}">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
-                    <a th:text="${page}" class="page-link" th:href="@{/boards/list(page=${page - 1})}"></a>
+                    <a th:text="${page}" class="page-link" th:href="@{/boards/list(subCategoryId=${subCategory.subCategoryId},page=${page - 1})}"></a>
                 </li>
                 <li th:classappend="${boards.last} ? 'disabled'" class="page-item">
-                    <a class="page-link" th:href="${boards.last} ? '#' : @{/boards/list(page=${pageNumber + 1})}" aria-label="Next">
+                    <a class="page-link" th:href="${boards.last} ? '#' : @{/boards/list(subCategoryId=${subCategory.subCategoryId},page=${pageNumber + 1})}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

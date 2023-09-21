@@ -63,8 +63,8 @@ public class BoardImagesServiceImpl implements BoardImagesService {
 
         String destinationPathString = String.valueOf(destinationFile);
         String[] split = destinationPathString.split("/");
-//        String destination = "http://localhost:8080";
-        String destination = "https://www.basecamp.o-r.kr";
+        String destination = "http://localhost:8080";
+//        String destination = "https://www.basecamp.o-r.kr";
         for (int i = split.length - 5; i < split.length; i++) {
             System.out.println("split[i] = " + split[i]);
             destination += "/";
