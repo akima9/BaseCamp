@@ -25,83 +25,18 @@
         </div>
     </div>
 
+    <h1 th:text="${board.title}">글 제목</h1>
+
     <p>
         <small class="text-body-tertiary">
             <span th:text="|${board.member.memberId}님이 작성, ${#temporals.format(board.updatedAt, 'yyyy-MM-dd')}에 최종 변경|"></span>
         </small>
     </p>
 
-    <div id="editor"></div>
+    <div class="mb-5" th:utext="${board.content}"></div>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-        let toolbarOptions = [
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            ['bold', 'italic', 'underline', 'strike', 'image'],        // toggled buttons
-            ['blockquote', 'code-block'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'align': [] }],
-            ['clean']                                         // remove formatting button
-        ];
-
-        let quill = new Quill('#editor', {
-            theme: 'snow',
-            placeholder: '글을 작성 해주세요.',
-            modules: {
-                toolbar: toolbarOptions
-            }
-        });
-
-        // 이미지 파일 서버 업로드 후 내용 입력
-        let customImageHandler = () => {
-            let fileInput = document.createElement("input");
-            fileInput.setAttribute("type", "file");
-            fileInput.click();
-            fileInput.addEventListener("change", () => {
-                let formData = new FormData();
-                formData.append("file", fileInput.files[0]);
-                // 1. 이미지 파일 서버 업로드
-                Images.upload("/rest/boards/uploadFile", formData).then((resData) => {
-                    console.log(resData);
-                    let range = quill.getSelection();
-                    // 2. 이미지 파일 URL로 내용 작성
-                    quill.insertEmbed(range.index, "image", resData.file.url);
-                });
-            });
-        }
-
-        let toolbar = quill.getModule('toolbar');
-        toolbar.addHandler('image', customImageHandler);
-
-
-        let validateForm = function () {
-            let titleInput = document.querySelector("#title");
-
-            // 제목이 없으면 return false
-            if (titleInput.value.length == 0) {
-                alert("제목을 입력해주세요.");
-                focus(titleInput);
-                return false;
-            }
-
-            // 내용이 없으면 return false
-            let text = quill.getText().split(" ").join("");
-            if (text.length == 1) {
-                alert("내용을 입력해주세요.");
-                return false;
-            }
-
-            // let tempContent = quill.getContents();
-            let contentInput = document.querySelector("input[name=content]");
-            contentInput.value = quill.root.innerHTML;
-
-            let method = document.querySelector("input[name=_method]");
-            method.value = "POST";
-
-            return true;
-        }
         VIEW.init();
         /*]]>*/
     </script>

@@ -4,11 +4,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content" class="container">
-    <form method="post" th:action="@{/boards}" id="formDeleteBoard" onsubmit="return validateForm()">
-        <input type="hidden" name="_method" value="DELETE">
+    <form method="post" th:action="@{/boards}" onsubmit="return validateForm()">
         <input type="hidden" name="boardId">
         <input type="hidden" name="subCategoryId" th:value="${param.subCategoryId}">
-        <input type="text" name="content">
+        <input type="hidden" name="content">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="title" name="title" placeholder="제목">
             <label for="title">제목</label>
@@ -16,9 +15,6 @@
         <div id="editor"></div>
         <div class="text-center mt-5">
             <button type="submit" class="btn btn-light">등록</button>
-            <button type="button" id="writeBtn" class="btn btn-light d-none">수정하기</button>
-            <button type="button" id="modifyBtn" class="btn btn-light d-none">변경</button>
-            <button type="button" id="deleteBtn" class="btn btn-light d-none">삭제</button>
             <button type="button" id="listBtn" class="btn btn-light">목록</button>
         </div>
     </form>
@@ -86,8 +82,8 @@
             let contentInput = document.querySelector("input[name=content]");
             contentInput.value = quill.root.innerHTML;
 
-            let method = document.querySelector("input[name=_method]");
-            method.value = "POST";
+            // let method = document.querySelector("input[name=_method]");
+            // method.value = "POST";
 
             return true;
         }

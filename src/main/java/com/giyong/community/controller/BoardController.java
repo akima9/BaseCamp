@@ -61,7 +61,7 @@ public class BoardController {
         dto.setMemberId(memberId);
         Board board = boardService.write(dto);
         m.addAttribute("board", board);
-        return "board/board1/view";
+        return "redirect:/boards?subCategoryId="+board.getSubCategory().getSubCategoryId()+"&boardId="+board.getBoardId()+"&page=0";
     }
 
     @GetMapping("/boards/modify")
