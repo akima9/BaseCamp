@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class StorageProperties {
 
-//    private String location = "src/main/resources/static/img/";
-
     @Value("${file.upload.directory}")
     private String location;
 }

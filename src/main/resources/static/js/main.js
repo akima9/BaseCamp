@@ -103,13 +103,13 @@ const list = {
 
 const write = {
     init : function () {
-        let postBtn = document.querySelector("#postBtn");
+        // let postBtn = document.querySelector("#postBtn");
         let writeBtn = document.querySelector("#writeBtn");
         let modifyBtn = document.querySelector("#modifyBtn");
         let deleteBtn = document.querySelector("#deleteBtn");
         let listBtn = document.querySelector("#listBtn");
 
-        postBtn.addEventListener("click", write.writeBoard);
+        // postBtn.addEventListener("click", write.writeBoard);
         writeBtn.addEventListener("click", write.toggleReadOnly);
         modifyBtn.addEventListener("click", write.modifyBoard);
         listBtn.addEventListener("click", write.goToList);
@@ -429,12 +429,12 @@ const COMMENT = {
 
         let modifyBtn = document.createElement("button");
         modifyBtn.setAttribute("type", "button");
-        modifyBtn.setAttribute("class", "btn btn-primary btn-sm d-none modifyCommentBtn");
+        modifyBtn.setAttribute("class", "btn btn-light btn-sm d-none modifyCommentBtn");
         modifyBtn.innerHTML = "댓글 수정";
 
         let deleteBtn = document.createElement("button");
         deleteBtn.setAttribute("type", "button");
-        deleteBtn.setAttribute("class", "btn btn-outline-danger btn-sm ms-1 deleteCommentBtn");
+        deleteBtn.setAttribute("class", "btn btn-light btn-sm ms-1 deleteCommentBtn");
         deleteBtn.innerHTML = "댓글 삭제";
 
         let contents = document.createElement("p");

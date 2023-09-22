@@ -4,120 +4,94 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content" class="container">
-    <form method="post" th:action="@{/boards}" id="formDeleteBoard">
+    <form method="post" th:action="@{/boards}" id="formDeleteBoard" onsubmit="return validateForm()">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="boardId">
         <input type="hidden" name="subCategoryId" th:value="${param.subCategoryId}">
+        <input type="text" name="content">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="title" name="title" placeholder="제목">
+            <label for="title">제목</label>
+        </div>
+        <div id="editor"></div>
+        <div class="text-center mt-5">
+            <button type="submit" class="btn btn-light">등록</button>
+            <button type="button" id="writeBtn" class="btn btn-light d-none">수정하기</button>
+            <button type="button" id="modifyBtn" class="btn btn-light d-none">변경</button>
+            <button type="button" id="deleteBtn" class="btn btn-light d-none">삭제</button>
+            <button type="button" id="listBtn" class="btn btn-light">목록</button>
+        </div>
     </form>
-    <div id="editorjs"></div>
-    <div class="text-center">
-        <button type="button" id="postBtn" class="btn btn-primary">등록</button>
-        <button type="button" id="writeBtn" class="btn btn-primary d-none">수정하기</button>
-        <button type="button" id="modifyBtn" class="btn btn-primary d-none">변경</button>
-        <button type="button" id="deleteBtn" class="btn btn-outline-danger d-none">삭제</button>
-        <button type="button" id="listBtn" class="btn btn-light">목록</button>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script><!-- Delimiter -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script><!-- List -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script><!-- Checklist -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script><!-- Quote -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/code@latest"></script><!-- Code -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script><!-- Embed -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/table@latest"></script><!-- Table -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script><!-- Link -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/warning@latest"></script><!-- Warning -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.8.1/dist/bundle.min.js"></script>
     <script>
-        const editor = new EditorJS({
-            readOnly: false,
-            holder: 'editorjs',
-            placeholder: 'Let`s write an awesome story!',
-            autofocus: true,
-            tools: {
-                header: {
-                    class: Header,
-                    inlineToolbar: ['marker', 'link'],
-                    config: {
-                        placeholder: 'Header'
-                    },
-                    shortcut: 'CMD+SHIFT+H'
-                },
-                image: {
-                    class: ImageTool,
-                    config: {
-                        uploader: {
-                            uploadByFile(file) {
-                                console.log(file);
-                                let formData = new FormData();
-                                formData.append("file", file);
-                                console.log(formData.values().next().value);
-                                return Images.upload("/rest/boards/uploadFile", formData).then((resData) => {
-                                    console.log(resData);
-                                    return {
-                                        success: 1,
-                                        file: {
-                                            url: resData.file.url
-                                        }
-                                    }
-                                })
-                            }
-                        }
-                        // endpoints: {
-                        //     byFile: '/rest/boards/uploadFile',
-                        // },
-                        // onFileUploadResponse: (response) => {
-                        //     console.log("call onFileUploadResponse");
-                        //     console.log(response);
-                        // }
-                    }
-                },
-                list: {
-                    class: List,
-                    inlineToolbar: true,
-                    shortcut: 'CMD+SHIFT+L'
-                },
-                checklist: {
-                    class: Checklist,
-                    inlineToolbar: true,
-                },
-                quote: {
-                    class: Quote,
-                    inlineToolbar: true,
-                    config: {
-                        quotePlaceholder: 'Enter a quote',
-                        captionPlaceholder: 'Quote\'s author',
-                    },
-                    shortcut: 'CMD+SHIFT+O'
-                },
-                warning: Warning,
-                marker: {
-                    class:  Marker,
-                    shortcut: 'CMD+SHIFT+M'
-                },
-                code: {
-                    class:  CodeTool,
-                    shortcut: 'CMD+SHIFT+C'
-                },
-                delimiter: Delimiter,
-                inlineCode: {
-                    class: InlineCode,
-                    shortcut: 'CMD+SHIFT+C'
-                },
-                linkTool: LinkTool,
-                embed: Embed,
-                table: {
-                    class: Table,
-                    inlineToolbar: true,
-                    shortcut: 'CMD+ALT+T'
-                },
-            },
-            data: {}
+        let toolbarOptions = [
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'image'],        // toggled buttons
+            ['blockquote', 'code-block'],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'align': [] }],
+            ['clean']                                         // remove formatting button
+        ];
+        
+        let quill = new Quill('#editor', {
+            theme: 'snow',
+            placeholder: '글을 작성 해주세요.',
+            modules: {
+                toolbar: toolbarOptions
+            }
         });
+
+        // 이미지 파일 서버 업로드 후 내용 입력
+        let customImageHandler = () => {
+            let fileInput = document.createElement("input");
+            fileInput.setAttribute("type", "file");
+            fileInput.click();
+            fileInput.addEventListener("change", () => {
+                let formData = new FormData();
+                formData.append("file", fileInput.files[0]);
+                // 1. 이미지 파일 서버 업로드
+                Images.upload("/rest/boards/uploadFile", formData).then((resData) => {
+                    console.log(resData);
+                    let range = quill.getSelection();
+                    // 2. 이미지 파일 URL로 내용 작성
+                    quill.insertEmbed(range.index, "image", resData.file.url);
+                });
+            });
+        }
+
+        let toolbar = quill.getModule('toolbar');
+        toolbar.addHandler('image', customImageHandler);
+
+
+        let validateForm = function () {
+            let titleInput = document.querySelector("#title");
+
+            // 제목이 없으면 return false
+            if (titleInput.value.length == 0) {
+                alert("제목을 입력해주세요.");
+                focus(titleInput);
+                return false;
+            }
+
+            // 내용이 없으면 return false
+            let text = quill.getText().split(" ").join("");
+            if (text.length == 1) {
+                alert("내용을 입력해주세요.");
+                return false;
+            }
+
+            // let tempContent = quill.getContents();
+            let contentInput = document.querySelector("input[name=content]");
+            contentInput.value = quill.root.innerHTML;
+
+            let method = document.querySelector("input[name=_method]");
+            method.value = "POST";
+
+            return true;
+        }
+
         write.init();
     </script>
 </div>

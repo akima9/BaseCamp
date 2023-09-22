@@ -57,9 +57,8 @@ public class BoardController {
     }
 
     @PostMapping("/boards")
-    public String writeBoard(BoardDto dto, Model m) {
-        System.out.println("BoardController.writeBoard");
-        System.out.println("dto = " + dto);
+    public String writeBoard(BoardDto dto, Model m, @SessionAttribute(name = "memberId", required = false) Long memberId) {
+        dto.setMemberId(memberId);
         Board board = boardService.write(dto);
         m.addAttribute("board", board);
         return "board/board1/view";

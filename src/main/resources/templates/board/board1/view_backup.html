@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<div layout:fragment="content" class="container">
+    <form method="post" th:action="@{/boards}" id="formDeleteBoard">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="boardId" th:value="${board.boardId}">
+        <input type="hidden" name="subCategoryId" th:value="${subCategoryId}">
+        <input type="hidden" name="page" th:value="${page}">
+    </form>
+
+    <div class="row">
+        <div class="col">
+            <small class="text-primary-emphasis">
+                <span th:text="|${board.subCategory.mainCategory.mainCategoryName} / ${board.subCategory.subCategoryName}|">카테고리</span>
+            </small>
+        </div>
+        <div class="col text-end">
+            <button type="button" th:if="${session.memberId == board.member.id}" id="writeBtn" class="btn btn-light btn-sm">편집</button>
+            <button type="button" id="modifyBtn" class="btn btn-light btn-sm d-none">변경</button>
+            <button type="button" th:if="${session.memberId == board.member.id}" id="deleteBtn" class="btn btn-light btn-sm">삭제</button>
+            <button type="button" id="listBtn" class="btn btn-light btn-sm" th:attr="data-page=${page}">목록</button>
+        </div>
+    </div>
+
+    <p>
+        <small class="text-body-tertiary">
+            <span th:text="|${board.member.memberId}님이 작성, ${#temporals.format(board.updatedAt, 'yyyy-MM-dd')}에 최종 변경|"></span>
+        </small>
+    </p>
+
+
+    <div id="editorjs"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script><!-- Delimiter -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script><!-- List -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script><!-- Checklist -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script><!-- Quote -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/code@latest"></script><!-- Code -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script><!-- Embed -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/table@latest"></script><!-- Table -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script><!-- Link -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/warning@latest"></script><!-- Warning -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.8.1/dist/bundle.min.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let content = JSON.parse(/*[[${board.content}]]*/);
+
+        const editor = new EditorJS({
+            readOnly: true,
+            holder: 'editorjs',
+            placeholder: 'Let`s write an awesome story!',
+            autofocus: false,
+            tools: {
+                header: {
+                    class: Header,
+                    inlineToolbar: ['marker', 'link'],
+                    config: {
+                        placeholder: 'Header'
+                    },
+                    shortcut: 'CMD+SHIFT+H'
+                },
+                image: {
+                    class: ImageTool,
+                    config: {
+                        uploader: {
+                            uploadByFile(file) {
+                                console.log(file);
+                                let formData = new FormData();
+                                formData.append("file", file);
+                                console.log(formData.values().next().value);
+                                return Images.upload("/rest/boards/uploadFile", formData).then((resData) => {
+                                    console.log(resData);
+                                    return {
+                                        success: 1,
+                                        file: {
+                                            url: resData.file.url
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                        // endpoints: {
+                        //     byFile: '/rest/boards/uploadFile',
+                        // },
+                        // onFileUploadResponse: (response) => {
+                        //     console.log("call onFileUploadResponse");
+                        //     console.log(response);
+                        // }
+                    }
+                },
+                list: {
+                    class: List,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+SHIFT+L'
+                },
+                checklist: {
+                    class: Checklist,
+                    inlineToolbar: true,
+                },
+                quote: {
+                    class: Quote,
+                    inlineToolbar: true,
+                    config: {
+                        quotePlaceholder: 'Enter a quote',
+                        captionPlaceholder: 'Quote\'s author',
+                    },
+                    shortcut: 'CMD+SHIFT+O'
+                },
+                warning: Warning,
+                marker: {
+                    class:  Marker,
+                    shortcut: 'CMD+SHIFT+M'
+                },
+                code: {
+                    class:  CodeTool,
+                    shortcut: 'CMD+SHIFT+C'
+                },
+                delimiter: Delimiter,
+                inlineCode: {
+                    class: InlineCode,
+                    shortcut: 'CMD+SHIFT+C'
+                },
+                linkTool: LinkTool,
+                embed: Embed,
+                table: {
+                    class: Table,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+ALT+T'
+                },
+            },
+            data: {
+                blocks: content.blocks
+            }
+        });
+
+        VIEW.init();
+        /*]]>*/
+    </script>
+    <th:block th:replace="fragments/commentWrite::commentWriteFragment"></th:block>
+    <th:block th:replace="fragments/commentList::commentListFragment"></th:block>
+</div>
+</html>
