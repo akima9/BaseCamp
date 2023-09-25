@@ -30,6 +30,14 @@ public class BoardController {
     @Autowired
     private SubCategoryService subCategoryService;
 
+    @GetMapping("/boards/edit")
+    public String edit(BoardDto boardDto, int page, Model m) {
+        Board board = boardService.findById(boardDto.getBoardId());
+        m.addAttribute("board", board);
+        m.addAttribute("page", page);
+        return "board/board1/edit";
+    }
+
     @DeleteMapping("/boards")
     public String deleteBoard(BoardDto boardDto) {
         boardService.remove(boardDto.getBoardId());
@@ -72,10 +80,12 @@ public class BoardController {
     }
 
     @PutMapping("/boards")
-    public String modify(BoardDto dto, Model m) {
-        Board board = boardService.write(dto);
+    public String modify(BoardDto dto, int page, Model m) {
+        Board board = boardService.modify(dto);
         m.addAttribute("board", board);
-        return "board/board1/view";
+        m.addAttribute("page", page);
+//        return "board/board1/view";
+        return "redirect:/boards?subCategoryId="+board.getSubCategory().getSubCategoryId()+"&boardId="+board.getBoardId()+"&page="+page;
     }
 
     @GetMapping("/boards/delete")

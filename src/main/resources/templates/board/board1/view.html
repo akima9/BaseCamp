@@ -18,7 +18,7 @@
             </small>
         </div>
         <div class="col text-end">
-            <button type="button" th:if="${session.memberId == board.member.id}" id="writeBtn" class="btn btn-light btn-sm">편집</button>
+            <button type="button" th:if="${session.memberId == board.member.id}" class="btn btn-light btn-sm" onclick="VIEW.goToEdit()">편집</button>
             <button type="button" id="modifyBtn" class="btn btn-light btn-sm d-none">변경</button>
             <button type="button" th:if="${session.memberId == board.member.id}" id="deleteBtn" class="btn btn-light btn-sm">삭제</button>
             <button type="button" id="listBtn" class="btn btn-light btn-sm" th:attr="data-page=${page}">목록</button>

@@ -140,7 +140,23 @@ const Images = {
     // }
 }
 
+const edit = {
+    cancel : () => {
+        let subCategoryId = document.querySelector("input[name=subCategoryId]");
+        let boardId = document.querySelector("input[name=boardId]");
+        let page = document.querySelector("input[name=page]");
+
+        self.location = "/boards?subCategoryId="+subCategoryId.value+"&boardId="+boardId.value+"&page="+page.value;
+    }
+}
+
 const VIEW = {
+    goToEdit : () => {
+        let boardId = document.querySelector("input[name=boardId]");
+        let subCategoryId = document.querySelector("input[name=subCategoryId]");
+        let page = document.querySelector("input[name=page]");
+        self.location = "/boards/edit?subCategoryId="+subCategoryId.value+"&boardId="+boardId.value+"&page="+page.value;
+    },
     init : function () {
         let writeBtn = document.querySelector("#writeBtn");     // 수정하기 버튼
         let modifyBtn = document.querySelector("#modifyBtn");   // 변경 버튼

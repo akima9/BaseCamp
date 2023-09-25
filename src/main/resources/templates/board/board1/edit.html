@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<div layout:fragment="content" class="container">
+    <form method="post" th:action="@{/boards}" onsubmit="return validateForm()">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="boardId" th:value="${board.boardId}">
+        <input type="hidden" name="subCategoryId" th:value="${board.subCategory.subCategoryId}">
+        <input type="hidden" name="page" th:value="${page}">
+        <input type="hidden" name="content">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="title" name="title" placeholder="제목" th:value="${board.title}">
+            <label for="title">제목</label>
+        </div>
+        <div id="editor"></div>
+        <div class="text-center mt-5">
+            <button type="submit" class="btn btn-light">수정</button>
+            <button type="button" class="btn btn-light" onclick="edit.cancel()">취소</button>
+        </div>
+    </form>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let toolbarOptions = [
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'image'],        // toggled buttons
+            ['blockquote', 'code-block'],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'align': [] }],
+            ['clean']                                         // remove formatting button
+        ];
+
+        let quill = new Quill('#editor', {
+            theme: 'snow',
+            placeholder: '글을 작성 해주세요.',
+            modules: {
+                toolbar: toolbarOptions
+            }
+        });
+
+        // 이미지 파일 서버 업로드 후 내용 입력
+        let customImageHandler = () => {
+            let fileInput = document.createElement("input");
+            fileInput.setAttribute("type", "file");
+            fileInput.click();
+            fileInput.addEventListener("change", () => {
+                let formData = new FormData();
+                formData.append("file", fileInput.files[0]);
+                // 1. 이미지 파일 서버 업로드
+                Images.upload("/rest/boards/uploadFile", formData).then((resData) => {
+                    console.log(resData);
+                    let range = quill.getSelection();
+                    // 2. 이미지 파일 URL로 내용 작성
+                    quill.insertEmbed(range.index, "image", resData.file.url);
+                });
+            });
+        }
+
+        let toolbar = quill.getModule('toolbar');
+        toolbar.addHandler('image', customImageHandler);
+
+
+        let validateForm = function () {
+            let titleInput = document.querySelector("#title");
+
+            // 제목이 없으면 return false
+            if (titleInput.value.length == 0) {
+                alert("제목을 입력해주세요.");
+                focus(titleInput);
+                return false;
+            }
+
+            // 내용이 없으면 return false
+            let text = quill.getText().split(" ").join("");
+            if (text.length == 1) {
+                alert("내용을 입력해주세요.");
+                return false;
+            }
+
+            // let tempContent = quill.getContents();
+            let contentInput = document.querySelector("input[name=content]");
+            contentInput.value = quill.root.innerHTML;
+
+            // let method = document.querySelector("input[name=_method]");
+            // method.value = "POST";
+
+            return true;
+        }
+
+        let initialContent = quill.clipboard.convert(/*[[${board.content}]]*/);
+        quill.setContents(initialContent, 'silent');
+        /*]]>*/
+    </script>
+</div>
+</html>
