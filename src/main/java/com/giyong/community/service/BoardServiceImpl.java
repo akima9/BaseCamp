@@ -2,7 +2,7 @@ package com.giyong.community.service;
 
 import com.giyong.community.dto.BoardDto;
 import com.giyong.community.entity.Board;
-import com.giyong.community.entity.Like;
+import com.giyong.community.entity.LikeBoard;
 import com.giyong.community.entity.Member;
 import com.giyong.community.repository.BoardRepository;
 import com.giyong.community.repository.LikeRepository;
@@ -123,12 +123,12 @@ public class BoardServiceImpl implements BoardService {
     public void toggleLike(Long boardId, Long memberId) {
         Board board = boardRepository.findById(boardId).orElse(null);
         Member member = memberRepository.findById(memberId).orElse(null);
-        Like existingLike = likeRepository.findByMemberAndBoard(member, board);
+        LikeBoard existingLike = likeRepository.findByMemberAndBoard(member, board);
         if (existingLike != null) {
             likeRepository.delete(existingLike);
             board.setLikeCount(board.getLikeCount() - 1);
         } else {
-            Like newLike = new Like();
+            LikeBoard newLike = new LikeBoard();
             newLike.setBoard(board);
             newLike.setMember(member);
             likeRepository.save(newLike);

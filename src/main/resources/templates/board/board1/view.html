@@ -41,7 +41,7 @@
         /*]]>*/
     </script>
 
-    <button th:if="${session.memberId != null}" type="button" class="btn btn-outline-danger mt-5 mb-5" id="likeBtn" data-memberId="${session.memberId}" onclick="VIEW.likeBoard()">♡ 좋아요</button>
+    <button th:if="${session.memberId != null}" type="button" class="btn btn-outline-danger mt-5 mb-5" id="likeBtn" th:attr="data-memberId=${session.memberId}" onclick="VIEW.likeBoard()">♡ 좋아요</button>
 
     <th:block th:replace="fragments/commentWrite::commentWriteFragment"></th:block>
     <th:block th:replace="fragments/commentList::commentListFragment"></th:block>

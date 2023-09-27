@@ -105,6 +105,9 @@ public class RestBoardController {
 
     @GetMapping("/boards/like")
     public String like(Long memberId, Long boardId) {
+        System.out.println("RestBoardController.like");
+        System.out.println("memberId = " + memberId);
+        System.out.println("boardId = " + boardId);
         boardService.toggleLike(boardId, memberId);
         return null;
     }
