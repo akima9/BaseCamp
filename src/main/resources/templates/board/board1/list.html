@@ -23,7 +23,7 @@
         <tr th:each="board : ${boards}">
             <th scope="row" class="text-center" th:text="${boards.pageable.pageNumber * boards.pageable.pageSize + boardStat.count}">번호</th>
             <td class="text-start">
-                <a th:href="@{/boards(subCategoryId=${subCategory.subCategoryId},boardId=${board.boardId},page=${boards.pageable.pageNumber})}" th:text="${board.title}"></a>
+                <a th:href="@{/boards(subCategoryId=${subCategory.subCategoryId},boardId=${board.boardId},page=${boards.pageable.pageNumber})}" th:text="${board.title}" class="link-dark"></a>
             </td>
             <td class="text-center" th:text="${board.viewCount}">조회수</td>
             <td class="text-center" th:text="${board.comments.size}">댓글수</td>

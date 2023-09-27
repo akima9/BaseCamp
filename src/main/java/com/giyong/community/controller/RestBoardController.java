@@ -102,4 +102,10 @@ public class RestBoardController {
         Board board = boardService.write(boardDto);
         return objectMapper.writeValueAsString(board);
     }
+
+    @GetMapping("/boards/like")
+    public String like(Long memberId, Long boardId) {
+        boardService.toggleLike(boardId, memberId);
+        return null;
+    }
 }

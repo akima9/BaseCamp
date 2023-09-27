@@ -2,7 +2,11 @@ package com.giyong.community.service;
 
 import com.giyong.community.dto.BoardDto;
 import com.giyong.community.entity.Board;
+import com.giyong.community.entity.Like;
+import com.giyong.community.entity.Member;
 import com.giyong.community.repository.BoardRepository;
+import com.giyong.community.repository.LikeRepository;
+import com.giyong.community.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,10 @@ import java.util.*;
 public class BoardServiceImpl implements BoardService {
     @Autowired
     private BoardRepository boardRepository;
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private LikeRepository likeRepository;
 
     @Override
     @Transactional
@@ -109,5 +117,23 @@ public class BoardServiceImpl implements BoardService {
 
     public Long findCommentCount(Long boardId) {
         return boardRepository.findCommentCountByBoardId(boardId);
+    }
+
+    @Override
+    public void toggleLike(Long boardId, Long memberId) {
+        Board board = boardRepository.findById(boardId).orElse(null);
+        Member member = memberRepository.findById(memberId).orElse(null);
+        Like existingLike = likeRepository.findByMemberAndBoard(member, board);
+        if (existingLike != null) {
+            likeRepository.delete(existingLike);
+            board.setLikeCount(board.getLikeCount() - 1);
+        } else {
+            Like newLike = new Like();
+            newLike.setBoard(board);
+            newLike.setMember(member);
+            likeRepository.save(newLike);
+            board.setLikeCount(board.getLikeCount() + 1);
+        }
+        boardRepository.save(board);
     }
 }

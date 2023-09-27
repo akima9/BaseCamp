@@ -28,6 +28,7 @@ public class Board {
     @JoinColumn(name = "member_id")
     private Member member;
     private Long viewCount;
+    private Long likeCount;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "sub_category_id")

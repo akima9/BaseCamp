@@ -25,4 +25,6 @@ public interface BoardService {
     void upViewCount(Long boardId, HttpSession session);
 
     Long findCommentCount(Long boardId);
+
+    void toggleLike(Long boardId, Long memberId);
 }

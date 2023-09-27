@@ -151,6 +151,13 @@ const edit = {
 }
 
 const VIEW = {
+    likeBoard : () => {
+        console.log("call VIEW.likeBoard");
+        let boardId = document.querySelector("input[name=boardId]");
+        let likeBtn = document.querySelector("#likeBtn");
+        let memberId = likeBtn.getAttribute("data-memberId");
+
+    },
     goToEdit : () => {
         let boardId = document.querySelector("input[name=boardId]");
         let subCategoryId = document.querySelector("input[name=subCategoryId]");
@@ -280,7 +287,7 @@ const COMMENT = {
         let commentWrap = document.querySelector(".comment_wrap");
         
         let commentDiv = document.createElement("div");
-        commentDiv.setAttribute("class", "comment");
+        commentDiv.setAttribute("class", "comment mb-3 p-3 text-bg-light");
         commentDiv.setAttribute("data-commentId", element.commentId);
         commentDiv.setAttribute("data-memberId", element.member.id);
         
@@ -296,21 +303,21 @@ const COMMENT = {
 
         let editBtn = document.createElement("button");
         editBtn.setAttribute("type", "button");
-        editBtn.setAttribute("class", "btn btn-light btn-sm editCommentBtn");
+        editBtn.setAttribute("class", "btn btn-secondary btn-sm editCommentBtn");
         editBtn.innerHTML = "댓글 편집";
 
         let modifyBtn = document.createElement("button");
         modifyBtn.setAttribute("type", "button");
-        modifyBtn.setAttribute("class", "btn btn-light btn-sm d-none modifyCommentBtn");
+        modifyBtn.setAttribute("class", "btn btn-secondary btn-sm d-none modifyCommentBtn");
         modifyBtn.innerHTML = "댓글 수정";
 
         let deleteBtn = document.createElement("button");
         deleteBtn.setAttribute("type", "button");
-        deleteBtn.setAttribute("class", "btn btn-light btn-sm ms-1 deleteCommentBtn");
+        deleteBtn.setAttribute("class", "btn btn-secondary btn-sm ms-1 deleteCommentBtn");
         deleteBtn.innerHTML = "댓글 삭제";
 
         let contents = document.createElement("p");
-        contents.setAttribute("class", "contents");
+        contents.setAttribute("class", "contents mb-0");
         contents.innerHTML = element.content;
 
         buttonDiv.appendChild(editBtn);
